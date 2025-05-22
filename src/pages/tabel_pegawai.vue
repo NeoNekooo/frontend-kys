@@ -1,8 +1,9 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import axios from "axios";
+import dayjs from "dayjs";
 
-const url = "http://localhost:5000/api/pegawai";
+const url = "http://localhost:8000/api/pegawai";
 const pegawai = ref([]);
 const errorMessage = ref("");
 const loading = ref(true);
@@ -17,8 +18,10 @@ const modalImageSrc = ref(""); // Untuk gambar di modal
 const getPegawai = async () => {
   try {
     const response = await axios.get(url);
-    if (response.data && response.data.pegawai) {
-      pegawai.value = response.data.pegawai;
+    // console.log(response.data);
+    if (response.data) {
+      pegawai.value = response.data;
+      console.log(pegawai.value);
     } else {
       errorMessage.value = "Format data tidak sesuai.";
     }
@@ -175,83 +178,48 @@ onMounted(() => {
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>1</td>
-        <td class="text-center">
-          iwak
-        </td>
-        <td class="text-center">
-          lorem
-        </td>
-        <td class="text-center">
-          lorem
-        </td>
-        <td class="text-center">
-          lorem
-        </td>
-        <td class="text-center">
-          lorem
-        </td>
-        <td class="text-center">
-          lorem
-        </td>
-        <td class="text-center">
-          lorem
-        </td>
-        <td class="text-center">
-          lorem
-        </td>
-        <td class="text-center">
-          lorem
-        </td>
-        <td class="text-center">
-          lorem
-        </td>
-        <td class="text-center">
-          lorem
-        </td>
-        <td class="text-center">
-          lorem
-        </td>
-        <td class="text-center">
-          lorem
-        </td>
-        <td class="text-center">
-          lorem
-        </td>
-        <td class="text-center">
-          lorem
-        </td>
-        <td class="text-center">
-          lorem
-        </td>
-        <td class="text-center">
-          lorem
-        </td>
-        <td class="text-center">
-          lorem
-        </td>
-        <td class="text-center">
-          lorem
-        </td>
-        <td class="text-center">
-          lorem
-        </td>
-        <td class="text-center">
-          lorem
-        </td>
-        <td class="text-center">
-          lorem
-        </td>
-        <!-- <td v-if="pendaki.ktpKartuPelajar"
-                  :src="http://localhost:5000${pendaki.ktpKartuPelajar}"
-                  class="w-12 h-12 object-cover rounded-md cursor-pointer text-center"
-                  @click="openImageModal(http://localhost:5000${pendaki.ktpKartuPelajar})"
-                  alt="Jaminan">
-          // <span v-else>-</span>
-        </td> -->
-      </tr>
-    </tbody>
+  <tr v-for="(p, index) in pegawai" :key="p.id">
+    <td>{{ index + 1 }}</td>
+    <td class="text-center">{{ p.nama }}</td>
+    <td class="text-center">{{ p.kewarganegaraan }}</td>
+    <td class="text-center">{{ p.nik }}</td>
+    <td class="text-center">{{ p.nuptk }}</td>
+    <td class="text-center">{{ p.nip }}</td>
+    <td class="text-center">{{ p.nipy }}</td>
+    <td class="text-center">{{ p.npwp }}</td>
+    <td class="text-center">{{ p.tmp_lahir }}</td>
+    <td class="text-center">{{ formatTanggal(p.tgl_lahir) }}</td>
+    <td class="text-center">{{ p.jk === 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
+    <td class="text-center">{{ p.agama }}</td>
+    <td class="text-center">{{ p.nama_ibu }}</td>
+    <td class="text-center">{{ p.status_pernikahan }}</td>
+    <td class="text-center">{{ p.nama_suami_istri }}</td>
+    <td class="text-center">{{ p.jml_anak }}</td>
+    <td class="text-center">{{ p.alamat }}</td>
+    <td class="text-center">{{ p.kecamatan }}</td>
+    <td class="text-center">{{ p.desa }}</td>
+    <td class="text-center">{{ p.kabupaten }}</td>
+    <td class="text-center">{{ p.provinsi }}</td>
+    <td class="text-center">{{ p.kode_pos }}</td>
+    <td class="text-center">{{ p.kontak || '-' }}</td> <!-- kontak tidak ada di data contoh, jadi fallback -->
+    <td class="text-center">
+      <img
+        v-if="p.photo"
+        :src="`http://localhost:8000/images/${p.photo}`"
+        alt="Photo"
+        class="w-12 h-12 object-cover rounded-md cursor-pointer mx-auto"
+        @click="openImageModal(`http://localhost:8000/images/${p.photo}`)"
+      />
+      <span v-else>-</span>
+    </td>
+    <td class="text-center">
+      <span :class="p.status === 1 ? 'text-green-600' : 'text-red-600'">
+        {{ p.status === 1 ? 'Aktif' : 'Tidak Aktif' }}
+      </span>
+    </td>
+  </tr>
+</tbody>
+
   </VTable>
   </VCard>
 </template>

@@ -1,5 +1,5 @@
-import ProfilLembaga from '@/layouts/components/ProfilLembaga.vue'
-import tables_pegawai from '@/layouts/components/tabels/tabel_pegawai.vue'
+import tables_pegawai from '@/pages/tabel_pegawai.vue'
+import ProfilLembaga from '@/pages/ProfilLembaga.vue'
 export const routes = [
   { path: '/', redirect: '/dashboard' },
   {
