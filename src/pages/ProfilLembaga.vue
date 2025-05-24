@@ -1,7 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
-
+import { useToast } from 'vue-toastification'
+const toast = useToast()
 const form = ref({
   nama: '',
   npyn: '',
@@ -36,17 +37,17 @@ const fetchLembaga = async () => {
     }
   } catch (error) {
     console.error('Gagal fetch data lembaga:', error)
-    alert('Gagal memuat data lembaga.')
+    toast.error('Gagal mengambil data lembaga.')
   }
 }
 
 const submitForm = async () => {
   try {
-    await axios.put(`http://localhost:5000/api/lembaga/${editLembaga.value}`, form.value)
-    alert('Perubahan berhasil disimpan!')
+    await axios.put(`http://localhost:5000/api/lembaga/${form.value.id}`, form.value)
+    toast.success('Data lembaga berhasil diperbarui.')
   } catch (error) {
     console.error('Gagal mengupdate data:', error)
-    alert('Terjadi kesalahan saat menyimpan data.')
+    toast.error('Gagal memperbarui data lembaga.', error)
   }
 }
 

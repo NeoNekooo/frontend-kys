@@ -2,6 +2,11 @@
 import VerticalNavSectionTitle from '@/@layouts/components/VerticalNavSectionTitle.vue'
 import VerticalNavGroup from '@layouts/components/VerticalNavGroup.vue'
 import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
+import { router } from '@/plugins/router'
+const logout = () => {
+    localStorage.removeItem("token");
+    router.push({ name: "login" });
+  };
 </script>
 
 <template>
@@ -75,8 +80,9 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
     :item="{
       title: 'Login',
       icon: 'ri-login-box-line',
-      to: '/login',
+      
     }"
+    @click="logout"
   />
 
   <!-- 👉 User Interface -->

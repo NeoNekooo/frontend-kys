@@ -1,17 +1,38 @@
 <script setup>
-import { useTheme } from 'vuetify'
 import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
 import logo from '@images/logo.svg?raw'
 import authV1MaskDark from '@images/pages/auth-v1-mask-dark.png'
 import authV1MaskLight from '@images/pages/auth-v1-mask-light.png'
 import authV1Tree2 from '@images/pages/auth-v1-tree-2.png'
 import authV1Tree from '@images/pages/auth-v1-tree.png'
+import axios from 'axios'
+import { useToast } from 'vue-toastification'
+import { useTheme } from 'vuetify'
+import {router} from '@/plugins/router'
+
+const toast = useToast()
 
 const form = ref({
-  email: '',
+  username: '',
   password: '',
   remember: false,
 })
+const handleLogin = async () => {
+  try {
+    const res = await axios.post('http://localhost:5000/api/admin/login', {
+      username: form.value.username,
+      password: form.value.password,
+    })
+
+    const token = res.data.token
+    localStorage.setItem('token', token)
+    toast.success('Login berhasil!')
+    router.push({name:'dashboard'})
+  } catch (err) {
+    toast.error(err.response?.data?.message || 'Login gagal')
+    console.error('Login error:', err)
+  }
+}
 
 const vuetifyTheme = useTheme()
 
@@ -40,30 +61,24 @@ const isPasswordVisible = ref(false)
             class="d-flex"
             v-html="logo"
           />
-          <h2 class="font-weight-medium text-2xl text-uppercase">
-            Materio
-          </h2>
+          <h2 class="font-weight-medium text-2xl text-uppercase">Materio</h2>
         </RouterLink>
       </VCardItem>
 
       <VCardText class="pt-2">
-        <h4 class="text-h4 mb-1">
-          Welcome to Materio! 👋🏻
-        </h4>
-        <p class="mb-0">
-          Please sign-in to your account and start the adventure
-        </p>
+        <h4 class="text-h4 mb-1">Welcome to Materio! 👋🏻</h4>
+        <p class="mb-0">Please sign-in to your account and start the adventure</p>
       </VCardText>
 
       <VCardText>
-        <VForm @submit.prevent="() => {}">
+        <VForm @submit.prevent="handleLogin">
           <VRow>
             <!-- email -->
             <VCol cols="12">
               <VTextField
-                v-model="form.email"
-                label="Email"
-                type="email"
+                v-model="form.username"
+                label="Username"
+                type="text"
               />
             </VCol>
 
@@ -98,7 +113,6 @@ const isPasswordVisible = ref(false)
               <VBtn
                 block
                 type="submit"
-                to="/"
               >
                 Login
               </VBtn>
