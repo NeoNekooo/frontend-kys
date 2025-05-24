@@ -1,5 +1,7 @@
 import tables_pegawai from '@/pages/tabel_pegawai.vue'
 import ProfilLembaga from '@/pages/ProfilLembaga.vue'
+import tables_rekap_pegawai from '@/pages/tabel_rekap_pegawai.vue'
+import tables_satuan_pendidikan from '@/pages/tabel_satuan_pendidikan.vue'
 export const routes = [
   { path: '/', redirect: '/dashboard' },
   {
@@ -41,6 +43,14 @@ export const routes = [
       {
         path: 'tabel-pegawai',
         component: tables_pegawai,
+      },
+      {
+        path: 'tabel-rekap-pegawai',
+        component: tables_rekap_pegawai,
+      },
+      {
+        path: 'satuan-pendidikan',
+        component: tables_satuan_pendidikan,
       },
     ],
   },

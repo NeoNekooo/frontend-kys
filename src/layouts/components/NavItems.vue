@@ -48,11 +48,25 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
     />
     <VerticalNavLink
       :item="{
+        title: 'Rekapan Pegawai',
+        href: '/tabel-rekap-pegawai',
+      }"
+    />
+    <VerticalNavLink
+      :item="{
         title: 'Cetak SK',
         href: '',
       }"
     />
   </VerticalNavGroup>
+
+   <VerticalNavLink
+    :item="{
+      title: 'Satuan Pendidikan',
+       icon: 'ri-file-copy-line',
+      to: '/satuan-pendidikan',
+    }"
+  />
 
   <!-- 👉 Apps & Pages -->
  
