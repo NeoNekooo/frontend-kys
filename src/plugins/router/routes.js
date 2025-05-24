@@ -5,6 +5,8 @@ import EditPegawai from '@/pages/edit-pegawai.vue'
 import tables_pegawai from '@/pages/tabel_pegawai.vue'
 import tables_rekap_pegawai from '@/pages/tabel_rekap_pegawai.vue'
 import tables_satuan_pendidikan from '@/pages/tabel_satuan_pendidikan.vue'
+import tambahSpk from '@/pages/tambah-spk.vue'
+import editSpk from '@/pages/edit-spk.vue'
 import Dashboard from '@/pages/dashboard.vue'
 const routes = [
   { path: '/', redirect: '/dashboard' },
@@ -26,6 +28,8 @@ const routes = [
       { name: 'tabel-pegawai', path: 'tabel-pegawai', component: tables_pegawai },
       { path: 'tabel-rekap-pegawai', component: tables_rekap_pegawai },
       { path: 'satuan-pendidikan', component: tables_satuan_pendidikan },
+      { path: 'tambah-spk', component: tambahSpk },
+      { name: 'Editspk', path: '/spk/edit/:id', component: editSpk, props: true },
     ],
   },
   {

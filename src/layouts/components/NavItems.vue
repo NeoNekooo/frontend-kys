@@ -34,8 +34,9 @@ const logout = () => {
     />
     <VerticalNavLink
       :item="{
-        title: 'Satuan Pendidikan',
-        href: '',
+       title: 'Satuan Pendidikan',
+       icon: 'ri-file-copy-line',
+      to: '/satuan-pendidikan',
       }"
     />
   </VerticalNavGroup>
@@ -65,13 +66,6 @@ const logout = () => {
     />
   </VerticalNavGroup>
 
-   <VerticalNavLink
-    :item="{
-      title: 'Satuan Pendidikan',
-       icon: 'ri-file-copy-line',
-      to: '/satuan-pendidikan',
-    }"
-  />
 
   <!-- 👉 Apps & Pages -->
  

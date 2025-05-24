@@ -1,77 +1,153 @@
 <script setup>
-import { onMounted, ref } from "vue";
 import axios from "axios";
 import dayjs from "dayjs";
+import { onMounted, ref } from "vue";
+import { RouterLink } from "vue-router";
+import { useToast } from 'vue-toastification'; // Assuming you have toastification installed
 
-const url = "http://localhost:5000/api/spk";
-const pegawai = ref([]);
+const toast = useToast(); // Initialize toast
+
+const url = "http://localhost:5000/api/spk"; // Changed from /api/pegawai to /api/spk
+const spk = ref([]); // Changed 'pegawai' ref to 'spk'
 const errorMessage = ref("");
 const loading = ref(true);
 const editModal = ref(null);
 const deleteModal = ref(null);
 const imageModal = ref(null);
+const addModal = ref(null);
 
-const editPegawai = ref({});
-const pegawaiToDelete = ref(null);
-const modalImageSrc = ref(""); // Untuk gambar di modal
+const editSpk = ref({}); // Changed 'editPegawai' to 'editSpk'
+const spkToDelete = ref(null); // Changed 'pegawaiToDelete' to 'spkToDelete'
+const modalImageSrc = ref("");
+const newSpk = ref({ // Changed 'newPegawai' to 'newSpk'
+  nama: "",
+  kewarganegaraan: "",
+  nik: "",
+  nuptk: "",
+  nip: "",
+  nipy: "",
+  npwp: "",
+  tmp_lahir: "",
+  tgl_lahir: "",
+  jk: "",
+  agama: "",
+  nama_ibu: "",
+  status_pernikahan: "",
+  nama_suami_istri: "",
+  jml_anak: 0,
+  alamat: "",
+  kecamatan: "",
+  desa: "",
+  kabupaten: "",
+  provinsi: "",
+  kode_pos: "",
+  kontak: "",
+  photo: "",
+  status: 1,
+});
 
-const getPegawai = async () => {
+const getSpk = async () => { // Changed 'getPegawai' to 'getSpk'
   try {
     const response = await axios.get(url);
-    // console.log(response.data);
     if (response.data) {
-      pegawai.value = response.data;
-      console.log(pegawai.value);
+      spk.value = response.data; // Changed 'pegawai.value' to 'spk.value'
+      console.log(spk.value); // Changed 'pegawai.value' to 'spk.value'
     } else {
       errorMessage.value = "Format data tidak sesuai.";
     }
   } catch (error) {
-    toast.error("Gagal memuat data pegawai.");
-    errorMessage.value = "Gagal memuat data pegawai.";
+    toast.error("Gagal memuat data SPK."); // Changed "pegawai" to "SPK"
+    errorMessage.value = "Gagal memuat data SPK."; // Changed "pegawai" to "SPK"
   } finally {
     loading.value = false;
   }
 };
 
-const openEditModal = (pegawai) => {
-  editPegawai.value = { ...pegawai };
+const openEditModal = (item) => { // Changed 'pegawai' parameter to 'item' for generality
+  editSpk.value = { ...item }; // Changed 'editPegawai' to 'editSpk'
   editModal.value.showModal();
 };
 
 const closeEditModal = () => {
-  editPegawai.value = {};
+  editSpk.value = {}; // Changed 'editPegawai' to 'editSpk'
   editModal.value.close();
 };
 
 const confirmEdit = async () => {
   try {
-    await axios.put(`${url}/${editPegawai.value._id}`, editPegawai.value);
-    getPegawai();
+    await axios.put(`${url}/${editSpk.value._id}`, editSpk.value); // Changed 'editPegawai' to 'editSpk'
+    getSpk(); // Changed 'getPegawai' to 'getSpk'
     editModal.value.close();
-    toast.success("Berhasil mengupdate data satuan pendidikan.");
+    toast.success("Berhasil mengupdate data SPK."); // Changed "pegawai" to "SPK"
   } catch (error) {
-    toast.error("Gagal mengupdate satuan pendidikan.");
+    toast.error("Gagal mengupdate data SPK."); // Changed "pegawai" to "SPK"
   }
 };
 
 const openDeleteModal = (id) => {
-  pegawaiToDelete.value = id;
+  spkToDelete.value = id; // Changed 'pegawaiToDelete' to 'spkToDelete'
   deleteModal.value.showModal();
 };
 
 const closeDeleteModal = () => {
-  pegawaiToDelete.value = null;
+  spkToDelete.value = null; // Changed 'pegawaiToDelete' to 'spkToDelete'
   deleteModal.value.close();
 };
 
 const confirmDelete = async () => {
   try {
-    await axios.delete(`${url}/${pegawaiToDelete.value}`);
-    getPegawai();
+    await axios.delete(`${url}/${spkToDelete.value}`); // Changed 'pegawaiToDelete' to 'spkToDelete'
+    getSpk(); // Changed 'getPegawai' to 'getSpk'
     deleteModal.value.close();
-    toast.success("Berhasil menghapus data pegawai.");
+    toast.success("Berhasil menghapus data SPK."); // Changed "pegawai" to "SPK"
   } catch (error) {
-    toast.error("Gagal menghapus data pegawai.");
+    toast.error("Gagal menghapus data SPK."); // Changed "pegawai" to "SPK"
+  }
+};
+
+const openAddModal = () => {
+  newSpk.value = { // Changed 'newPegawai' to 'newSpk'
+    nama: "",
+    kewarganegaraan: "",
+    nik: "",
+    nuptk: "",
+    nip: "",
+    nipy: "",
+    npwp: "",
+    tmp_lahir: "",
+    tgl_lahir: "",
+    jk: "",
+    agama: "",
+    nama_ibu: "",
+    status_pernikahan: "",
+    nama_suami_istri: "",
+    jml_anak: 0,
+    alamat: "",
+    kecamatan: "",
+    desa: "",
+    kabupaten: "",
+    provinsi: "",
+    kode_pos: "",
+    kontak: "",
+    photo: "",
+    status: 1,
+  };
+  addModal.value.showModal();
+};
+
+const closeAddModal = () => {
+  newSpk.value = {}; // Changed 'newPegawai' to 'newSpk'
+  addModal.value.close();
+};
+
+const confirmAdd = async () => {
+  try {
+    await axios.post(url, newSpk.value); // Changed 'newPegawai' to 'newSpk'
+    getSpk(); // Changed 'getPegawai' to 'getSpk'
+    addModal.value.close();
+    toast.success("Berhasil menambahkan data SPK."); // Changed "pegawai" to "SPK"
+  } catch (error) {
+    toast.error("Gagal menambahkan data SPK."); // Changed "pegawai" to "SPK"
   }
 };
 
@@ -79,7 +155,6 @@ const formatTanggal = (tanggal) => {
   return tanggal ? dayjs(tanggal).format("DD-MM-YYYY") : "-";
 };
 
-// Fungsi untuk membuka modal gambar besar
 const openImageModal = (imageUrl) => {
   modalImageSrc.value = imageUrl;
   imageModal.value.showModal();
@@ -91,34 +166,47 @@ const closeImageModal = () => {
 };
 
 onMounted(() => {
-  getPegawai();
+  getSpk();
 });
 </script>
 
 <template>
-  <VCard title="satuan pendidikan">
-  <VTable>
-    <thead>
-      <tr>
-        <th class="text-uppercase">
-          No
-        </th>
-        <th class="text-center text-uppercase">
-          Nama
-        </th>
-        <th class="text-center text-uppercase">
-          Aksi
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-  <tr v-for="(p, index) in pegawai" :key="p.id">
-    <td>{{ index + 1 }}</td>
-    <td class="text-center">{{ p.nama }}</td>
-    
-  </tr>
-</tbody>
+  <section>
+    <VCard>
+      <div class="flex justify-between items-center gap-4 mb-4 my-4 ml-4">
+        <h2 class="text-2xl font-semibold text-gray-800">Table Data SPK</h2> <RouterLink to="tambah-spk" class="btn bg-green-600 text-white px-4 py-2 rounded-lg mr-4"> Tambah SPK
+        </RouterLink>
+      </div>
+      <VTable>
+        <thead>
+          <tr>
+            <th class="text-uppercase">No</th>
+            <th class="text-center text-uppercase">Nama</th>
+            <th class="text-center text-uppercase">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in spk" :key="item.id"> <td>{{ index + 1 }}</td>
+            <td class="text-center">{{ item.nama }}</td> <td class="text-center whitespace-nowrap">
+              <div class="flex items-center justify-center gap-3">
+                <router-link
+                  :to="`/spk/edit/${item.id}`" class="text-white hover:text-blue-800 text-center px-2 py-1 rounded-lg bg-yellow-400 focus:outline-none"
+                  title="Edit SPK" aria-label="Edit"
+                >
+                  <i class="ri-pencil-line text-xl"></i>
+                </router-link>
 
-  </VTable>
-  </VCard>
+                <button
+                  @click="openDeleteModal(item._id)" class="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+                  title="Hapus SPK" aria-label="Delete"
+                >
+                  <i class="ri-delete-bin-6-line text-lg"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </VTable>
+    </VCard>
+  </section>
 </template>

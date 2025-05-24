@@ -174,8 +174,8 @@ onMounted(() => {
   <section>
 
   <VCard>
-    <div class="flex justify-between items-center gap-4 mb-4">
-  <h2 class="text-2xl font-semibold text-gray-800">Tambah Data Pegawai</h2>
+    <div class="flex justify-between items-center gap-4 mb-4 my-4 ml-4">
+  <h2 class="text-2xl font-semibold text-gray-800">Table Data Pegawai</h2>
       <RouterLink to="tambah-pegawai" class="btn bg-green-600 text-white px-4 py-2 rounded-lg mr-4">
         Tambah Pegawai
       </RouterLink>

@@ -91,9 +91,10 @@ onMounted(() => {
       <input v-model="form.nama_ibu" type="text" placeholder="Nama Ibu Kandung" class="input-style" />
       <select v-model="form.status_pernikahan" class="input-style">
         <option disabled value="">Status Pernikahan</option>
-        <option value="Belum Menikah">Belum Menikah</option>
+        <option value="Lajang">Lajang</option>
         <option value="Menikah">Menikah</option>
-        <option value="Cerai">Cerai</option>
+        <option value="Duda">Duda</option>
+        <option value="Janda">Janda</option>
       </select>
       <input v-model="form.nama_suami_istri" type="text" placeholder="Nama Suami/Istri" class="input-style" />
       <input v-model="form.jml_anak" type="number" placeholder="Jumlah Anak" class="input-style" />
@@ -103,7 +104,7 @@ onMounted(() => {
       <input v-model="form.kabupaten" type="text" placeholder="Kabupaten" class="input-style" />
       <input v-model="form.provinsi" type="text" placeholder="Provinsi" class="input-style" />
       <input v-model="form.kode_pos" type="text" placeholder="Kode Pos" class="input-style" />
-      <input v-model="form.photo" type="text" placeholder="Nama File Foto" class="input-style" />
+      <input v-model="form.photo" type="text" placeholder="Foto" class="input-style" />
 
       <div class="md:col-span-2 flex gap-4">
         <button
