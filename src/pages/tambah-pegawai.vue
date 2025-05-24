@@ -27,20 +27,75 @@ const form = ref({
   kabupaten: '',
   provinsi: '',
   kode_pos: '',
-  photo: '',
-  status: 1
+  status: 1,
 })
+
+const photoFile = ref(null) // ✅ untuk menyimpan file aslinya
+const photoPreview = ref('') // opsional untuk pratinjau gambar
+
+const handleFileUpload = (event) => {
+  const file = event.target.files[0]
+  if (file) {
+    photoFile.value = file // simpan file asli
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      photoPreview.value = e.target.result // untuk preview
+    }
+    reader.readAsDataURL(file)
+  }
+}
 
 const submitForm = async () => {
   try {
-    await axios.post('http://localhost:5000/api/pegawai', form.value)
+    // Simpan data pegawai (tanpa foto)
+    const res = await axios.post('http://localhost:5000/api/pegawai', form.value)
     toast.success('Data pegawai berhasil ditambahkan.')
+
+    const pegawaiId = res.data._id || res.data.id // pastikan ini sesuai respons API
+
+    // Upload foto jika ada
+    if (photoFile.value) {
+      const formData = new FormData()
+      formData.append('foto', photoFile.value)
+console.log(pegawaiId)
+      await axios.post(`http://localhost:5000/api/pegawai/upload/${pegawaiId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      toast.success('Foto pegawai berhasil diunggah.')
+    }
+    object.assign(form.value, {
+      nama: '',
+      kewarganegaraan: '',
+      nik: '',
+      nuptk: '',
+      nip: '',
+      nipy: '',
+      npwp: '',
+      tmp_lahir: '',
+      tgl_lahir: '',
+      jk: '',
+      agama: '',
+      nama_ibu: '',
+      status_pernikahan: '',
+      nama_suami_istri: '',
+      jml_anak: '',
+      alamat: '',
+      kecamatan: '',
+      desa: '',
+      kabupaten: '',
+      provinsi: '',
+      kode_pos: ''
+    })
   } catch (error) {
-    console.error('Gagal menyimpan data pegawai:', error)
-    toast.error('Gagal menyimpan data pegawai.')
+    console.error('Menyimpan foto:', error)
+    toast.error('Gagal menyimpan foto.', error)
   }
 }
 </script>
+
+
 <template>
 
   <div class="w-full mx-auto mt-10 p-8 bg-white rounded-lg shadow-md">
@@ -54,7 +109,11 @@ const submitForm = async () => {
 
     <form @submit.prevent="submitForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <input v-model="form.nama" type="text" placeholder="Nama" class="input-style" />
-      <input v-model="form.kewarganegaraan" type="text" placeholder="Kewarganegaraan" class="input-style" />
+      <select name="" id="" class="input-style" v-model="form.kewarganegaraan">
+        <option disabled value="">Pilih Kewarganegaraan</option>
+        <option value="WNI">WNI</option>
+        <option value="WNA">WNI</option>
+      </select>
       <input v-model="form.nik" type="text" placeholder="NIK" class="input-style" />
       <input v-model="form.nuptk" type="text" placeholder="NUPTK" class="input-style" />
       <input v-model="form.nip" type="text" placeholder="NIP" class="input-style" />
@@ -67,7 +126,14 @@ const submitForm = async () => {
         <option value="L">Laki-laki</option>
         <option value="P">Perempuan</option>
       </select>
-      <input v-model="form.agama" type="text" placeholder="Agama" class="input-style" />
+      <select v-model="form.agama" class="input-style">
+        <option disabled value="">Pilih Agama</option>
+        <option value="Islam">Islam</option>
+        <option value="Kristen">Kristen</option>
+        <option value="Katolik">Katolik</option>
+        <option value="BUddha">Buddha</option>
+        <option value="Hindu">Buddha</option>
+      </select>
       <input v-model="form.nama_ibu" type="text" placeholder="Nama Ibu Kandung" class="input-style" />
       <select v-model="form.status_pernikahan" class="input-style">
         <option disabled value="">Status Pernikahan</option>
@@ -84,7 +150,9 @@ const submitForm = async () => {
       <input v-model="form.kabupaten" type="text" placeholder="Kabupaten" class="input-style" />
       <input v-model="form.provinsi" type="text" placeholder="Provinsi" class="input-style" />
       <input v-model="form.kode_pos" type="text" placeholder="Kode Pos" class="input-style" />
-      <input v-model="form.photo" type="text" placeholder="Nama File Foto" class="input-style" />
+      <input accept=".jpg, .png, .jpeg" @change="handleFileUpload" type="file" placeholder="Nama File Foto" class="input-style" />
+      <p v-if="form.photo" class="text-sm text-light mt-2">
+      </p>
 
       <div class="md:col-span-2 flex gap-4">
         <button

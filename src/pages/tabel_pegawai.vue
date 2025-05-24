@@ -239,10 +239,10 @@ onMounted(() => {
           <td class="text-center">
             <img
               v-if="p.photo"
-              :src="`http://localhost:8000/images/${p.photo}`"
+              :src="`http://localhost:5000/uploads/pegawai/${p.photo}`"
               alt="Photo"
               class="w-12 h-12 object-cover rounded-md cursor-pointer mx-auto"
-              @click="openImageModal(`http://localhost:8000/images/${p.photo}`)"
+              @click="openImageModal(`http://localhost:5000/upload/pegawai/${p.photo}`)"
             />
             <span v-else>-</span>
           </td>
