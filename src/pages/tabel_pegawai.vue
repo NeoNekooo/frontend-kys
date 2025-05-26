@@ -11,6 +11,7 @@ import { useToast } from 'vue-toastification'; // Assuming you have toastificati
 const toast = useToast(); // Initialize toast
 
 const url = "http://localhost:5000/api/pegawai/aktif";
+const urlAll = "http://localhost:5000/api/pegawai";
 const pegawai = ref([]);
 const errorMessage = ref("");
 const loading = ref(true);
@@ -80,7 +81,7 @@ const closeEditModal = () => {
 
 const confirmEdit = async () => {
   try {
-    await axios.put(`${url}/${editPegawai.value._id}`, editPegawai.value);
+    await axios.put(`${urlAll}/${editPegawai.value.id}`, editPegawai.value);
     getPegawai();
     editModal.value.close();
     toast.success("Berhasil mengupdate data pegawai.");
@@ -101,8 +102,9 @@ const closeDeleteModal = () => {
 
 const confirmDelete = async () => {
   try {
-    await axios.delete(`${url}/${pegawai.value.id}`);
+    await axios.delete(`${urlAll}/${pegawaiToDelete.value}`);
     getPegawai();
+    console.log("Pegawai dengan ID", pegawaiToDelete.value, "telah dihapus.");
     deleteModal.value.close();
     toast.success("Berhasil menghapus data pegawai.");
   } catch (error) {

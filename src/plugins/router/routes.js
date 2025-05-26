@@ -1,14 +1,13 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import ProfilLembaga from '@/pages/ProfilLembaga.vue'
-import TambahPegawai from '@/pages/tambah-pegawai.vue'
 import EditPegawai from '@/pages/edit-pegawai.vue'
+import editSpk from '@/pages/edit-spk.vue'
+import ProfilLembaga from '@/pages/ProfilLembaga.vue'
 import tables_pegawai from '@/pages/tabel_pegawai.vue'
+import tabel_pegawai_keluar from '@/pages/tabel_pegawai_keluar.vue'
 import tables_rekap_pegawai from '@/pages/tabel_rekap_pegawai.vue'
 import tables_satuan_pendidikan from '@/pages/tabel_satuan_pendidikan.vue'
+import TambahPegawai from '@/pages/tambah-pegawai.vue'
 import tambahSpk from '@/pages/tambah-spk.vue'
-import editSpk from '@/pages/edit-spk.vue'
-import tabel_pegawai_keluar from '@/pages/tabel_pegawai_keluar.vue'
-import Dashboard from '@/pages/dashboard.vue'
+import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
   { path: '/', redirect: '/dashboard' },
   {
@@ -53,8 +52,11 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token')
+  toast.warning('Anda harus login terlebih dahulu')
 
   if (to.meta.requiresAuth && !token) {
+    toast.warning('Anda harus login terlebih dahulu')
+
     next({ name: 'login' })
   } else {
     next()

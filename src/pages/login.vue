@@ -26,6 +26,7 @@ const handleLogin = async () => {
 
     const token = res.data.token
     localStorage.setItem('token', token)
+    console.log('Login successful:', token)
     toast.success('Login berhasil!')
     router.push({name:'dashboard'})
   } catch (err) {

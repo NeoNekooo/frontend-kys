@@ -1,11 +1,14 @@
 <script setup>
-import VerticalNavSectionTitle from '@/@layouts/components/VerticalNavSectionTitle.vue'
-import VerticalNavGroup from '@layouts/components/VerticalNavGroup.vue'
-import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
-import { router } from '@/plugins/router'
+import VerticalNavSectionTitle from '@/@layouts/components/VerticalNavSectionTitle.vue';
+import { router } from '@/plugins/router';
+import VerticalNavGroup from '@layouts/components/VerticalNavGroup.vue';
+import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
+
 const logout = () => {
-    localStorage.removeItem("token");
-    router.push({ name: "login" });
+  console.log("Logout function called", localStorage.getItem("token"));
+  localStorage.removeItem("token");
+  console.log("is ther any token", localStorage.getItem("token"));
+  router.push({ name: "login" });
   };
 </script>
 
@@ -92,7 +95,7 @@ const logout = () => {
       icon: 'ri-login-box-line',
       
     }"
-    @click="logout"
+    onclick="my_modal_5.showModal()"
   />
 
   <!-- 👉 User Interface -->
@@ -131,6 +134,18 @@ const logout = () => {
       to: '/tables',
     }"
   />
-
+<!-- Open the modal using ID.showModal() method -->
+<dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle ">
+  <div class="modal-box bg-slate-100">
+    <h3 class="text-lg font-bold">Lanjur logout?</h3>
+    <p class="py-4">Press ESC key or click the button below to close</p>
+    <div class="modal-action">
+      <form method="dialog p-4 mx-auto">
+        <button class="btn bg-red-600  text-white hover:bg-red-700 mx-4" @click="logout">Logout</button>
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
 
 </template>
