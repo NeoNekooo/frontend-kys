@@ -48,14 +48,28 @@ const logout = () => {
   >
     <VerticalNavLink
       :item="{
-        title: 'Penugasan Pegawai',
+        title: 'Pegawai',
         href: '/tabel-pegawai',
       }"
     />
     <VerticalNavLink
+  :item="{
+    title: 'Pegawai Keluar',
+    href: '/tabel-pegawai-keluar',
+  }"
+  :style="{ color: 'red' }" />
+  </VerticalNavGroup>
+
+    <VerticalNavGroup
+    :item="{
+      title: 'Penugasan Pegawai',
+      icon: 'ri-file-copy-line',
+    }"
+  >
+    <VerticalNavLink
       :item="{
-        title: 'Rekapan Pegawai',
-        href: '/tabel-rekap-pegawai',
+        title: 'Penugasan Pegawai',
+        href: '/tabel-penugasan',
       }"
     />
     <VerticalNavLink
@@ -65,6 +79,8 @@ const logout = () => {
       }"
     />
   </VerticalNavGroup>
+
+
 
 
   <!-- 👉 Apps & Pages -->

@@ -61,24 +61,83 @@ onMounted(() => {
     <h2 class="text-2xl font-semibold text-gray-800 mb-4">Edit Data Lembaga</h2>
 
     <form @submit.prevent="submitForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <input v-model="form.nama" type="text" placeholder="Nama Lembaga" class="input-style" />
-      <input v-model="form.npyn" type="text" placeholder="NPYN" class="input-style" />
-      <input v-model="form.thn_berdiri" type="date" class="input-style" />
-      <input v-model="form.luas" type="text" placeholder="Luas" class="input-style" />
-      <input v-model="form.moto" type="text" placeholder="Moto" class="input-style" />
-      <textarea v-model="form.alamat" placeholder="Alamat" class="input-style md:col-span-2 resize-none h-24"></textarea>
-      <input v-model="form.desa" type="text" placeholder="Desa" class="input-style" />
-      <input v-model="form.kecamatan" type="text" placeholder="Kecamatan" class="input-style" />
-      <input v-model="form.kabupaten" type="text" placeholder="Kabupaten" class="input-style" />
-      <input v-model="form.provinsi" type="text" placeholder="Provinsi" class="input-style" />
-      <input v-model="form.kode_pos" type="text" placeholder="Kode Pos" class="input-style" />
-      <input v-model="form.telepon" type="text" placeholder="Telepon" class="input-style" />
-      <input v-model="form.fax" type="text" placeholder="Fax" class="input-style" />
-      <input v-model="form.email" type="email" placeholder="Email" class="input-style" />
-      <input v-model="form.situs_web" type="text" placeholder="Situs Web" class="input-style" />
-      <input v-model="form.facebook" type="text" placeholder="Facebook" class="input-style" />
-      <input v-model="form.youtube" type="text" placeholder="YouTube" class="input-style" />
-      <input v-model="form.tiktok" type="text" placeholder="TikTok" class="input-style" />
+      <div>
+        <label>Nama Lembaga</label>
+        <input v-model="form.nama" type="text" class="input-style" />
+      </div>
+      <div>
+        <label>NPYN</label>
+        <input v-model="form.npyn" type="text" class="input-style" />
+      </div>
+      <div>
+        <label>Tahun Berdiri</label>
+        <input v-model="form.thn_berdiri" type="date" class="input-style" />
+      </div>
+      <div>
+        <label>Luas</label>
+        <input v-model="form.luas" type="text" class="input-style" />
+      </div>
+      <div>
+        <label>Moto</label>
+        <input v-model="form.moto" type="text" class="input-style" />
+      </div>
+      <div>
+        <label>Logo</label>
+        <input accept=".jpg, .png, .jpeg" @change="handleFileUpload" type="file" class="input-style" />
+        <p v-if="form.photo" class="text-sm text-light mt-2"></p>
+      </div>
+      <div class="md:col-span-2">
+        <label>Alamat</label>
+        <textarea v-model="form.alamat" class="input-style resize-none h-24"></textarea>
+      </div>
+      <div>
+        <label>Desa</label>
+        <input v-model="form.desa" type="text" class="input-style" />
+      </div>
+      <div>
+        <label>Kecamatan</label>
+        <input v-model="form.kecamatan" type="text" class="input-style" />
+      </div>
+      <div>
+        <label>Kabupaten</label>
+        <input v-model="form.kabupaten" type="text" class="input-style" />
+      </div>
+      <div>
+        <label>Provinsi</label>
+        <input v-model="form.provinsi" type="text" class="input-style" />
+      </div>
+      <div>
+        <label>Kode Pos</label>
+        <input v-model="form.kode_pos" type="text" class="input-style" />
+      </div>
+      <div>
+        <label>Telepon</label>
+        <input v-model="form.telepon" type="text" class="input-style" />
+      </div>
+      <div>
+        <label>Fax</label>
+        <input v-model="form.fax" type="text" class="input-style" />
+      </div>
+      <div>
+        <label>Email</label>
+        <input v-model="form.email" type="email" class="input-style" />
+      </div>
+      <div>
+        <label>Situs Web</label>
+        <input v-model="form.situs_web" type="text" class="input-style" />
+      </div>
+      <div>
+        <label>Facebook</label>
+        <input v-model="form.facebook" type="text" class="input-style" />
+      </div>
+      <div>
+        <label>YouTube</label>
+        <input v-model="form.youtube" type="text" class="input-style" />
+      </div>
+      <div>
+        <label>TikTok</label>
+        <input v-model="form.tiktok" type="text" class="input-style" />
+      </div>
 
       <div class="md:col-span-2 flex gap-4">
         <button
@@ -91,6 +150,7 @@ onMounted(() => {
     </form>
   </div>
 </template>
+
 
 <style scoped>
 .input-style {
