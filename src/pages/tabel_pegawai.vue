@@ -276,20 +276,18 @@ onMounted(() => {
   </template>
 
 <style scoped>
-/* Anda bisa menambahkan styling dasar untuk modal jika belum ada */
 .modal {
-  /* Contoh styling dasar */
-  display: none; /* Sembunyikan secara default */
   position: fixed;
   z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  display: none;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0);
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0%);
+  block-size: 100%;
+  inline-size: 100%;
+  inset-block-start: 0;
+  inset-inline-start: 0;
   transition: opacity 0.5s ease-in-out, visibility 0.3s ease-in-out; /* Smooth transition */
 }
 
@@ -298,32 +296,33 @@ onMounted(() => {
 }
 
 .modal-box {
-  background-color: #fefefe;
-  margin: auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
-  max-width: 500px;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: auto;
+  background-color: #fefefe;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 10%);
+  inline-size: 80%;
+  max-inline-size: 500px;
 }
 
 .modal-action {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  margin-top: 20px;
+  margin-block-start: 20px;
 }
 
 .btn {
-  padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
+  padding-block: 8px;
+  padding-inline: 16px;
 }
 
 .btn-error {
+  border-color: #dc2626;
   background-color: #dc2626; /* Warna merah */
   color: white;
-  border-color: #dc2626;
 }
 </style>

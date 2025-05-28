@@ -8,7 +8,7 @@ import { useToast } from 'vue-toastification'; // Assuming you have toastificati
 const toast = useToast(); // Initialize toast
 
 const url = "http://localhost:5000/api/spk"; // Changed from /api/pegawai to /api/spk
-const spk = ref([]); // Changed 'pegawai' ref to 'spk'
+const spk = ref([]);
 const errorMessage = ref("");
 const loading = ref(true);
 const editModal = ref(null);
@@ -16,10 +16,10 @@ const deleteModal = ref(null);
 const imageModal = ref(null);
 const addModal = ref(null);
 
-const editSpk = ref({}); // Changed 'editPegawai' to 'editSpk'
-const spkToDelete = ref(null); // Changed 'pegawaiToDelete' to 'spkToDelete'
+const editSpk = ref({});
+const spkToDelete = ref(null); 
 const modalImageSrc = ref("");
-const newSpk = ref({ // Changed 'newPegawai' to 'newSpk'
+const newSpk = ref({ 
   nama: "",
   kewarganegaraan: "",
   nik: "",
@@ -171,8 +171,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="container-fluid"> <VCard class="my-4"> <div class="flex justify-between items-center gap-4 mb-4 mx-4"> <h2 class="text-2xl font-semibold text-gray-800">Table Data SPK</h2>
-        <RouterLink to="tambah-spk" class="btn bg-green-600 text-white px-4 py-2 rounded-lg"> Tambah SPK
+  <section class="container-fluid"> <VCard class="my-4">
+     <div class="flex justify-between items-center gap-4 mb-4 mx-4 dark:text-white"> 
+      <h2 class="text-2xl font-semibold text-gray-800">Table Data SPK</h2>
+        <RouterLink to="tambah-spk" class="btn items-center justify-center mt-4 bg-green-600 text-white mb-4 px-4 py-2 rounded-lg"> Tambah SPK
         </RouterLink>
       </div>
       <div class="overflow-x-auto"> <VTable class="w-full"> <thead>
@@ -226,18 +228,19 @@ onMounted(() => {
 <style scoped>
 /* Anda bisa menambahkan styling dasar untuk modal jika belum ada */
 .modal {
-  /* Contoh styling dasar */
-  display: none; /* Sembunyikan secara default */
   position: fixed;
   z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+
+  /* Contoh styling dasar */
+  display: none; /* Sembunyikan secara default */
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0);
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0%);
+  block-size: 100%;
+  inline-size: 100%;
+  inset-block-start: 0;
+  inset-inline-start: 0;
   transition: opacity 0.5s ease-in-out, visibility 0.3s ease-in-out; /* Smooth transition */
 }
 
@@ -246,32 +249,33 @@ onMounted(() => {
 }
 
 .modal-box {
-  background-color: #fefefe;
-  margin: auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
-  max-width: 500px;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: auto;
+  background-color: #fefefe;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 10%);
+  inline-size: 80%;
+  max-inline-size: 500px;
 }
 
 .modal-action {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  margin-top: 20px;
+  margin-block-start: 20px;
 }
 
 .btn {
-  padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
+  padding-block: 8px;
+  padding-inline: 16px;
 }
 
 .btn-error {
+  border-color: #dc2626;
   background-color: #dc2626; /* Warna merah */
   color: white;
-  border-color: #dc2626;
 }
 </style>

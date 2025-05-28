@@ -38,8 +38,7 @@ const logout = () => {
     <VerticalNavLink
       :item="{
        title: 'Satuan Pendidikan',
-       icon: 'ri-file-copy-line',
-      to: '/satuan-pendidikan',
+       to: '/satuan-pendidikan',
       }"
     />
   </VerticalNavGroup>
@@ -140,7 +139,6 @@ const logout = () => {
       to: '/tables',
     }"
   />
-<!-- Open the modal using ID.showModal() method -->
 <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle ">
   <div class="modal-box bg-slate-100">
     <h3 class="text-lg font-bold">Lanjur logout?</h3>

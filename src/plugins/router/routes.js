@@ -9,6 +9,7 @@ import TambahPegawai from '@/pages/tambah-pegawai.vue'
 import tambahSpk from '@/pages/tambah-spk.vue'
 import tapel from '@/pages/tabel-tapel.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import TabelPenugasan from '@/pages/penugasan.vue'
 const routes = [
   { path: '/', redirect: '/dashboard' },
   {
@@ -33,6 +34,7 @@ const routes = [
       { path: 'tapel',  name:"tapel" ,component: tapel },
       { path: 'tambah-spk', component: tambahSpk },
       { name: 'Editspk', path: '/spk/edit/:id', component: editSpk, props: true },
+      {path: 'tabel-penugasan', name: 'tabel-penugasan', component: TabelPenugasan}
     ],
   },
   {
