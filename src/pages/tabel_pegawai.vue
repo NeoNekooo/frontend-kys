@@ -230,9 +230,11 @@ onMounted(() => {
             <td class="text-center">{{ p.kontak || '-' }}</td>
 
             <td class="text-center">
+              <VChip>
               <span :class="p.status === 1 ? 'text-green-600' : 'text-red-600'">
                 {{ p.status === 1 ? 'Aktif' : 'Tidak Aktif' }}
               </span>
+              </VChip>
             </td>
             <td class="whitespace-nowrap">
               <div class="flex items-center gap-3">
@@ -288,6 +290,7 @@ onMounted(() => {
   background-color: rgba(0, 0, 0, 0);
   justify-content: center;
   align-items: center;
+  transition: opacity 0.5s ease-in-out, visibility 0.3s ease-in-out; /* Smooth transition */
 }
 
 .modal[open] {
@@ -316,8 +319,6 @@ onMounted(() => {
   padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
-  border: 1px solid #ccc;
-
 }
 
 .btn-error {

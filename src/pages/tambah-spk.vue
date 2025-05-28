@@ -1,4 +1,5 @@
 <script setup>
+import router from '@/plugins/router'
 import axios from 'axios'
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'

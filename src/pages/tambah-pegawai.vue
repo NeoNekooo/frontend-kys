@@ -91,7 +91,6 @@ console.log(pegawaiId)
     })
   } catch (error) {
     console.error('Menyimpan foto:', error)
-    toast.error('Gagal menyimpan foto.', error)
   }
 }
 </script>

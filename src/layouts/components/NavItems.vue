@@ -83,7 +83,13 @@ const logout = () => {
     />
   </VerticalNavGroup>
 
-
+ <VerticalNavLink
+      :item="{
+        title: 'Tahun Pelajaran',
+        icon: 'ri-file-copy-line',
+        href: '/tapel',
+      }"
+    />
 
 
   <!-- 👉 Apps & Pages -->
