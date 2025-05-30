@@ -1,17 +1,19 @@
 <script setup>
 import axios from 'axios'
 import { onMounted, reactive, ref } from 'vue'
+import { useToast } from 'vue-toastification'
 
+const toast = useToast()
 const penugasanUrl = 'http://localhost:5000/api/penugasan'
 const tapelUrl = 'http://localhost:5000/api/tapel'
 const nomorSuratUrl = 'http://localhost:5000/api/nomorSurat'
 const namaPegawaiUrl = 'http://localhost:5000/api/pegawai/aktif'
-const suratPerintahUrl = 'http://localhost:5000/api/spk' // URL SPK
+const suratPerintahUrl = 'http://localhost:5000/api/spk'
 
 const tapelOptions = ref([])
 const nomorSuratOptions = ref([])
 const namaPegawaiOptions = ref([])
-const spkOptions = ref([]) // Diubah dari suratPerintahOptions
+const spkOptions = ref([])
 
 const penugasanData = ref([])
 
@@ -21,7 +23,7 @@ const form = reactive({
   id_nomorSurat: '',
   nomorSurat_display: '',
   id_namaPegawai: '',
-  id_spk: '', // Diubah dari id_suratPerintah
+  id_spk: '',
 })
 
 async function fetchTapel() {
@@ -135,12 +137,12 @@ async function handleSubmit() {
   console.log('Submitted form:', dataToSubmit);
   try {
     await axios.post(penugasanUrl, dataToSubmit);
-    alert('Data penugasan berhasil ditambahkan!');
+    toast.success('Data penugasan berhasil ditambahkan!');
     handleReset();
     await fetchPenugasanData();
   } catch (error) {
     console.error('Error submitting form:', error);
-    alert('Gagal menambahkan data penugasan.');
+    toast.error('Gagal menambahkan data penugasan.');
   }
 }
 
