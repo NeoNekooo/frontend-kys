@@ -266,7 +266,7 @@ onMounted(() => {
   <dialog ref="deleteModal" class="modal">
     <div class="modal-box">
       <h3 class="font-bold text-lg text-red-600">Konfirmasi Penghapusan</h3>
-      <p class="py-4">Apakah Anda yakin ingin menghapus data pegawai ini? Tindakan ini **tidak dapat dibatalkan**.</p>
+      <p class="py-4">Apakah Anda yakin ingin menghapus data pegawai ini?</p>
       <div class="modal-action">
         <button @click="closeDeleteModal" class="btn">Batal</button>
         <button @click="confirmDelete" class="btn btn-error text-white">Ya, Hapus</button>

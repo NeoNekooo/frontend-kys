@@ -1,71 +1,232 @@
+<script setup>
+import axios from 'axios'
+import { onMounted, reactive, ref } from 'vue'
+
+const penugasanUrl = 'http://localhost:5000/api/penugasan'
+const tapelUrl = 'http://localhost:5000/api/tapel'
+const nomorSuratUrl = 'http://localhost:5000/api/nomorSurat'
+const namaPegawaiUrl = 'http://localhost:5000/api/pegawai/aktif'
+const suratPerintahUrl = 'http://localhost:5000/api/spk' // URL SPK
+
+const tapelOptions = ref([])
+const nomorSuratOptions = ref([])
+const namaPegawaiOptions = ref([])
+const spkOptions = ref([]) // Diubah dari suratPerintahOptions
+
+const penugasanData = ref([])
+
+const form = reactive({
+  id_tapel: '',
+  tapel_display: '',
+  id_nomorSurat: '',
+  nomorSurat_display: '',
+  id_namaPegawai: '',
+  id_spk: '', // Diubah dari id_suratPerintah
+})
+
+async function fetchTapel() {
+  try {
+    const res = await axios.get(tapelUrl)
+    if (res.data && res.data.length > 0) {
+      const activeTapel = res.data.find(item => item.status === 0);
+      
+      if (activeTapel) {
+        form.id_tapel = activeTapel._id;
+        form.tapel_display = activeTapel.tapel;
+      } else {
+        console.warn('No active tapel (status === 0) found.');
+        form.id_tapel = '';
+        form.tapel_display = 'Tidak Ada Tapel Aktif';
+      }
+      tapelOptions.value = res.data;
+    } else {
+      console.error('No data found for tapel')
+      tapelOptions.value = []
+      form.id_tapel = '';
+      form.tapel_display = 'Tidak Ada Data Tapel';
+    }
+  } catch (error) {
+    console.error('Error fetching tapel:', error)
+    form.id_tapel = '';
+    form.tapel_display = 'Error Memuat Tapel';
+  }
+}
+
+async function fetchNomorSurat() {
+  try {
+    const res = await axios.get(nomorSuratUrl)
+    if (res.data && res.data.length > 0) {
+      const firstNomorSurat = res.data[0];
+      form.id_nomorSurat = firstNomorSurat._id;
+      form.nomorSurat_display = firstNomorSurat.nomor_surat;
+      nomorSuratOptions.value = res.data;
+    } else {
+      console.error('No data found for nomor surat')
+      nomorSuratOptions.value = []
+    }
+  } catch (error) {
+    console.error('Error fetching nomor surat:', error)
+  }
+}
+
+async function fetchPegawaiAktif() {
+  try {
+    const res = await axios.get(namaPegawaiUrl)
+    if (res.data) {
+      namaPegawaiOptions.value = res.data
+    } else {
+      console.error('No data found for pegawai aktif')
+      namaPegawaiOptions.value = []
+    }
+  } catch (error) {
+    console.error('Error fetching pegawai aktif:', error)
+  }
+}
+
+async function fetchSPK() { // Diubah dari fetchSuratPerintah
+  try {
+    const res = await axios.get(suratPerintahUrl) // Menggunakan suratPerintahUrl yang sudah diubah
+    if (res.data) {
+      spkOptions.value = res.data // Diubah dari suratPerintahOptions
+    } else {
+      console.error('No data found for SPK')
+      spkOptions.value = []
+    }
+  } catch (error) {
+    console.error('Error fetching SPK:', error)
+  }
+}
+
+async function fetchPenugasanData() {
+  try {
+    const res = await axios.get(penugasanUrl);
+    if (res.data) {
+      penugasanData.value = res.data.map(item => {
+        const tapel = tapelOptions.value.find(t => t._id === item.id_tapel);
+        const nomorSurat = nomorSuratOptions.value.find(ns => ns._id === item.id_nomorSurat);
+        const pegawai = namaPegawaiOptions.value.find(p => p._id === item.id_namaPegawai);
+        const spk = spkOptions.value.find(s => s._id === item.id_spk); // Diubah dari spkOptions dan id_spk
+
+        return {
+          ...item,
+          nama_tapel: tapel ? tapel.tapel : 'N/A',
+          nomor_surat: nomorSurat ? nomorSurat.nomor_surat : 'N/A',
+          nama_pegawai: pegawai ? pegawai.nama : 'N/A',
+          nama_spk: spk ? spk.nama : 'N/A' // Diubah dari nama_sp menjadi nama_spk
+        };
+      });
+    } else {
+      console.error('No data found for penugasan');
+      penugasanData.value = [];
+    }
+    console.log('Penugasan data:', penugasanData.value);
+  } catch (error) {
+    console.error('Error fetching penugasan data:', error);
+  }
+}
+
+async function handleSubmit() {
+  const dataToSubmit = {
+    id_tapel: form.id_tapel,
+    id_nomorSurat: form.id_nomorSurat,
+    id_namaPegawai: form.id_namaPegawai,
+    id_spk: form.id_spk, // Diubah dari id_suratPerintah
+  };
+  console.log('Submitted form:', dataToSubmit);
+  try {
+    await axios.post(penugasanUrl, dataToSubmit);
+    alert('Data penugasan berhasil ditambahkan!');
+    handleReset();
+    await fetchPenugasanData();
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    alert('Gagal menambahkan data penugasan.');
+  }
+}
+
+function handleReset() {
+  form.id_namaPegawai = '';
+  form.id_spk = ''; // Diubah dari id_suratPerintah
+}
+
+onMounted(async () => {
+  await fetchTapel();
+  await fetchNomorSurat();
+  await fetchPegawaiAktif();
+  await fetchSPK(); // Diubah dari fetchSuratPerintah
+
+  await fetchPenugasanData();
+})
+</script>
+
 <template>
   <div class="bg-white p-6 rounded-lg shadow-md w-full">
     <div class="flex flex-col md:flex-row gap-6">
-      <!-- Form -->
       <div class="w-full md:w-1/2">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-6">Multiple Column</h2>
-        <form
-          @submit.prevent="handleSubmit"
-          class="space-y-4"
-        >
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6">Form Penugasan</h2>
+        <form @submit.prevent="handleSubmit" class="space-y-4">
+          <div>
+            <label for="tapel" class="block text-sm font-medium text-gray-700">Tahun Pelajaran</label>
             <input
-              v-for="tapel in tapel"
-              :key="tapel.id"
-              v-model="form.tapel"
+              id="tapel"
+              v-model="form.tapel_display"
               type="text"
-              placeholder="Tahun Pelajaran"
-              class="input-field"
+              class="input-field mt-1 block w-full bg-gray-100 cursor-not-allowed"
+              disabled
+              placeholder="Tahun Pelajaran Akan Tampil Disini"
             />
+          </div>
 
-            <!-- Nama Pegawai (Select Option) -->
-            <select
-              v-model="form.namaPegawai"
-              class="input-field"
-            >
-              <option
-                disabled
-                value=""
-              >
-                Pilih Nama Pegawai
-              </option>
-              <option
-                v-for="item in nama"
-                :key="item.id"
-                :value="item.nama"
-              >
-                {{ item.nama }}
-              </option>
-            </select>
-
-            <!-- Nomor Surat Input -->
+          <div>
+            <label for="nomor_surat" class="block text-sm font-medium text-gray-700">Nomor Surat</label>
             <input
-              v-model="form.NomorSurat"
+              id="nomor_surat"
+              v-model="form.nomorSurat_display"
               type="text"
-              placeholder="Nomor Surat"
-              class="input-field"
+              class="input-field mt-1 block w-full bg-gray-100 cursor-not-allowed"
+              disabled
+              placeholder="Nomor Surat Akan Tampil Disini"
             />
+          </div>
 
-            <!-- Satuan Pendidikan (SP) Select Option -->
+          <div>
+            <label for="nama_pegawai" class="block text-sm font-medium text-gray-700">Nama Pegawai</label>
             <select
-              v-model="form.SP"
-              class="input-field"
+              id="nama_pegawai"
+              v-model="form.id_namaPegawai"
+              class="input-field mt-1 block w-full"
+              required
             >
+              <option disabled value="">Pilih Nama Pegawai</option>
               <option
-                disabled
-                value=""
-              >
-                Pilih Satuan Pendidikan
-              </option>
-              <option
-                v-for="item in sp"
-                :key="item.id"
-                :value="item.nama"
+                v-for="item in namaPegawaiOptions"
+                :key="item._id"
+                :value="item._id"
               >
                 {{ item.nama }}
               </option>
             </select>
           </div>
+
+          <div>
+            <label for="spk_select" class="block text-sm font-medium text-gray-700">SPK</label>
+            <select
+              id="spk_select"
+              v-model="form.id_spk" 
+              class="input-field mt-1 block w-full"
+              required
+            >
+              <option disabled value="">Pilih SPK</option>
+              <option
+                v-for="item in spkOptions" 
+                :key="item._id"
+                :value="item._id"
+              >
+                {{ item.nama }}
+              </option>
+            </select>
+          </div>
+
           <div class="flex space-x-2 pt-2">
             <button
               type="submit"
@@ -84,28 +245,34 @@
         </form>
       </div>
 
-      <!-- Table -->
       <div class="w-full md:w-1/2 overflow-auto">
-        <VTable class="w-full">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6">Data Penugasan</h2>
+        <VTable class="w-full table-auto">
           <thead>
             <tr>
-              <th class="text-uppercase">Dessert (100g serving)</th>
-              <th class="text-center text-uppercase">Calories</th>
-              <th class="text-center text-uppercase">Fat (g)</th>
-              <th class="text-center text-uppercase">Carbs (g)</th>
-              <th class="text-center text-uppercase">Protein (g)</th>
+              <th class="text-uppercase">No</th>
+              <th class="text-uppercase">Tahun Pelajaran</th>
+              <th class="text-uppercase">Nomor Surat</th>
+              <th class="text-uppercase">Nama Pegawai</th>
+              <th class="text-uppercase">SPK</th> <th class="text-uppercase">Aksi</th>
             </tr>
           </thead>
           <tbody>
             <tr
-              v-for="item in desserts"
-              :key="item.dessert"
+              v-for="(item, index) in penugasanData"
+              :key="item._id"
             >
-              <td>{{ item.dessert }}</td>
-              <td class="text-center">{{ item.calories }}</td>
-              <td class="text-center">{{ item.fat }}</td>
-              <td class="text-center">{{ item.carbs }}</td>
-              <td class="text-center">{{ item.protein }}</td>
+              <td>{{ index + 1 }}</td>
+              <td>{{ item.nama_tapel }}</td>
+              <td>{{ item.nomor_surat }}</td>
+              <td>{{ item.nama_pegawai }}</td>
+              <td>{{ item.nama_spk }}</td> <td>
+                <button class="text-blue-500 hover:text-blue-700">Edit</button>
+                <button class="text-red-500 hover:text-red-700 ml-2">Hapus</button>
+              </td>
+            </tr>
+            <tr v-if="penugasanData.length === 0">
+              <td colspan="6" class="text-center py-4 text-gray-500">Tidak ada data penugasan.</td>
             </tr>
           </tbody>
         </VTable>
@@ -113,111 +280,34 @@
     </div>
   </div>
 </template>
-<script setup>
-import axios from 'axios'
-import { onMounted, reactive } from 'vue'
 
-// URL endpoints
-const tapelUrl = 'http://localhost:5000/api/tapel'
-const NSUrl = 'http://localhost:5000/api/nomorSurat'
-const namaUrl = 'http://localhost:5000/api/pegawai/aktif'
-const spUrl = 'http://localhost:5000/api/suratPerintah'
-const tapel = ref([])
-const NS = ref([])
-const nama = ref([])
-const sp = ref([])
-
-// Form state
-const form = reactive({
-  tapel: '',
-  NomorSurat: '',
-  namaPegawai: '',
-  SP: '',
-})
-
-const desserts = [
-  { dessert: 'Frozen Yogurt', calories: 159, fat: 6, carbs: 24, protein: 4 },
-  { dessert: 'Ice cream sandwich', calories: 237, fat: 6, carbs: 24, protein: 4 },
-  { dessert: 'Eclair', calories: 262, fat: 6, carbs: 24, protein: 4 },
-  { dessert: 'Cupcake', calories: 305, fat: 6, carbs: 24, protein: 4 },
-  { dessert: 'Gingerbread', calories: 356, fat: 6, carbs: 24, protein: 4 },
-]
-
-// Fetching functions
-async function fetchTapel() {
-  try {
-    const res = await axios.get(tapelUrl)
-    if (res.data) {
-      tapel.value = res.data
-    } else {
-      console.error('No data found for tapel')
-      tapel.value = []
-    }
-    console.log('Tapel data:', res.data)
-  } catch (error) {
-    console.error('Error fetching tapel:', error)
-  }
+<style scoped>
+.input-field {
+  @apply px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500;
 }
 
-async function fetchNomorSurat() {
-  try {
-    const res = await axios.get(NSUrl)
-    if (res.data) {
-      NS.value = res.data
-    } else {
-      console.error('No data found for nomor surat')
-      NS.value = []
-    }
-    console.log('Nomor Surat data:', res.data)
-  } catch (error) {
-    console.error('Error fetching nomor surat:', error)
-  }
+.input-field[disabled] {
+  background-color: #e2e8f0;
+  cursor: not-allowed;
 }
 
-async function fetchPegawaiAktif() {
-  try {
-    const res = await axios.get(namaUrl)
-    if (res.data) {
-      nama.value = res.data
-    } else {
-      console.error('No data found for pegawai aktif')
-      nama.value = []
-    }
-    console.log('Pegawai aktif:', res.data)
-  } catch (error) {
-    console.error('Error fetching pegawai aktif:', error)
-  }
+.VTable {
+  border-collapse: collapse;
 }
 
-async function fetchSP() {
-  try {
-    const res = await axios.get(spUrl)
-    if (res.data) {
-      sp.value = res.data
-    } else {
-      console.error('No data found for surat perintah')
-      sp.value = []
-    }
-    console.log('Surat Perintah:', res.data)
-  } catch (error) {
-    console.error('Error fetching surat perintah:', error)
-  }
+.VTable th,
+.VTable td {
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
 }
 
-function handleSubmit() {
-  console.log('Submitted form:', { ...form })
+.VTable th {
+  background-color: #f9fafb;
+  font-weight: 600;
 }
 
-function handleReset() {
-  Object.keys(form).forEach(key => {
-    form[key] = key === 'remember' ? false : ''
-  })
+.VTable td.text-center {
+    text-align: center;
 }
-
-onMounted(() => {
-  fetchTapel()
-  fetchNomorSurat()
-  fetchPegawaiAktif()
-  fetchSP()
-})
-</script>
+</style>
