@@ -56,8 +56,8 @@ async function fetchTapel(idTapel) {
   try {
     const res = await axios.get(`${tapelUrl}/${idTapel}`)
     if (res.data && Array.isArray(res.data) && res.data.length > 0) {
-      form.tapel_display = res.data[0].tapel
-      tapel.value = res.data[0]
+      form.tapel_display = res.data[1].tapel
+      tapel.value = res.data[1]
       console.log('Tapel fetched:', tapel.value)
     } else {
       console.error('Tapel tidak ditemukan')
@@ -111,7 +111,7 @@ async function handleSubmit() {
   const dataToSubmit = {
     id_nomor_surat: form.id_nomor_surat,
     id_namaPegawai: form.id_namaPegawai,
-    id_spk: form.id_spk, // Diubah dari id_suratPerintah
+    id_spk: form.id_spk, 
   }
   console.log('Submitted form:', dataToSubmit)
   try {
