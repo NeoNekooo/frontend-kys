@@ -1,15 +1,48 @@
+<script setup>
+import axios from 'axios'
+import { ref } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const romawi = ref(['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'])
+
+const url = 'http://localhost:5000/api/penugasan'
+
+const penugasan = ref([])
+
+const getPenugasan = async () => {
+  const { id } = route.params
+  try {
+    const response = await axios.get(`${url}/${id}`)
+    if (response.data) {
+      penugasan.value = response.data.data
+    } else {
+      errorMessage.value = 'Format data tidak sesuai.'
+    }
+    console.log('Data Penugasan:', penugasan.value)
+  } catch (error) {
+    errorMessage.value = 'Gagal memuat data Tapel.'
+  }
+}
+
+
+onMounted(() => {
+  getPenugasan()
+})
+</script>
+
 <template>
-  <div class="font-sans p-8 bg-white text-gray-800 leading-relaxed">
+  <div v-if="penugasan" class="font-sans p-8 bg-white text-gray-800 leading-relaxed">
     <div class="max-w-4xl mx-auto border border-gray-300 p-8 shadow-lg">
       <div class="text-center mb-8">
         <h1 class="text-xl font-bold uppercase mb-1">SURAT KEPUTUSAN</h1>
         <h2 class="text-lg font-bold uppercase mb-1">KETUA YAYASAN NURUL ISLAM AFFANDIYAH</h2>
-        <p class="text-sm">Nomor : 001/01/NURIS/IX/2024</p>
+        <p class="text-sm font-bold">Nomor : 001/01/NURIS/IX/2024</p>
         <div class="my-4">
           <p class="font-bold uppercase text-base">TENTANG :</p>
         </div>
         <p class="font-bold uppercase text-lg">PENGANGKATAN GURU DAN TENAGA KEPENDIDIKAN</p>
-        <p class="font-bold uppercase text-lg">DI YAYASAN NURUL ISLAM AFFANDIYAH TAHUN PELAJARAN 2024/2025</p>
+        <p class="font-bold uppercase text-lg">DI YAYASAN NURUL ISLAM AFFANDIYAH TAHUN PELAJARAN {{ penugasan.tahun_pelajaran }}</p>
         <h2 class="text-xl font-bold uppercase mt-6">KETUA YAYASAN NURUL ISLAM AFFANDIYAH</h2>
       </div>
 
@@ -18,10 +51,12 @@
           <div class="w-1/5 font-semibold">Menimbang</div>
           <div class="w-4/5">
             <p>
-              : 1. Bahwa untuk kelancaran dan ketertiban kegiatan Belajar Mengajar serta kinerja ketatausahaan di Yayasan Nurul Islam dipandang perlu untuk mengangkat Guru dan Tenaga Kependidikan;
+              : 1. Bahwa untuk kelancaran dan ketertiban kegiatan Belajar Mengajar serta kinerja ketatausahaan di
+              Yayasan Nurul Islam dipandang perlu untuk mengangkat Guru dan Tenaga Kependidikan;
             </p>
             <p class="mt-2">
-              &nbsp;&nbsp;&nbsp; 2. Bahwa nama yang tercantum dalam surat keputusan ini dipandang cakap dan memenuhi syarat untuk menjadi Guru dan Tenaga Kependidikan di Yayasan Nurul Islam.
+              &nbsp;&nbsp;&nbsp; 2. Bahwa nama yang tercantum dalam surat keputusan ini dipandang cakap dan memenuhi
+              syarat untuk menjadi Guru dan Tenaga Kependidikan di Yayasan Nurul Islam.
             </p>
           </div>
         </div>
@@ -34,8 +69,14 @@
             <p>: 1. Undang – undang Pendidikan Nomor 20 Tahun 2003 tentang Sistem Pendidikan Nasional;</p>
             <p>2. Peraturan Pemerintah Nomor 28 tahun 1990 tentang Pendidikan Dasar;</p>
             <p>3. Peraturan Pemerintah Nomor 29 tahun 1990 tentang pendidikan menengah;</p>
-            <p>4. Keputusan Menteri Negara Pendayagunaan Aparatur Negara Nomor 84 tahun 1983 tentang Jabatan Fungsional Guru dan Angka Kreditnya;</p>
-            <p>5. Keputusan Bersama Menteri Pendidikan dan Kebudayaan dan Kepala Badan Administrasi Kepegawaian Negara Nomor : 0432/P/1993 dan Nomor 25 tahun 1993;</p>
+            <p>
+              4. Keputusan Menteri Negara Pendayagunaan Aparatur Negara Nomor 84 tahun 1983 tentang Jabatan Fungsional
+              Guru dan Angka Kreditnya;
+            </p>
+            <p>
+              5. Keputusan Bersama Menteri Pendidikan dan Kebudayaan dan Kepala Badan Administrasi Kepegawaian Negara
+              Nomor : 0432/P/1993 dan Nomor 25 tahun 1993;
+            </p>
           </div>
         </div>
       </div>
@@ -67,35 +108,35 @@
           <div class="w-1/5"></div>
           <div class="w-4/5 flex">
             <div class="w-1/4">Nama</div>
-            <div class="w-3/4">: TISYA TERESYA RIYANDI, S.E.</div>
+            <div class="w-3/4">: {{ penugasan.nama_pegawai }}</div>
           </div>
         </div>
         <div class="flex mb-2">
           <div class="w-1/5"></div>
           <div class="w-4/5 flex">
             <div class="w-1/4">Tempat, Tanggal Lahir</div>
-            <div class="w-3/4">: Cianjur, 4 September 1996</div>
+            <div class="w-3/4">:{{penugasan.tmp_lahir}}, {{ penugasan.tgl_lahir }}</div>
           </div>
         </div>
         <div class="flex mb-2">
           <div class="w-1/5"></div>
           <div class="w-4/5 flex">
             <div class="w-1/4">Jenjang/Pend. Terakhir</div>
-            <div class="w-3/4">: S1/Manajemen</div>
+            <div class="w-3/4">: {{ penugasan.jenjang_pendidikan }}</div>
           </div>
         </div>
         <div class="flex mb-2">
           <div class="w-1/5"></div>
           <div class="w-4/5 flex">
             <div class="w-1/4">Jabatan/Unit Kerja</div>
-            <div class="w-3/4">: Guru/PTY</div>
+            <div class="w-3/4">: {{ penugasan.jabatan }}</div>
           </div>
         </div>
         <div class="flex mb-6">
           <div class="w-1/5"></div>
           <div class="w-4/5 flex">
             <div class="w-1/4"></div>
-            <div class="w-3/4">Di SMP Nurul Islam Tahun Pelajaran 2024/2025</div>
+            <div class="w-3/4">Di {{ penugasan.nama_satuan_pendidikan }} Nurul Islam Tahun Pelajaran 2024/2025</div>
           </div>
         </div>
 
@@ -104,7 +145,8 @@
           <div class="w-4/5 flex">
             <div class="w-1/4">Kedua</div>
             <div class="w-3/4">
-              : Kepada nama yang tercantum di atas diberikan honorarium sesuai dengan peraturan dan ketentuan yang berlaku di Yayasan Nurul Islam
+              : Kepada nama yang tercantum di atas diberikan honorarium sesuai dengan peraturan dan ketentuan yang
+              berlaku di Yayasan Nurul Islam
             </div>
           </div>
         </div>
@@ -124,7 +166,7 @@
         <p class="mb-1">Ditetapkan di&nbsp;&nbsp;: Cianjur</p>
         <p class="mb-1">Pada Tanggal&nbsp;&nbsp;: 22 Juli 2024</p>
         <p class="mb-1">Ketua Yayasan,</p>
-        <p class="font-bold">ESTERNA KARIM, S.Psi</p>
+        <p class="font-bold">{{ penugasan.nama_pimpinan }}</p>
         <p class="text-sm">NIPY. -</p>
       </div>
 
@@ -140,11 +182,3 @@
     </div>
   </div>
 </template>
-
-<script>
-
-</script>
-
-<style scoped>
-
-</style>
