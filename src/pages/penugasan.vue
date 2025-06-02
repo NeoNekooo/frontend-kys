@@ -284,10 +284,28 @@ onMounted(async () => {
               <td>{{ item.nomor_surat }}</td>
               <td>{{ item.nama_pegawai}}</td>
               <td>{{ item.nama_satuan_pendidikan }}</td>
-              <td>
-                <button class="text-blue-500 hover:text-blue-700">Edit</button>
-                <button class="text-red-500 hover:text-red-700 ml-2">Hapus</button>
-              </td>
+               <td class="text-center whitespace-nowrap">
+              <div class="flex items-center justify-center gap-3">
+                <RouterLink
+                  :to="`/tapel/edit/${item.id}`"
+                  class="text-white hover:text-blue-800 text-center px-2 py-1 rounded-lg bg-yellow-400 focus:outline-none"
+                  title="Edit Tapel"
+                  aria-label="Edit"
+                >
+                  <i class="ri-pencil-line text-xl"></i>
+                </RouterLink>
+
+                <RouterLink
+                :to="`/cetak_sk/${item.id}`"
+                  class="bg-green-800 hover:bg-green-700 text-white px-2 py-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+                  title="Hapus Tapel"
+                  aria-label="Delete"
+                >
+                  <i class="ri-printer-line text-lg"></i>
+                </RouterLink>
+              
+              </div>
+            </td>
             </tr>
             <tr v-if="penugasanData.length === 0">
               <td

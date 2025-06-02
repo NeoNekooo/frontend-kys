@@ -12,8 +12,10 @@ import tambahTapel from '@/pages/tambah-tapel.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import TabelPenugasan from '@/pages/penugasan.vue'
 import EditTapel from '@/pages/edit-tapel.vue'
+import cetak_sk from '@/pages/cetak_sk.vue'
 const routes = [
   { path: '/', redirect: '/dashboard' },
+  { path: '/cetak_sk/:id' , name:'cetak_sk', component: cetak_sk, meta: { requiresAuth: true } },
   {
     path: '/',
     component: () => import('@/layouts/default.vue'),
@@ -34,11 +36,11 @@ const routes = [
       { path: 'tabel-rekap-pegawai', component: tables_rekap_pegawai },
       { path: 'satuan-pendidikan',  name:"spk" ,component: tables_satuan_pendidikan },
       { path: 'tapel',  name:"tabel-tapel" ,component: tapel },
-      {path: 'tapel/edit/:id', name: 'edit-tapel', component: EditTapel, props: true },
+      { path: 'tapel/edit/:id', name: 'edit-tapel', component: EditTapel, props: true },
       { path: 'tambah-tapel',  name:"tambah-tapel" ,component: tambahTapel },
       { path: 'tambah-spk', component: tambahSpk },
       { name: 'Editspk', path: '/spk/edit/:id', component: editSpk, props: true },
-      {path: 'tabel-penugasan', name: 'tabel-penugasan', component: TabelPenugasan}
+      { path: 'tabel-penugasan', name: 'tabel-penugasan', component: TabelPenugasan},
     ],
   },
   {
@@ -50,6 +52,8 @@ const routes = [
       { path: '/:pathMatch(.*)*', component: () => import('@/pages/[...error].vue') },
     ],
   },
+  
+
 ]
 
 // Create router instance
