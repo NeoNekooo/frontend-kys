@@ -90,7 +90,6 @@ async function fetchPegawaiAktif() {
 }
 
 async function fetchSPK() {
-  // Diubah dari fetchSuratPerintah
   try {
     const res = await axios.get(suratPerintahUrl) // Menggunakan suratPerintahUrl yang sudah diubah
     if (res.data) {
@@ -205,8 +204,8 @@ onMounted(async () => {
               </option>
               <option
                 v-for="item in namaPegawaiOptions"
-                :key="item._id"
-                :value="item._id"
+                :key="item.id"
+                :value="item.id"
               >
                 {{ item.nama }}
               </option>
@@ -233,8 +232,8 @@ onMounted(async () => {
               </option>
               <option
                 v-for="item in spkOptions"
-                :key="item._id"
-                :value="item._id"
+                :key="item.id"
+                :value="item.id"
               >
                 {{ item.nama }}
               </option>
@@ -275,7 +274,7 @@ onMounted(async () => {
           <tbody>
             <tr
               v-for="(item, index) in penugasanData"
-              :key="item._id"
+              :key="item.id"
             >
               <td>{{ index + 1 }}</td>
               <td>{{ item.nama_tapel }}</td>
