@@ -4,66 +4,88 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 
-const toast = useToast()
 const route = useRoute()
 const router = useRouter()
+const toast = useToast()
 
 const form = ref({
-  nama: '',
-
+  tapel: '',
+  ket: '',
+  status: 1,
 })
-console.log('Form:', route.params)
-const fetchSpk = async () => { 
+
+const getTapelById = async () => {
   try {
-    const { id } = route.params
-    const res = await axios.get(`http://localhost:5000/api/spk/${id}`)
-    form.value = res.data
+    const response = await axios.get(`http://localhost:5000/api/tapel/${route.params.id}`)
+    const data = response.data
+    form.value.tapel = data.tapel
+    form.value.ket = data.ket
+    form.value.status = data.status
   } catch (error) {
-    toast.error('Gagal mengambil data SPK.')
+    console.error('Gagal mengambil data:', error)
+    toast.error('Gagal memuat data tapel.')
   }
 }
 
-// Fungsi untuk mengupdate data SPK
-const updateForm = async () => { 
+const submitForm = async () => {
+  const payload = {
+    tapel: form.value.tapel,
+    ket: form.value.ket,
+    status: 1,
+  }
   try {
-    const { id } = route.params
-    await axios.put(`http://localhost:5000/api/spk/${id}`, form.value) 
-    toast.success('Data SPK berhasil diperbarui.') 
-    router.push('/satuan-pendidikan') 
+    await axios.put(`http://localhost:5000/api/tapel/${route.params.id}`, payload)
+    toast.success('Data tapel berhasil diperbarui.')
+    router.push('/tapel')
   } catch (error) {
-    toast.error('Gagal menyimpan perubahan.')
-    console.error(error)
+    console.error('Gagal memperbarui data:', error)
+    toast.error('Gagal memperbarui data tapel.')
   }
 }
 
-// Muat data saat komponen di-mount
 onMounted(() => {
-  fetchSpk() // 
+  getTapelById()
 })
 </script>
 
 <template>
-  <div class="max-w-lg mx-auto mt-10 p-8 bg-white rounded-lg shadow-md">
+  <div class="w-full mx-auto mt-10 p-8 bg-white rounded-lg shadow-md">
     <div class="flex justify-between items-center gap-4 mb-4">
-      <h2 class="text-2xl font-semibold text-gray-800">Tambah Data Satuan Pendidikan</h2>
-      <router-link to="/satuan-pendidikan" class="btn bg-green-600 text-white px-4 py-2 rounded-lg mr-4">
-        Daftar Satuan Pendidikan
+      <h2 class="text-2xl font-semibold text-gray-800">Edit Data Tapel</h2>
+      <router-link
+        to="/tapel"
+        class="btn bg-green-600 text-white px-4 py-2 rounded-lg mr-4"
+      >
+        Kembali
       </router-link>
     </div>
 
-    <form @submit.prevent="updateForm" class="grid grid-cols-1 gap-6">
-      <input
-        v-model="form.nama" type="text"
-        placeholder="Nama" class="input-style"
-        required
-      />
-
-      <div class="flex gap-4">
+    <form
+      @submit.prevent="submitForm"
+      class="grid grid-cols-1 md:grid-cols-2 gap-6"
+    >
+      <div>
+        <label>Tapel</label>
+        <input
+          v-model="form.tapel"
+          type="text"
+          class="input-style"
+        />
+      </div>
+      <div>
+        <label>Keterangan</label>
+        <input
+          v-model="form.ket"
+          type="text"
+          class="input-style"
+        />
+      </div>
+      <div class="md:col-span-2 flex gap-4">
         <button
           type="submit"
-          class="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-2 rounded shadow"
+          class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded shadow"
         >
-          Update Satuan Pendidikan
+          Simpan Perubahan
         </button>
       </div>
     </form>

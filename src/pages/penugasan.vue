@@ -8,7 +8,7 @@ const penugasanUrl = 'http://localhost:5000/api/penugasan'
 const nomorSuratUrl = 'http://localhost:5000/api/nomorSurat'
 const namaPegawaiUrl = 'http://localhost:5000/api/pegawai/aktif'
 const suratPerintahUrl = 'http://localhost:5000/api/spk'
-const tapelUrl = 'http://localhost:5000/api/nomorSurat/tapel'
+const tapelUrl = 'http://localhost:5000/api/tapel'
 
 const nomorSuratOptions = ref([])
 const namaPegawaiOptions = ref([])
@@ -16,34 +16,36 @@ const spkOptions = ref([])
 const tapelOptions = ref([])
 const tapel = ref({ tapel: '' })
 const penugasanData = ref([])
+const tapelId = ref(null)
 
 const form = reactive({
   tapel_display: '',
   id_nomor_surat: '',
   nomorSurat_display: '',
-  id_namaPegawai: '',
-  id_spk: '',
+  id_pegawai: '',
+  id_satuan_pendidikan: '',
 })
 
-// Fetch nomorSurat, lalu ambil ID tapel dari situ, dan fetch tapel-nya
 async function fetchNomorSurat() {
   try {
     const res = await axios.get(nomorSuratUrl)
     if (res.data && res.data.length > 0) {
       const firstNomorSurat = res.data[0]
       console.log('First Nomor Surat:', res.data[0])
-
-      form.id_nomor_surat = firstNomorSurat._id
+      form.id_nomor_surat = firstNomorSurat.id
+      tapelId.value = firstNomorSurat.id_tapel || ''
+      console.log('Tapel ID:', tapelId.value)
       form.nomorSurat_display = firstNomorSurat.no_surat
       console.log('Nomor Surat fetched:', form.nomorSurat_display)
       nomorSuratOptions.value = res.data
 
       if (firstNomorSurat.id_tapel) {
-        await fetchTapel(firstNomorSurat.id_tapel)
-      } else {
-        console.warn('id_tapel tidak tersedia di nomorSurat')
-        form.tapel_display = 'N/A'
-      }
+  await fetchTapel(firstNomorSurat.id_tapel)
+} else {
+  console.warn('id_tapel tidak tersedia di nomorSurat')
+  form.tapel_display = 'N/A'
+}
+
     } else {
       console.error('No data found for nomor surat')
       nomorSuratOptions.value = []
@@ -52,12 +54,15 @@ async function fetchNomorSurat() {
     console.error('Error fetching nomor surat:', error)
   }
 }
-async function fetchTapel(idTapel) {
+async function fetchTapel(id) {
   try {
-    const res = await axios.get(`${tapelUrl}/${idTapel}`)
-    if (res.data && Array.isArray(res.data) && res.data.length > 0) {
-      form.tapel_display = res.data[1].tapel
-      tapel.value = res.data[1]
+    console.log('Fetching tapel with ID:', id)
+    const res = await axios.get(`${tapelUrl}/${id}`)
+    console.log('Tapel response:', res.data)
+
+    if (res.data) {
+      form.tapel_display = res.data.tapel // langsung akses objek
+      tapel.value = res.data
       console.log('Tapel fetched:', tapel.value)
     } else {
       console.error('Tapel tidak ditemukan')
@@ -68,6 +73,7 @@ async function fetchTapel(idTapel) {
     form.tapel_display = 'N/A'
   }
 }
+
 
 async function fetchPegawaiAktif() {
   try {
@@ -100,18 +106,18 @@ async function fetchSPK() {
 
 async function fetchPenugasanData() {
   try {
-    const res = await axios.get(penugasanUrl);
-    penugasanData.value = res.data; // Already contains joined data!
+    const res = await axios.get(penugasanUrl)
+    penugasanData.value = res.data // Already contains joined data!
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error('Error fetching data:', error)
   }
 }
 
 async function handleSubmit() {
   const dataToSubmit = {
     id_nomor_surat: form.id_nomor_surat,
-    id_namaPegawai: form.id_namaPegawai,
-    id_spk: form.id_spk, 
+    id_pegawai: form.id_pegawai,
+    id_satuan_pendidikan: form.id_satuan_pendidikan,
   }
   console.log('Submitted form:', dataToSubmit)
   try {
@@ -126,8 +132,8 @@ async function handleSubmit() {
 }
 console.log('tapel display:', form.tapel_display)
 function handleReset() {
-  form.id_namaPegawai = ''
-  form.id_spk = '' // Diubah dari id_suratPerintah
+  form.id_pegawai = ''
+  form.id_satuan_pendidikan = '' // Diubah dari id_suratPerintah
 }
 
 onMounted(async () => {
@@ -187,7 +193,7 @@ onMounted(async () => {
             >
             <select
               id="nama_pegawai"
-              v-model="form.id_namaPegawai"
+              v-model="form.id_pegawai"
               class="input-field mt-1 block w-full"
               required
             >
@@ -215,7 +221,7 @@ onMounted(async () => {
             >
             <select
               id="spk_select"
-              v-model="form.id_spk"
+              v-model="form.id_satuan_pendidikan"
               class="input-field mt-1 block w-full"
               required
             >
