@@ -49,9 +49,32 @@ const deleteItem = async () => {
   }
 }
 
+<<<<<<< HEAD
 const formatTanggal = tanggal => {
   return tanggal ? dayjs(tanggal).format('DD-MM-YYYY') : '-'
 }
+=======
+// New method to toggle Tapel status
+const toggleTapelStatus = async (item) => {
+  const newStatus = item.status === 1 ? 0 : 1; // Toggle status
+  try {
+    await axios.put(`${url}/${item._id}`, { status: newStatus });
+    item.status = newStatus; // Update local state
+    toast.success(`Status Tapel ${item.tapel} berhasil diubah menjadi ${newStatus === 1 ? 'Aktif' : 'Tidak Aktif'}.`);
+    // Optionally, you might want to re-fetch all data to ensure only one is active
+    // if your business logic dictates only one 'Tapel' can be active at a time.
+    // getTapel();
+  } catch (error) {
+    toast.error("Gagal mengubah status Tapel.");
+    // Revert status on error to maintain UI consistency
+    item.status = item.status === 1 ? 0 : 1;
+  }
+};
+
+const formatTanggal = (tanggal) => {
+  return tanggal ? dayjs(tanggal).format("DD-MM-YYYY") : "-";
+};
+>>>>>>> 2d1c296f9268bac3e9ed797212df74ec9b26d45e
 
 onMounted(() => {
   getTapel()
@@ -89,9 +112,16 @@ onMounted(() => {
             <td class="text-center">{{ item.tapel }}</td>
             <td class="text-center">{{ item.ket }}</td>
             <td class="text-center">
-              <VChip :color="item.status === 1 ? 'success' : 'error'">
+              <VSwitch
+                v-model="item.status"
+                :true-value="1"
+                :false-value="0"
+                color="success"
+                @change="toggleTapelStatus(item)"
+              ></VSwitch>
+              <span :class="item.status === 1 ? 'text-green-600' : 'text-red-600'">
                 {{ item.status === 1 ? 'Aktif' : 'Tidak Aktif' }}
-              </VChip>
+              </span>
             </td>
             <td class="text-center whitespace-nowrap">
               <div class="flex items-center justify-center gap-3">

@@ -147,7 +147,7 @@ onMounted(async () => {
 <template>
   <div class="bg-white p-6 rounded-lg shadow-md w-full">
     <div class="flex flex-col md:flex-row gap-6">
-      <div class="w-full md:w-1/2">
+      <div class="w-full md:w-1/3">
         <h2 class="text-2xl font-semibold text-gray-800 mb-6">Form Penugasan</h2>
         <form
           @submit.prevent="handleSubmit"
@@ -259,7 +259,7 @@ onMounted(async () => {
         </form>
       </div>
 
-      <div class="w-full md:w-1/2 overflow-auto">
+      <div class="w-full overflow-auto">
         <h2 class="text-2xl font-semibold text-gray-800 mb-6">Data Penugasan</h2>
         <VTable class="w-full table-auto">
           <thead>
