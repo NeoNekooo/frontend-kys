@@ -1,180 +1,175 @@
 <script setup>
-import axios from "axios";
-import dayjs from "dayjs";
-import { onMounted, ref } from "vue";
-import { RouterLink } from "vue-router";
-import { useToast } from 'vue-toastification'; // Assuming you have toastification installed
+import axios from 'axios'
+import dayjs from 'dayjs'
+import { onMounted, ref } from 'vue'
+import { RouterLink } from 'vue-router'
+import { useToast } from 'vue-toastification' // Assuming you have toastification installed
 
+const toast = useToast() // Initialize toast
 
+const url = 'http://localhost:5000/api/pegawai/tidak-aktif'
+const urlAll = 'http://localhost:5000/api/pegawai'
+const pegawai = ref([])
+const errorMessage = ref('')
+const loading = ref(true)
+const editModal = ref(null)
+const deleteModal = ref(null)
+const imageModal = ref(null)
+const addModal = ref(null)
 
-
-const toast = useToast(); // Initialize toast
-
-const url = "http://localhost:5000/api/pegawai/tidak-aktif";
-const urlAll = "http://localhost:5000/api/pegawai";
-const pegawai = ref([]);
-const errorMessage = ref("");
-const loading = ref(true);
-const editModal = ref(null);
-const deleteModal = ref(null);
-const imageModal = ref(null);
-const addModal = ref(null);
-
-const editPegawai = ref({});
-const pegawaiToDelete = ref(null);
-const modalImageSrc = ref("");
+const editPegawai = ref({})
+const pegawaiToDelete = ref(null)
+const modalImageSrc = ref('')
 const newPegawai = ref({
-  nama: "",
-  kewarganegaraan: "",
-  nik: "",
-  nuptk: "",
-  nip: "",
-  nipy: "",
-  npwp: "",
-  tmp_lahir: "",
-  tgl_lahir: "",
-  jk: "",
-  agama: "",
-  nama_ibu: "",
-  status_pernikahan: "",
-  nama_suami_istri: "",
+  nama: '',
+  kewarganegaraan: '',
+  nik: '',
+  nuptk: '',
+  nip: '',
+  nipy: '',
+  npwp: '',
+  tmp_lahir: '',
+  tgl_lahir: '',
+  jk: '',
+  agama: '',
+  nama_ibu: '',
+  status_pernikahan: '',
+  nama_suami_istri: '',
   jml_anak: 0,
-  alamat: "",
-  kecamatan: "",
-  desa: "",
-  kabupaten: "",
-  provinsi: "",
-  kode_pos: "",
-  kontak: "",
-  photo: "",
+  alamat: '',
+  kecamatan: '',
+  desa: '',
+  kabupaten: '',
+  provinsi: '',
+  kode_pos: '',
+  kontak: '',
+  photo: '',
   status: 1,
-});
+})
 
 const getPegawai = async () => {
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(url)
     if (response.data) {
-      pegawai.value = response.data;
-      console.log(pegawai.value);
+      pegawai.value = response.data
+      console.log(pegawai.value)
     } else {
-      errorMessage.value = "Format data tidak sesuai.";
+      errorMessage.value = 'Format data tidak sesuai.'
     }
   } catch (error) {
-    toast.error("Gagal memuat data pegawai.");
-    errorMessage.value = "Gagal memuat data pegawai.";
+    toast.error('Gagal memuat data pegawai.')
+    errorMessage.value = 'Gagal memuat data pegawai.'
   } finally {
-    loading.value = false;
+    loading.value = false
   }
-};
+}
 
-
-
-const openEditModal = (pegawai) => {
-  editPegawai.value = { ...pegawai };
-  editModal.value.showModal();
-};
+const openEditModal = pegawai => {
+  editPegawai.value = { ...pegawai }
+  editModal.value.showModal()
+}
 
 const closeEditModal = () => {
-  editPegawai.value = {};
-  editModal.value.close();
-};
+  editPegawai.value = {}
+  editModal.value.close()
+}
 
 const confirmEdit = async () => {
   try {
-    await axios.put(`${urlAll}/${editPegawai.value.id}`, editPegawai.value);
-    getPegawai();
-    editModal.value.close();
-    toast.success("Berhasil mengupdate data pegawai.");
+    await axios.put(`${urlAll}/${editPegawai.value.id}`, editPegawai.value)
+    getPegawai()
+    editModal.value.close()
+    toast.success('Berhasil mengupdate data pegawai.')
   } catch (error) {
-    toast.error("Gagal mengupdate data pegawai.");
+    toast.error('Gagal mengupdate data pegawai.')
   }
-};
+}
 
-const openDeleteModal = (id) => {
-  pegawaiToDelete.value = id;
-  deleteModal.value.showModal();
-};
+const openDeleteModal = id => {
+  pegawaiToDelete.value = id
+  deleteModal.value.showModal()
+}
 
 const closeDeleteModal = () => {
-  pegawaiToDelete.value = null;
-  deleteModal.value.close();
-};
+  pegawaiToDelete.value = null
+  deleteModal.value.close()
+}
 
 const confirmDelete = async () => {
   try {
-    await axios.delete(`${urlAll}/${pegawaiToDelete.value}`);
-    getPegawai();
-    console.log("Pegawai dengan ID", pegawaiToDelete.value, "telah dihapus.");
-    deleteModal.value.close();
-    toast.success("Berhasil menghapus data pegawai.");
+    await axios.delete(`${urlAll}/${pegawaiToDelete.value}`)
+    getPegawai()
+    console.log('Pegawai dengan ID', pegawaiToDelete.value, 'telah dihapus.')
+    deleteModal.value.close()
+    toast.success('Berhasil menghapus data pegawai.')
   } catch (error) {
-    toast.error("Gagal menghapus data pegawai.");
+    toast.error('Gagal menghapus data pegawai.')
   }
-};
+}
 
 const openAddModal = () => {
   newPegawai.value = {
-    nama: "",
-    kewarganegaraan: "",
-    nik: "",
-    nuptk: "",
-    nip: "",
-    nipy: "",
-    npwp: "",
-    tmp_lahir: "",
-    tgl_lahir: "",
-    jk: "",
-    agama: "",
-    nama_ibu: "",
-    status_pernikahan: "",
-    nama_suami_istri: "",
+    nama: '',
+    kewarganegaraan: '',
+    nik: '',
+    nuptk: '',
+    nip: '',
+    nipy: '',
+    npwp: '',
+    tmp_lahir: '',
+    tgl_lahir: '',
+    jk: '',
+    agama: '',
+    nama_ibu: '',
+    status_pernikahan: '',
+    nama_suami_istri: '',
     jml_anak: 0,
-    alamat: "",
-    kecamatan: "",
-    desa: "",
-    kabupaten: "",
-    provinsi: "",
-    kode_pos: "",
-    kontak: "",
-    photo: "",
+    alamat: '',
+    kecamatan: '',
+    desa: '',
+    kabupaten: '',
+    provinsi: '',
+    kode_pos: '',
+    kontak: '',
+    photo: '',
     status: 1,
-  };
-  addModal.value.showModal();
-};
+  }
+  addModal.value.showModal()
+}
 
 const closeAddModal = () => {
-  newPegawai.value = {};
-  addModal.value.close();
-};
+  newPegawai.value = {}
+  addModal.value.close()
+}
 
 const confirmAdd = async () => {
   try {
-    await axios.post(url, newPegawai.value);
-    getPegawai();
-    addModal.value.close();
-    toast.success("Berhasil menambahkan data pegawai.");
+    await axios.post(url, newPegawai.value)
+    getPegawai()
+    addModal.value.close()
+    toast.success('Berhasil menambahkan data pegawai.')
   } catch (error) {
-    toast.error("Gagal menambahkan data pegawai.");
+    toast.error('Gagal menambahkan data pegawai.')
   }
-};
+}
 
-const formatTanggal = (tanggal) => {
-  return tanggal ? dayjs(tanggal).format("DD-MM-YYYY") : "-";
-};
+const formatTanggal = tanggal => {
+  return tanggal ? dayjs(tanggal).format('DD-MM-YYYY') : '-'
+}
 
-const openImageModal = (imageUrl) => {
-  modalImageSrc.value = imageUrl;
-  imageModal.value.showModal();
-};
+const openImageModal = imageUrl => {
+  modalImageSrc.value = imageUrl
+  imageModal.value.showModal()
+}
 
 const closeImageModal = () => {
-  modalImageSrc.value = "";
-  imageModal.value.close();
-};
+  modalImageSrc.value = ''
+  imageModal.value.close()
+}
 
 onMounted(() => {
-  getPegawai();
-});
+  getPegawai()
+})
 </script>
 
 <template>
@@ -203,7 +198,10 @@ onMounted(() => {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(p, index) in pegawai" :key="p.id">
+          <tr
+            v-for="(p, index) in pegawai"
+            :key="p.id"
+          >
             <td>{{ index + 1 }}</td>
             <td class="text-center">
               <img
@@ -228,9 +226,9 @@ onMounted(() => {
 
             <td class="text-center">
               <VChip>
-              <span :class="p.status === 1 ? 'text-green-600' : 'text-red-600'">
-                {{ p.status === 1 ? 'Aktif' : 'Tidak Aktif' }}
-              </span>
+                <span :class="p.status === 1 ? 'text-green-600' : 'text-red-600'">
+                  {{ p.status === 1 ? 'Aktif' : 'Tidak Aktif' }}
+                </span>
               </VChip>
             </td>
             <td class="whitespace-nowrap">
@@ -260,33 +258,47 @@ onMounted(() => {
     </VCard>
   </section>
 
-  <dialog ref="deleteModal" class="modal">
+  <dialog
+    ref="deleteModal"
+    class="modal"
+  >
     <div class="modal-box">
       <h3 class="font-bold text-lg text-red-600">Konfirmasi Penghapusan</h3>
       <p class="py-4">Apakah Anda yakin ingin menghapus data pegawai ini? Tindakan ini **tidak dapat dibatalkan**.</p>
       <div class="modal-action">
-        <button @click="closeDeleteModal" class="btn">Batal</button>
-        <button @click="confirmDelete" class="btn btn-error text-white">Ya, Hapus</button>
+        <button
+          @click="closeDeleteModal"
+          class="btn"
+        >
+          Batal
+        </button>
+        <button
+          @click="confirmDelete"
+          class="btn btn-error text-white"
+        >
+          Ya, Hapus
+        </button>
       </div>
     </div>
   </dialog>
-  </template>
+</template>
 
 <style scoped>
 /* Anda bisa menambahkan styling dasar untuk modal jika belum ada */
 .modal {
-  /* Contoh styling dasar */
-  display: none; /* Sembunyikan secara default */
   position: fixed;
   z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+
+  /* Contoh styling dasar */
+  display: none; /* Sembunyikan secara default */
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0);
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0%);
+  block-size: 100%;
+  inline-size: 100%;
+  inset-block-start: 0;
+  inset-inline-start: 0;
 }
 
 .modal[open] {
@@ -294,33 +306,33 @@ onMounted(() => {
 }
 
 .modal-box {
-  background-color: #fefefe;
-  margin: auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
-  max-width: 500px;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: auto;
+  background-color: #fefefe;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 10%);
+  inline-size: 80%;
+  max-inline-size: 500px;
 }
 
 .modal-action {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  margin-top: 20px;
+  margin-block-start: 20px;
 }
 
 .btn {
-  padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
-
+  padding-block: 8px;
+  padding-inline: 16px;
 }
 
 .btn-error {
+  border-color: #dc2626;
   background-color: #dc2626; /* Warna merah */
   color: white;
-  border-color: #dc2626;
 }
 </style>

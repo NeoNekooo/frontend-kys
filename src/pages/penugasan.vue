@@ -106,7 +106,8 @@ async function fetchSPK() {
 async function fetchPenugasanData() {
   try {
     const res = await axios.get(penugasanUrl)
-    penugasanData.value = res.data // Already contains joined data!
+    penugasanData.value = res.data.data
+    console.log('Penugasan data fetched:', penugasanData.value)
   } catch (error) {
     console.error('Error fetching data:', error)
   }
@@ -114,10 +115,12 @@ async function fetchPenugasanData() {
 
 async function handleSubmit() {
   const dataToSubmit = {
+    id_tapel: tapelId.value, 
     id_nomor_surat: form.id_nomor_surat,
     id_pegawai: form.id_pegawai,
     id_satuan_pendidikan: form.id_satuan_pendidikan,
   }
+
   console.log('Submitted form:', dataToSubmit)
   try {
     await axios.post(penugasanUrl, dataToSubmit)
@@ -277,10 +280,10 @@ onMounted(async () => {
               :key="item.id"
             >
               <td>{{ index + 1 }}</td>
-              <td>{{ item.nama_tapel }}</td>
+              <td>{{ item.tahun_pelajaran }}</td>
               <td>{{ item.nomor_surat }}</td>
-              <td>{{ item.nama_pegawai }}</td>
-              <td>{{ item.nama_spk }}</td>
+              <td>{{ item.nama_pegawai}}</td>
+              <td>{{ item.nama_satuan_pendidikan }}</td>
               <td>
                 <button class="text-blue-500 hover:text-blue-700">Edit</button>
                 <button class="text-red-500 hover:text-red-700 ml-2">Hapus</button>
