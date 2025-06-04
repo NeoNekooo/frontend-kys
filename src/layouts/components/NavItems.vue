@@ -90,6 +90,14 @@ const logout = () => {
       }"
     />
 
+ <VerticalNavLink
+      :item="{
+        title: 'Nomor Surat',
+        icon: 'ri-file-copy-line',
+        href: '/nomor-surat',
+      }"
+    />
+
 
   <!-- 👉 Apps & Pages -->
  
