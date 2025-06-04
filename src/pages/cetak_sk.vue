@@ -64,8 +64,8 @@ onMounted(() => {
                 Nurul Islam dipandang perlu untuk mengangkat Guru dan Tenaga Kependidikan;
               </li>
               <li>
-                 Bahwa nama yang tercantum dalam surat keputusan ini dipandang cakap dan memenuhi
-                syarat untuk menjadi Guru dan Tenaga Kependidikan di Yayasan Nurul Islam.
+                Bahwa nama yang tercantum dalam surat keputusan ini dipandang cakap dan memenuhi syarat untuk menjadi
+                Guru dan Tenaga Kependidikan di Yayasan Nurul Islam.
               </li>
             </ol>
           </div>
@@ -78,21 +78,16 @@ onMounted(() => {
           <div>:</div>
           <div class="w-4/5">
             <ol
-            type="1"
-            class="list-decimal list-inside pl-4">
+              type="1"
+              class="list-decimal list-inside pl-4"
+            >
+              <li>Undang – undang Pendidikan Nomor 20 Tahun 2003 tentang Sistem Pendidikan Nasional;</li>
+              <li>Peraturan Pemerintah Nomor 28 tahun 1990 tentang Pendidikan Dasar;</li>
+              <li>Peraturan Pemerintah Nomor 29 tahun 1990 tentang pendidikan menengah;</li>
               <li>
-                Undang – undang Pendidikan Nomor 20 Tahun 2003 tentang Sistem Pendidikan Nasional;      
+                Keputusan Menteri Negara Pendayagunaan Aparatur Negara Nomor 84 tahun 1983 tentang Jabatan Fungsional
+                Guru dan Angka Kreditnya;
               </li>
-              <li>
-                 Peraturan Pemerintah Nomor 28 tahun 1990 tentang Pendidikan Dasar;
-
-              </li>
-              <li>
-
-                Peraturan Pemerintah Nomor 29 tahun 1990 tentang pendidikan menengah;
-              </li>
-              <li> Keputusan Menteri Negara Pendayagunaan Aparatur Negara Nomor 84 tahun 1983 tentang Jabatan Fungsional
-                Guru dan Angka Kreditnya;</li>
               <li>
                 Keputusan Bersama Menteri Pendidikan dan Kebudayaan dan Kepala Badan Administrasi Kepegawaian Negara
                 Nomor : 0432/P/1993 dan Nomor 25 tahun 1993;
@@ -107,13 +102,13 @@ onMounted(() => {
           <div class="w-1/5 font-semibold">Memperhatikan</div>
           <div>:</div>
           <div class="w-4/5">
-            <ol 
+            <ol
               type="1"
-              class="list-decimal list-inside pl-4">
+              class="list-decimal list-inside pl-4"
+            >
               <li>Program Kerja Yayasan Tahun Pelajaran 2024/2025</li>
               <li>AD & ART Yayasan Nurul Islam Affandiyah</li>
               <li>Saran dan Pendapat unsur pimpinan Yayasan pada tanggal 20 Juli 2024</li>
-
             </ol>
           </div>
         </div>
@@ -210,6 +205,3 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped>
-
-</style>
