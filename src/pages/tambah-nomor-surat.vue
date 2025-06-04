@@ -1,16 +1,20 @@
 <script setup>
 import axios from 'axios'
-import { ref, onMounted } from 'vue'
-import { RouterLink } from 'vue-router'
+import { onMounted, ref } from 'vue'
+import { RouterLink, useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
-import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const toast = useToast()
-const tapel = ref([])
+
+const tapel = ref({
+  id_tapel: '',
+  tapel: '',
+  status: '',
+})
 
 const form = ref({
-  nomor_surat: '',
+  no_surat: '',
   nama_pimpinan: '',
   tgl_sp: '',
   tmt: '',
@@ -22,8 +26,12 @@ const loading = ref(false)
 const getTapel = async () => {
   try {
     const response = await axios.get('http://localhost:5000/api/tapel/aktif')
+    const data = response.data[0]
     if (response.data) {
-      tapel.value = response.data
+      tapel.value.id_tapel = data.id
+      tapel.value.tapel = data.tapel
+      tapel.value.status = data.status
+      console.log('Data Tapel:', tapel.value)
     } else {
       errorMessage.value = 'Format data tidak sesuai.'
     }
@@ -36,17 +44,18 @@ const getTapel = async () => {
 }
 const submitForm = async () => {
   const payload = {
-    tapel: tapel.value,
-    nomor_surat: form.value.nomor_surat, // Corrected key to match backend expectation
+    id_tapel: tapel.value.id_tapel,
+    no_surat: form.value.no_surat, // Corrected key to match backend expectation
     nama_pimpinan: form.value.nama_pimpinan,
     tgl_sp: form.value.tgl_sp,
     tmt: form.value.tmt,
   }
   try {
     await axios.post('http://localhost:5000/api/nomorSurat', payload)
+    console.log('Data yang dikirim:', payload)
     toast.success('Data tapel berhasil ditambahkan.')
-    router.push('/nomor-surat')
-    form.value.nomor_surat = ''
+    router.push('nomor-surat')
+    form.value.no_surat = ''
     form.value.nama_pimpinan = ''
     form.value.tgl_sp = ''
     form.value.tmt = ''
@@ -55,7 +64,6 @@ const submitForm = async () => {
     toast.error('Gagal menyimpan data tapel.')
   }
 }
-
 
 onMounted(() => {
   getTapel()
@@ -74,27 +82,38 @@ onMounted(() => {
       </router-link>
     </div>
 
-    <div v-if="loading" class="text-center text-gray-600">Memuat data...</div>
-    <div v-if="errorMessage" class="text-center text-red-600">{{ errorMessage }}</div>
+    <div
+      v-if="loading"
+      class="text-center text-gray-600"
+    >
+      Memuat data...
+    </div>
+    <div
+      v-if="errorMessage"
+      class="text-center text-red-600"
+    >
+      {{ errorMessage }}
+    </div>
 
     <form
       @submit.prevent="submitForm"
       class="grid grid-cols-1 md:grid-cols-2 gap-6"
     >
       <div>
-        <label for="nomor_surat">Tapel</label>
+        <label for="no_surat">Tapel</label>
         <input
-          id="nomor_surat"
-          v-model="tapel"
+          id="no_surat"
+          v-model="tapel.tapel"
           type="text"
-          class="input-style"
+          class="input-style cursor-not-allowed"
+          disabled
         />
       </div>
       <div>
-        <label for="nomor_surat">Nomor Surat</label>
+        <label for="no_surat">Nomor Surat</label>
         <input
-          id="nomor_surat"
-          v-model="form.nomor_surat"
+          id="no_surat"
+          v-model="form.no_surat"
           type="text"
           class="input-style"
         />
