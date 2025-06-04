@@ -1,4 +1,4 @@
-<script setup>
+<!-- <script setup>
 import axios from 'axios'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
@@ -50,24 +50,33 @@ onMounted(() => {
         <h2 class="text-xl font-bold uppercase mt-6">KETUA YAYASAN NURUL ISLAM AFFANDIYAH</h2>
       </div>
 
-      <div class="mb-6">
-        <div class="flex">
-          <div class="w-1/5 font-semibold">Menimbang</div>
-          <div>:</div>
-          <div class="w-4/5 text-align-justify">
-            <ol
-              type="1"
-              class="list-decimal list-inside pl-4"
-            >
+      <table class="border-2 border-black">
+        <tr>
+          <td>Menimbang</td>
+          <td>:</td>
+          <td>
+            <ol>
               <li>
                 Bahwa untuk kelancaran dan ketertiban kegiatan Belajar Mengajar serta kinerja ketatausahaan di Yayasan
                 Nurul Islam dipandang perlu untuk mengangkat Guru dan Tenaga Kependidikan;
               </li>
-              <li>
-                 Bahwa nama yang tercantum dalam surat keputusan ini dipandang cakap dan memenuhi
-                syarat untuk menjadi Guru dan Tenaga Kependidikan di Yayasan Nurul Islam.
-              </li>
             </ol>
+          </td>
+        </tr>
+      </table>
+
+      <div class="mb-6">
+        <div class="flex">
+          <div class="w-1/5 font-semibold">Menimbang</div>
+          <div class="w-4/5">
+            <p>
+              : 1. Bahwa untuk kelancaran dan ketertiban kegiatan Belajar Mengajar serta kinerja ketatausahaan di
+              Yayasan Nurul Islam dipandang perlu untuk mengangkat Guru dan Tenaga Kependidikan;
+            </p>
+            <p class="mt-2">
+              &nbsp;&nbsp;&nbsp; 2. Bahwa nama yang tercantum dalam surat keputusan ini dipandang cakap dan memenuhi
+              syarat untuk menjadi Guru dan Tenaga Kependidikan di Yayasan Nurul Islam.
+            </p>
           </div>
         </div>
       </div>
@@ -75,29 +84,18 @@ onMounted(() => {
       <div class="mb-6">
         <div class="flex">
           <div class="w-1/5 font-semibold">Mengingat</div>
-          <div>:</div>
           <div class="w-4/5">
-            <ol
-            type="1"
-            class="list-decimal list-inside pl-4">
-              <li>
-                Undang – undang Pendidikan Nomor 20 Tahun 2003 tentang Sistem Pendidikan Nasional;      
-              </li>
-              <li>
-                 Peraturan Pemerintah Nomor 28 tahun 1990 tentang Pendidikan Dasar;
-
-              </li>
-              <li>
-
-                Peraturan Pemerintah Nomor 29 tahun 1990 tentang pendidikan menengah;
-              </li>
-              <li> Keputusan Menteri Negara Pendayagunaan Aparatur Negara Nomor 84 tahun 1983 tentang Jabatan Fungsional
-                Guru dan Angka Kreditnya;</li>
-              <li>
-                Keputusan Bersama Menteri Pendidikan dan Kebudayaan dan Kepala Badan Administrasi Kepegawaian Negara
-                Nomor : 0432/P/1993 dan Nomor 25 tahun 1993;
-              </li>
-            </ol>
+            <p>: 1. Undang – undang Pendidikan Nomor 20 Tahun 2003 tentang Sistem Pendidikan Nasional;</p>
+            <p>2. Peraturan Pemerintah Nomor 28 tahun 1990 tentang Pendidikan Dasar;</p>
+            <p>3. Peraturan Pemerintah Nomor 29 tahun 1990 tentang pendidikan menengah;</p>
+            <p>
+              4. Keputusan Menteri Negara Pendayagunaan Aparatur Negara Nomor 84 tahun 1983 tentang Jabatan Fungsional
+              Guru dan Angka Kreditnya;
+            </p>
+            <p>
+              5. Keputusan Bersama Menteri Pendidikan dan Kebudayaan dan Kepala Badan Administrasi Kepegawaian Negara
+              Nomor : 0432/P/1993 dan Nomor 25 tahun 1993;
+            </p>
           </div>
         </div>
       </div>
@@ -105,16 +103,10 @@ onMounted(() => {
       <div class="mb-6">
         <div class="flex">
           <div class="w-1/5 font-semibold">Memperhatikan</div>
-          <div>:</div>
           <div class="w-4/5">
-            <ol 
-              type="1"
-              class="list-decimal list-inside pl-4">
-              <li>Program Kerja Yayasan Tahun Pelajaran 2024/2025</li>
-              <li>AD & ART Yayasan Nurul Islam Affandiyah</li>
-              <li>Saran dan Pendapat unsur pimpinan Yayasan pada tanggal 20 Juli 2024</li>
-
-            </ol>
+            <p>: 1. Program Kerja Yayasan Tahun Pelajaran 2024/2025</p>
+            <p>2. AD & ART Yayasan Nurul Islam Affandiyah</p>
+            <p>3. Saran dan Pendapat unsur pimpinan Yayasan pada tanggal 20 Juli 2024</p>
           </div>
         </div>
       </div>
@@ -208,8 +200,29 @@ onMounted(() => {
       </div>
     </div>
   </div>
+</template> -->
+
+<template>
+  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <table cellpadding="2" cellspacing="0">
+    <tr>
+      <td>Menimbang</td>
+      <td>:</td>
+      <td>
+        <ol>
+          <li>Bahwa untuk kelancaran dan ketertiban kegiatan Belajar Mengajar serta kinerja ketatausahaan di Yayasan Nurul Islam dipandang perlu untuk mengangkat Guru dan Tenaga Kependidikan;</li>
+        </ol>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
 </template>
-
-<style scoped>
-
-</style>
