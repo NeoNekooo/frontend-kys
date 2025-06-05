@@ -7,6 +7,8 @@ const toast = useToast()
 
 const form = ref({
   nama: '',
+  jenjang_pendidikan: '',
+  jabatan: '',
   kewarganegaraan: '',
   nik: '',
   nuptk: '',
@@ -39,7 +41,7 @@ const handleFileUpload = event => {
     photoFile.value = file // simpan file asli
     const reader = new FileReader()
     reader.onload = e => {
-      photoPreview.value = e.target.result // untuk preview
+      photoPreview.value = e.target.result
     }
     reader.readAsDataURL(file)
   }
@@ -50,22 +52,19 @@ const submitForm = async () => {
     const res = await axios.post('http://localhost:5000/api/pegawai', form.value)
     toast.success('Data pegawai berhasil ditambahkan.')
 
-    const pegawaiId = res.data._id || res.data.id // pastikan ini sesuai respons API
+    const pegawaiId = res.data.id || res.data.id // pastikan ini sesuai respons API
 
-    // Upload foto jika ada
     if (photoFile.value) {
       const formData = new FormData()
       formData.append('foto', photoFile.value)
       console.log(pegawaiId)
-      await axios.post(`http://localhost:5000/api/pegawai/upload/${pegawaiId}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
+      await axios.post(`http://localhost:5000/api/pegawai/upload/${pegawaiId}`, formData, {})
       toast.success('Foto pegawai berhasil diunggah.')
     }
-    object.assign(form.value, {
+    Object.assign(form.value, {
       nama: '',
+      jenjang_pendidikan: '',
+      jabatan: '',
       kewarganegaraan: '',
       nik: '',
       nuptk: '',
@@ -114,6 +113,22 @@ const submitForm = async () => {
         <label>Nama</label>
         <input
           v-model="form.nama"
+          type="text"
+          class="input-style"
+        />
+      </div>
+      <div>
+        <label>Jenjang Pendidikan</label>
+        <input
+          v-model="form.jenjang_pendidikan"
+          type="text"
+          class="input-style"
+        />
+      </div>
+      <div>
+        <label>Jabatan</label>
+        <input
+          v-model="form.jabatan"
           type="text"
           class="input-style"
         />
@@ -317,7 +332,7 @@ const submitForm = async () => {
       <div>
         <label>Kontak</label>
         <input
-          v-model="form.Kontak"
+          v-model="form.kontak"
           type="text"
           class="input-style"
         />

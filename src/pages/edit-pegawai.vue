@@ -10,6 +10,8 @@ const router = useRouter()
 
 const form = ref({
   nama: '',
+  jenjang_pendidikan: '',
+  jabatan: '',
   kewarganegaraan: '',
   nik: '',
   nuptk: '',
@@ -34,6 +36,8 @@ const form = ref({
   status: ''
 })
 console.log('Form:', route.params)
+
+
 const fetchPegawai = async () => {
   try {
     const { id } = route.params
@@ -44,11 +48,46 @@ const fetchPegawai = async () => {
   }
 }
 
-// Fungsi untuk mengupdate data pegawai
+const handleFileUpload = (event) => {
+  const file = event.target.files[0]
+  if (!file) return
+
+  const validTypes = ['image/jpeg', 'image/png', 'image/jpg']
+  if (!validTypes.includes(file.type)) {
+    toast.error('Hanya file JPG, JPEG, atau PNG yang diperbolehkan.')
+    return
+  }
+
+  if (file.size > 800 * 1024) {
+    toast.error('Ukuran file maksimal 800KB.')
+    return
+  }
+
+  form.value.photo = file // Simpan file ke dalam form untuk upload nanti
+}
 const updateForm = async () => {
   try {
     const { id } = route.params
-    await axios.put(`http://localhost:5000/api/pegawai/${id}`, form.value)
+
+    // Salin data form kecuali file
+    const updateData = { ...form.value }
+    delete updateData.photo
+
+    // Update data pegawai
+    await axios.put(`http://localhost:5000/api/pegawai/${id}`, updateData)
+
+    // Upload foto jika ada
+    if (form.value.photo) {
+      const formData = new FormData()
+      formData.append('foto', form.value.photo)
+
+      await axios.post(`http://localhost:5000/api/pegawai/upload/${id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+    }
+
     toast.success('Data pegawai berhasil diperbarui.')
     router.push('/tabel-pegawai')
   } catch (error) {
@@ -57,7 +96,9 @@ const updateForm = async () => {
   }
 }
 
-// Muat data saat komponen di-mount
+
+
+
 onMounted(() => {
   fetchPegawai()
 })
@@ -77,6 +118,16 @@ onMounted(() => {
         <label>Nama</label>
         <input v-model="form.nama" type="text" class="input-style" />
       </div>
+      <div>
+        <label>Jenjang Pendidikan</label>
+        <input v-model="form.jenjang_pendidikan" type="text" class="input-style" />
+      </div>
+      
+      <div>
+        <label>Jabatan</label>
+        <input v-model="form.jabatan" type="text" class="input-style" />
+      </div>
+
       <div>
         <label>Kewarganegaraan</label>
         <input v-model="form.kewarganegaraan" type="text" class="input-style" />
@@ -169,7 +220,7 @@ onMounted(() => {
       </div>
       <div>
         <label>Foto</label>
-        <input v-model="form.photo" type="text" class="input-style" />
+        <input  type="file" accept=".jpg, .png, .jpeg" @change="handleFileUpload" class="input-style" />
       </div>
 
        <div>

@@ -57,7 +57,7 @@ onMounted(() => {
           <div class="w-4/5 text-align-justify">
             <ol
               type="1"
-              class="list-decimal list-inside pl-4"
+              class="list-decimal list-inside pl-4 pr-4"
             >
               <li>
                 Bahwa untuk kelancaran dan ketertiban kegiatan Belajar Mengajar serta kinerja ketatausahaan di Yayasan

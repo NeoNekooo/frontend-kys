@@ -67,8 +67,8 @@ const isPasswordVisible = ref(false)
       </VCardItem>
 
       <VCardText class="pt-2">
-        <h4 class="text-h4 mb-1">Welcome to Materio! 👋🏻</h4>
-        <p class="mb-0">Please sign-in to your account and start the adventure</p>
+        <h4 class="text-h4 mb-1">Welcome</h4>
+        <p class="mb-0">Silahkan Login</p>
       </VCardText>
 
       <VCardText>

@@ -18,11 +18,6 @@ const tabs = [
     icon: 'ri-lock-line',
     tab: 'security',
   },
-  {
-    title: 'Notifications',
-    icon: 'ri-notification-3-line',
-    tab: 'notification',
-  },
 ]
 </script>
 
@@ -62,7 +57,6 @@ const tabs = [
         <AccountSettingsSecurity />
       </VWindowItem>
 
-      <!-- Notification -->
      
     </VWindow>
   </div>
