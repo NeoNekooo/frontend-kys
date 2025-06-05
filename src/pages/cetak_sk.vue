@@ -31,10 +31,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-    v-if="penugasan"
-    class="font-sans p-8 bg-white text-gray-800 leading-relaxed"
-  >
+  <div v-if="penugasan" class="font-sans p-8 bg-white text-gray-800 leading-relaxed">
     <div class="max-w-4xl mx-auto border border-gray-300 p-8 shadow-lg">
       <div class="text-center mb-8">
         <h1 class="text-xl font-bold uppercase mb-1">SURAT KEPUTUSAN</h1>
@@ -50,158 +47,158 @@ onMounted(() => {
         <h2 class="text-xl font-bold uppercase mt-6">KETUA YAYASAN NURUL ISLAM AFFANDIYAH</h2>
       </div>
 
-      <div class="mb-6">
-        <div class="flex">
-          <div class="w-1/5 font-semibold">Menimbang</div>
-          <div>:</div>
-          <div class="w-4/5 text-align-justify">
-            <ol
-              type="1"
-              class="list-decimal list-inside pl-4 pr-4"
-            >
-              <li>
-                Bahwa untuk kelancaran dan ketertiban kegiatan Belajar Mengajar serta kinerja ketatausahaan di Yayasan
-                Nurul Islam dipandang perlu untuk mengangkat Guru dan Tenaga Kependidikan;
-              </li>
-              <li>
-                Bahwa nama yang tercantum dalam surat keputusan ini dipandang cakap dan memenuhi syarat untuk menjadi
-                Guru dan Tenaga Kependidikan di Yayasan Nurul Islam.
-              </li>
-            </ol>
-          </div>
+      <VTable class=" no-row-borders">
+        <tbody>
+          <tr class="text-black font-normal">
+            <td class="w-2 pr-16 align-top">Menimbang</td>
+            <td class="w-3 pr-1 align-top">:</td>
+            <td class="align-top pr-1">1.</td>
+            <td class="align-top">
+              Bahwa untuk kelancaran dan ketertiban kegiatan Belajar Mengajar serta kinerja
+              ketatausahaan di Yayasan Nurul Islam dipandang perlu untuk mengangkat Guru dan
+              Tenaga Kependidikan;
+            </td>
+          </tr>
+          <tr class="text-black font-normal">
+            <td class="w-2 pr-4 align-top"></td>
+            <td class="w-3 pr-1 align-top"></td>
+            <td class="align-top pr-1">2.</td>
+            <td class="align-top">
+              Bahwa nama yang tercantum dalam surat keputusan ini dipandang cakap dan memenuhi
+              syarat untuk menjadi Guru dan Tenaga Kependidikan di Yayasan Nurul Islam. <br><br>
+            </td>
+          </tr>
+          <tr class="text-black font-normal">
+            <td class="w-2 pr-16 align-top">Mengingat</td>
+            <td class="w-3 pr-1 align-top">:</td>
+            <td class="align-top pr-1">1. <br> <br>
+              2. <br>
+              3. <br>
+              4. <br> <br>
+              5. <br> <br> <br>
+              6.
+
+
+            </td>
+            <td class="align-top">
+              Undang – undang Pendidikan Nomor 20 Tahun 2003 tentang Sistem Pendidikan Nasional; <br>
+              Peraturan Pemerintah Nomor 28 tahun 1990 tentang Pendidikan Dasar; <br>
+              Peraturan Pemerintah Nomor 29 tahun 1990 tentang pendidikan menengah;<br>
+              Keputusan Menteri Negara Pendayagunaan Aparatur Negara Nomor 84 tahun 1983
+              tentang Jabatan Fungsional Guru dan Angka Kreditnya. <br>
+              Keputusan Bersama Menteri Pendidikan dan Kebudayaan dan Kepala Badan Administrasi
+              Kepegawaian Negara Nomor : 0433/P/1993 dan Nomor 25 tahun 1993; <br>
+              Program Kerja Yayasan Tahun Pelajaran 2024/2025
+
+            </td>
+          </tr>
+          <tr class="text-black font-normal">
+            <td class="w-2 pr-16 align-top">Memperhatikan</td>
+            <td class="w-3 pr-1 align-top">:</td>
+            <td class="align-top pr-1">1. <br>
+              2.
+            </td>
+            <td class="align-top">
+              AD & ART Yayasan Nurul Islam Affandiyah <br>
+              Saran dan Pendapat unsur pimpinan Yayasan pada tanggal 20 Juli 2024
+            </td>
+          </tr>
+          <tr class="text-black font-normal">
+            <td class="w-2 pr-16 align-top"></td>
+            <td class="w-3 pr-1 align-top"></td>
+            <td class="align-top pr-1">
+
+            </td>
+            <td class="align-top">
+              <div class="ml-15 my-8">
+                <h3 class="text-xl font-bold uppercase">M E M U T U S K A N</h3>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </VTable>
+
+      <VTable class=" no-row-borders">
+        <tbody>
+          <tr class="text-black font-normal">
+            <td class="w-2 pr-16 align-top">Menimbang <br>
+              Pertama
+            </td>
+            <td class=" pr-1 align-top"><br>ㅤ &nbsp;:ㅤ Menunjuk Saudara/i ㅤㅤㅤㅤㅤ : <br>
+              ㅤ &nbsp;&nbsp;&nbsp;ㅤNama&nbsp;ㅤㅤㅤㅤㅤㅤㅤㅤㅤ &nbsp; &nbsp; &nbsp; &nbsp; : ㅤ <b>TISYA TERESYA RIYANDI,
+                S.E.</b><br>
+              ㅤ &nbsp;&nbsp;&nbsp;ㅤTempat, Tanggal Lahir &nbsp; ㅤㅤㅤㅤ: ㅤ Cianjur, 4 September 1996<br>
+              ㅤ &nbsp;&nbsp;&nbsp;ㅤJenjang/Pend. Terakhir &nbsp;ㅤㅤㅤㅤ: ㅤ S1/Manajemen<br>
+              ㅤ &nbsp;&nbsp;&nbsp;ㅤJabatan/Unit Kerja&nbsp;ㅤㅤㅤㅤㅤ &nbsp;&nbsp;&nbsp;: ㅤ GTY/PTY<br>
+              ㅤ &nbsp;&nbsp;&nbsp;ㅤㅤㅤㅤㅤㅤㅤㅤㅤ&nbsp;ㅤㅤㅤㅤㅤ &nbsp;&nbsp;&nbsp;&nbsp; ㅤ Di SMK Nurul Islam Tahun Pelajaran
+              2024/2025
+            </td>
+          </tr>
+          <tr class="text-black font-normal">
+            <td class="w-2 pr-16 align-top">Kedua
+            </td>
+            <td class=" pr-1 align-top">
+              ㅤ &nbsp;:ㅤ Kepada nama yang tercantum di atas diberikan honorarium sesuai dengan peraturan dan
+              ㅤㅤㅤketentuan yang berlaku di Yayasan Nurul Islam ㅤㅤㅤㅤㅤ
+            </td>
+          </tr>
+          <tr class="text-black font-normal">
+            <td class="w-2 pr-16 align-top">Ketiga
+            </td>
+            <td class=" pr-1 align-top">
+              ㅤ &nbsp;:ㅤ Keputusan mulai berlaku sejak tanggal ditetapkan sampai dengan adanya perubahan 
+              ㅤㅤㅤㅤㅤyang dianggap perlu.
+            </td>
+          </tr>
+        </tbody>
+      </VTable>
+
+      <div class="font-sans p-8">
+    <div class="flex justify-end mb-12">
+      <div class="text-left">
+        <div class="grid grid-cols-2 gap-x-4">
+          <span>Ditetapkan di</span>
+          <span>: Cianjur</span>
+
+          <span>Pada Tanggalㅤㅤ</span>
+          <span>: 22 Juli 2024</span>
         </div>
+        <p class=" mb-20">Ketua Yayasan,</p>
+        <p class="font-bold underline">ESTERNIA KARIM, S.Psi</p>
+        <p>NIPY. -</p>
       </div>
+    </div>
 
-      <div class="mb-6">
-        <div class="flex">
-          <div class="w-1/5 font-semibold">Mengingat</div>
-          <div>:</div>
-          <div class="w-4/5">
-            <ol
-              type="1"
-              class="list-decimal list-inside pl-4"
-            >
-              <li>Undang – undang Pendidikan Nomor 20 Tahun 2003 tentang Sistem Pendidikan Nasional;</li>
-              <li>Peraturan Pemerintah Nomor 28 tahun 1990 tentang Pendidikan Dasar;</li>
-              <li>Peraturan Pemerintah Nomor 29 tahun 1990 tentang pendidikan menengah;</li>
-              <li>
-                Keputusan Menteri Negara Pendayagunaan Aparatur Negara Nomor 84 tahun 1983 tentang Jabatan Fungsional
-                Guru dan Angka Kreditnya;
-              </li>
-              <li>
-                Keputusan Bersama Menteri Pendidikan dan Kebudayaan dan Kepala Badan Administrasi Kepegawaian Negara
-                Nomor : 0432/P/1993 dan Nomor 25 tahun 1993;
-              </li>
-            </ol>
-          </div>
-        </div>
-      </div>
+    <div>
+      <p class="mb-2">Tembusan disampaikan Kepada:</p>
+      <ol class="list-decimal list-inside pl-4 ">
+        <li>Yth. Kepala Dinas Pendidikan Propinsi Jawa Barat</li>
+        <li>Yth. Pembina Yayasan Nurul Islam Affandiyah</li>
+        <li>Yth. Guru dan Tenaga Pendidikan yang bersangkutan;</li>
+        <li>Pertinggal.</li>
+      </ol>
+    </div>
+  </div>
 
-      <div class="mb-6">
-        <div class="flex">
-          <div class="w-1/5 font-semibold">Memperhatikan</div>
-          <div>:</div>
-          <div class="w-4/5">
-            <ol
-              type="1"
-              class="list-decimal list-inside pl-4"
-            >
-              <li>Program Kerja Yayasan Tahun Pelajaran 2024/2025</li>
-              <li>AD & ART Yayasan Nurul Islam Affandiyah</li>
-              <li>Saran dan Pendapat unsur pimpinan Yayasan pada tanggal 20 Juli 2024</li>
-            </ol>
-          </div>
-        </div>
-      </div>
 
-      <div class="text-center my-8">
-        <h3 class="text-xl font-bold uppercase">MEMUTUSKAN</h3>
-      </div>
 
-      <div class="mb-6">
-        <div class="flex mb-2">
-          <div class="w-1/5 font-semibold">Menetapkan</div>
-          <div class="w-4/5 flex">
-            <div class="w-1/4">: Pertama</div>
-            <div class="w-3/4">Menunjuk Saudara/i</div>
-          </div>
-        </div>
-        <div class="flex mb-2">
-          <div class="w-1/5"></div>
-          <div class="w-4/5 flex">
-            <div class="w-1/4">Nama</div>
-            <div class="w-3/4">: {{ penugasan.nama_pegawai }}</div>
-          </div>
-        </div>
-        <div class="flex mb-2">
-          <div class="w-1/5"></div>
-          <div class="w-4/5 flex">
-            <div class="w-1/4">Tempat, Tanggal Lahir</div>
-            <div class="w-3/4">:{{ penugasan.tmp_lahir }}, {{ penugasan.tgl_lahir }}</div>
-          </div>
-        </div>
-        <div class="flex mb-2">
-          <div class="w-1/5"></div>
-          <div class="w-4/5 flex">
-            <div class="w-1/4">Jenjang/Pend. Terakhir</div>
-            <div class="w-3/4">: {{ penugasan.jenjang_pendidikan }}</div>
-          </div>
-        </div>
-        <div class="flex mb-2">
-          <div class="w-1/5"></div>
-          <div class="w-4/5 flex">
-            <div class="w-1/4">Jabatan/Unit Kerja</div>
-            <div class="w-3/4">: {{ penugasan.jabatan }}</div>
-          </div>
-        </div>
-        <div class="flex mb-6">
-          <div class="w-1/5"></div>
-          <div class="w-4/5 flex">
-            <div class="w-1/4"></div>
-            <div class="w-3/4">Di {{ penugasan.nama_satuan_pendidikan }} Nurul Islam Tahun Pelajaran 2024/2025</div>
-          </div>
-        </div>
 
-        <div class="flex mb-2">
-          <div class="w-1/5"></div>
-          <div class="w-4/5 flex">
-            <div class="w-1/4">Kedua</div>
-            <div class="w-3/4">
-              : Kepada nama yang tercantum di atas diberikan honorarium sesuai dengan peraturan dan ketentuan yang
-              berlaku di Yayasan Nurul Islam
-            </div>
-          </div>
-        </div>
 
-        <div class="flex">
-          <div class="w-1/5"></div>
-          <div class="w-4/5 flex">
-            <div class="w-1/4">Ketiga</div>
-            <div class="w-3/4">
-              : Keputusan mulai berlaku sejak tanggal ditetapkan sampai dengan adanya perubahan yang dianggap perlu.
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="mt-12 text-right">
-        <p class="mb-1">Ditetapkan di&nbsp;&nbsp;: Cianjur</p>
-        <p class="mb-1">Pada Tanggal&nbsp;&nbsp;: 22 Juli 2024</p>
-        <p class="mb-1">Ketua Yayasan,</p>
-        <p class="font-bold">{{ penugasan.nama_pimpinan }}</p>
-        <p class="text-sm">NIPY. -</p>
-      </div>
 
-      <div class="mt-12 text-sm">
-        <p>Tembusan disampaikan Kepada:</p>
-        <ol class="list-decimal list-inside pl-4">
-          <li>Yth. Kepala Dinas Pendidikan Provinsi Jawa Barat</li>
-          <li>Yth. Pembina Yayasan Nurul Islam Affandiyah</li>
-          <li>Yth. Guru dan Tenaga Pendidikan Yang bersangkutan;</li>
-          <li>Pertinggal.</li>
-        </ol>
-      </div>
+
+
     </div>
   </div>
 </template>
 
+<style>
+.no-row-borders table tr {
+  border: none !important;
+}
+
+.no-row-borders table td,
+.no-row-borders table th {
+  border: none !important;
+}
+</style>
