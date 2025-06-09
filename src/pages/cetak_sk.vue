@@ -95,8 +95,9 @@ onMounted(() => {
       <table class="w-full border-collapse text-black font-normal mt-2">
         <tbody>
           <tr>
-            <td class="w-1/6 pr-4 align-top">Menetapkan <br>Pertama</td>
-            <td class="w-1/60 align-top">&nbsp;</td>
+            <td class="w-1/6 pr-4 align-top">Menetapkan <br>Pertama </td>
+            <td class="w-1/60 align-top">:</td>
+            <p>Menunjuk Saudara/i</p>
             <td class="align-top">
               <table class="ml-8 mt-1">
                 <tr>
@@ -120,8 +121,8 @@ onMounted(() => {
                   <td>GTY/PTY</td>
                 </tr>
                 <tr>
-                  <td class="pr-2">&nbsp;</td>
-                  <td>&nbsp;</td>
+                  <td class="pr-2"></td>
+                  <td></td>
                   <td>Di SMK Nurul Islam Tahun Pelajaran 2024/2025</td>
                 </tr>
               </table>
@@ -129,22 +130,20 @@ onMounted(() => {
           </tr>
           <tr>
             <td class="pr-4 align-top">Kedua</td>
-            <td class="align-top">&nbsp;</td>
+            <td class="align-top">:</td>
             <td class="align-top">
-              Kepada nama yang tercantum di atas diberikan honorarium sesuai dengan peraturan dan ketentuan yang berlaku
-              di Yayasan Nurul Islam.
+              Kepada nama yang tercantum di atas diberikan honorarium sesuai dengan peraturan dan ketentuan yang berlaku di Yayasan Nurul Islam.
             </td>
           </tr>
           <tr>
             <td class="pr-4 align-top">Ketiga</td>
-            <td class="align-top">&nbsp;</td>
+            <td class="align-top">:</td>
             <td class="align-top">
               Keputusan mulai berlaku sejak tanggal ditetapkan sampai dengan adanya perubahan yang dianggap perlu.
             </td>
           </tr>
         </tbody>
       </table>
-
       <!-- Footer and Signature -->
       <div class="flex justify-end mt-8 print:mt-12">
         <div class="text-left">
