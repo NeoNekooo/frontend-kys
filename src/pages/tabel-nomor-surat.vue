@@ -47,6 +47,11 @@ const deleteItem = async () => {
     console.error(error)
   }
 }
+const formatDate = (dateStr) => {
+  if (!dateStr) return ''
+  return new Date(dateStr).toISOString().split('T')[0]
+}
+
 
 onMounted(() => {
   getNomorSurat()
@@ -84,8 +89,8 @@ onMounted(() => {
             <td>{{ index + 1 }}</td>
             <td class="text-center">{{ item.no_surat }}</td>
             <td class="text-center">{{ item.nama_pimpinan }}</td>
-            <td class="text-center">{{ item.tgl_sp }}</td>
-            <td class="text-center">{{ item.tmt }}</td>
+            <td class="text-center">{{ formatDate(item.tgl_sp) }}</td>
+            <td class="text-center">{{ formatDate(item.tmt) }}</td>
             <td class="text-center whitespace-nowrap">
               <div class="flex items-center justify-center gap-3">
                 <RouterLink
