@@ -30,8 +30,6 @@ const routes = [
       { path: 'typography', component: () => import('@/pages/typography.vue') },
       { path: 'icons', component: () => import('@/pages/icons.vue') },
       { path: 'cards', component: () => import('@/pages/cards.vue') },
-      { path: 'tables', component: () => import('@/pages/tables.vue') },
-      { path: 'form-layouts', component: () => import('@/pages/form-layouts.vue') },
       { path: 'profil-lembaga', component: ProfilLembaga },
       { name: 'tambah-pegawai', path: 'tambah-pegawai', component: TambahPegawai },
       { name: 'EditPegawai', path: '/pegawai/edit/:id', component: EditPegawai, props: true },

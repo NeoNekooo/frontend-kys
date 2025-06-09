@@ -47,9 +47,10 @@ const submitForm = async () => {
     id_tapel: tapel.value.id_tapel,
     no_surat: form.value.no_surat, 
     nama_pimpinan: form.value.nama_pimpinan,
-    tgl_sp: form.value.tgl_sp,
-    tmt: form.value.tmt,
+    tgl_sp: formatDate(form.value.tgl_sp),
+    tmt: formatDate(form.value.tmt),
   }
+
   try {
     await axios.post('http://localhost:5000/api/nomorSurat', payload)
     console.log('Data yang dikirim:', payload)
@@ -64,6 +65,11 @@ const submitForm = async () => {
     toast.error('Gagal menyimpan data tapel.')
   }
 }
+
+const formatDate = (date) => {
+  return new Date(date).toISOString().split('T')[0]
+}
+
 
 onMounted(() => {
   getTapel()
