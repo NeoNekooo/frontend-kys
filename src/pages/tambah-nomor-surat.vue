@@ -45,7 +45,7 @@ const getTapel = async () => {
 const submitForm = async () => {
   const payload = {
     id_tapel: tapel.value.id_tapel,
-    no_surat: form.value.no_surat, // Corrected key to match backend expectation
+    no_surat: form.value.no_surat, 
     nama_pimpinan: form.value.nama_pimpinan,
     tgl_sp: form.value.tgl_sp,
     tmt: form.value.tmt,

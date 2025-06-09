@@ -16,7 +16,7 @@ const form = ref({
 
 const getTapelById = async () => {
   try {
-    const response = await axios.get(`http://localhost:5000/api/tapel/${route.params.id}`)
+    const response = await axios.get(`http://localhost:5000/api//${route.params.id}`)
     const data = response.data
     form.value.tapel = data.tapel
     form.value.ket = data.ket

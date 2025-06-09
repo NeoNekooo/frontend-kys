@@ -45,7 +45,7 @@ const routes = [
       { path: 'tambah-spk', component: tambahSpk },
       { name: 'Editspk', path: '/spk/edit/:id', component: editSpk, props: true },
       { path: 'tabel-penugasan', name: 'tabel-penugasan', component: TabelPenugasan },
-      { path: 'nomor-surat', name: 'tabel-nomor-surat', component: tabelNomorSurat },
+      { path: 'nomor-surat', name: 'nomor-surat', component: tabelNomorSurat },
       { path: 'edit-nomor-surat/:id', name: 'edit-nomor-surat', component: EditNomorSurat, props: true },
       { path: 'tambah-nomor-surat', name: 'tambah-nomor-surat', component: tambahNomorSurat },
     ],

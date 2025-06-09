@@ -1,10 +1,18 @@
 <script setup>
+import axios from 'axios'
+import { onMounted, ref } from 'vue'
+import { useToast } from 'vue-toastification'
+import avatar1 from '@images/avatars/avatar-1.png'
+
+const toast = useToast()
+
 const isCurrentPasswordVisible = ref(false)
 const isNewPasswordVisible = ref(false)
 const isConfirmPasswordVisible = ref(false)
-const currentPassword = ref('12345678')
-const newPassword = ref('87654321')
-const confirmPassword = ref('87654321')
+
+const currentPassword = ref('')
+const newPassword = ref('')
+const confirmPassword = ref('')
 
 const passwordRequirements = [
   'Minimum 8 characters long - the more, the better',
@@ -12,6 +20,65 @@ const passwordRequirements = [
   'At least one number, symbol, or whitespace character',
 ]
 
+const adminData = ref({
+  avatarImg: avatar1,
+  username: '',
+  email: '',
+  password: '',
+  photoFile: null,
+})
+
+const fetchLoggedInAdmin = async () => {
+  try {
+    const res = await axios.get('http://localhost:5000/api/admin/me', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+
+    console.log('Admin profile response:', res.data)
+    const admin = res.data
+    if (admin) {
+      adminId.value = admin.id
+      adminData.value = {
+        username: admin.username,
+        email: admin.email || '',
+        password: '',
+        avatarImg: admin.photo || avatar1,
+        photoFile: null,
+      }
+      console.log('Admin profile loaded:', adminData.value)
+    }
+  } catch (err) {
+    toast.error('Failed to load admin profile')
+    console.error(err)
+  }
+}
+
+const handleSubmit = async () => {
+  if (newPassword.value !== confirmPassword.value) {
+    toast.error('New password and confirmation do not match!')
+    return
+  }
+
+  try {
+    await axios.put('http://localhost:5000/api/admin/', {
+      currentPassword: currentPassword.value,
+      newPassword: newPassword.value,
+    })
+
+    toast.success('Password updated successfully!')
+
+    currentPassword.value = ''
+    newPassword.value = ''
+    confirmPassword.value = ''
+  } catch (error) {
+    toast.error(error.response?.data?.message || 'Failed to update password')
+  }
+}
+onMounted(() => {
+  fetchLoggedInAdmin()
+})
 </script>
 
 <template>
@@ -19,7 +86,7 @@ const passwordRequirements = [
     <!-- SECTION: Change Password -->
     <VCol cols="12">
       <VCard title="Change Password">
-        <VForm>
+        <VForm @submit.prevent="handleSubmit">
           <VCardText>
             <!-- 👉 Current Password -->
             <VRow class="mb-3">
@@ -72,15 +139,13 @@ const passwordRequirements = [
                   placeholder="············"
                   @click:append-inner="isConfirmPasswordVisible = !isConfirmPasswordVisible"
                 />
-              </VCol>
-            </VRow>
+              </VCol> </VRow
+            >a
           </VCardText>
 
           <!-- 👉 Password Requirements -->
           <VCardText>
-            <p class="text-base font-weight-medium mt-2">
-              Password Requirements:
-            </p>
+            <p class="text-base font-weight-medium mt-2">Password Requirements:</p>
 
             <ul class="d-flex flex-column gap-y-3">
               <li
@@ -102,7 +167,7 @@ const passwordRequirements = [
 
           <!-- 👉 Action Buttons -->
           <VCardText class="d-flex flex-wrap gap-4">
-            <VBtn>Save changes</VBtn>
+            <VBtn type="submit">Save changes</VBtn>
 
             <VBtn
               type="reset"
