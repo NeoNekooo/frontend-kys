@@ -2,7 +2,6 @@
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
 import { useToast } from 'vue-toastification'
-import avatar1 from '@images/avatars/avatar-1.png'
 
 const toast = useToast()
 
@@ -21,7 +20,8 @@ const passwordRequirements = [
 ]
 
 const adminData = ref({
-  avatarImg: avatar1,
+  id: '',            // penting untuk endpoint change-password/:id
+  avatarImg: '',
   username: '',
   email: '',
   password: '',
@@ -36,23 +36,28 @@ const fetchLoggedInAdmin = async () => {
       },
     })
 
-    console.log('Admin profile response:', res.data)
     const admin = res.data
     if (admin) {
-      adminId.value = admin.id
       adminData.value = {
+        id: admin.id,  
         username: admin.username,
         email: admin.email || '',
         password: '',
-        avatarImg: admin.photo || avatar1,
+        avatarImg: admin.photo || '',
         photoFile: null,
       }
-      console.log('Admin profile loaded:', adminData.value)
     }
   } catch (err) {
     toast.error('Failed to load admin profile')
     console.error(err)
   }
+}
+
+const validatePassword = (password) => {
+  if (password.length < 8) return false
+  if (!/[a-z]/.test(password)) return false
+  if (!/[\d\s\W]/.test(password)) return false
+  return true
 }
 
 const handleSubmit = async () => {
@@ -61,21 +66,47 @@ const handleSubmit = async () => {
     return
   }
 
+  if (!validatePassword(newPassword.value)) {
+    toast.error('Password tidak memenuhi persyaratan keamanan.')
+    return
+  }
+
+  if (!adminData.value.id) {
+    toast.error('Admin ID tidak ditemukan.')
+    return
+  }
+console.log('Submitting password change for admin ID:', adminData.value.id)
+console.log('Current Password:', currentPassword.value)
+console.log('New Password:', newPassword.value)
+
   try {
-    await axios.put('http://localhost:5000/api/admin/', {
+    await axios.put(`http://localhost:5000/api/admin/change-password/${adminData.value.id}`, {
       currentPassword: currentPassword.value,
       newPassword: newPassword.value,
+    }, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }
     })
 
     toast.success('Password updated successfully!')
 
+    // Reset form values
     currentPassword.value = ''
     newPassword.value = ''
     confirmPassword.value = ''
   } catch (error) {
     toast.error(error.response?.data?.message || 'Failed to update password')
+    console.error(error)
   }
 }
+
+const handleReset = () => {
+  currentPassword.value = ''
+  newPassword.value = ''
+  confirmPassword.value = ''
+}
+
 onMounted(() => {
   fetchLoggedInAdmin()
 })
@@ -83,105 +114,75 @@ onMounted(() => {
 
 <template>
   <VRow>
-    <!-- SECTION: Change Password -->
     <VCol cols="12">
       <VCard title="Change Password">
         <VForm @submit.prevent="handleSubmit">
           <VCardText>
-            <!-- 👉 Current Password -->
             <VRow class="mb-3">
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <!-- 👉 current password -->
+              <VCol cols="12" md="6">
                 <VTextField
                   v-model="currentPassword"
                   :type="isCurrentPasswordVisible ? 'text' : 'password'"
                   :append-inner-icon="isCurrentPasswordVisible ? 'ri-eye-off-line' : 'ri-eye-line'"
-                  autocomplete="on"
+                  autocomplete="current-password"
                   label="Current Password"
                   placeholder="············"
                   @click:append-inner="isCurrentPasswordVisible = !isCurrentPasswordVisible"
+                  required
                 />
               </VCol>
             </VRow>
 
-            <!-- 👉 New Password -->
             <VRow>
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <!-- 👉 new password -->
+              <VCol cols="12" md="6">
                 <VTextField
                   v-model="newPassword"
                   :type="isNewPasswordVisible ? 'text' : 'password'"
                   :append-inner-icon="isNewPasswordVisible ? 'ri-eye-off-line' : 'ri-eye-line'"
                   label="New Password"
-                  autocomplete="on"
+                  autocomplete="new-password"
                   placeholder="············"
                   @click:append-inner="isNewPasswordVisible = !isNewPasswordVisible"
+                  required
                 />
               </VCol>
 
-              <VCol
-                cols="12"
-                md="6"
-              >
-                <!-- 👉 confirm password -->
+              <VCol cols="12" md="6">
                 <VTextField
                   v-model="confirmPassword"
                   :type="isConfirmPasswordVisible ? 'text' : 'password'"
                   :append-inner-icon="isConfirmPasswordVisible ? 'ri-eye-off-line' : 'ri-eye-line'"
-                  autocomplete="on"
+                  autocomplete="new-password"
                   label="Confirm New Password"
                   placeholder="············"
                   @click:append-inner="isConfirmPasswordVisible = !isConfirmPasswordVisible"
+                  required
                 />
-              </VCol> </VRow
-            >a
+              </VCol>
+            </VRow>
           </VCardText>
 
-          <!-- 👉 Password Requirements -->
           <VCardText>
             <p class="text-base font-weight-medium mt-2">Password Requirements:</p>
-
             <ul class="d-flex flex-column gap-y-3">
-              <li
-                v-for="item in passwordRequirements"
-                :key="item"
-                class="d-flex"
-              >
+              <li v-for="item in passwordRequirements" :key="item" class="d-flex">
                 <div>
-                  <VIcon
-                    size="7"
-                    icon="ri-checkbox-blank-circle-fill"
-                    class="me-3"
-                  />
+                  <VIcon size="7" icon="ri-checkbox-blank-circle-fill" class="me-3" />
                 </div>
                 <span class="font-weight-medium">{{ item }}</span>
               </li>
             </ul>
           </VCardText>
 
-          <!-- 👉 Action Buttons -->
           <VCardText class="d-flex flex-wrap gap-4">
             <VBtn type="submit">Save changes</VBtn>
 
-            <VBtn
-              type="reset"
-              color="secondary"
-              variant="outlined"
-            >
+            <VBtn color="secondary" variant="outlined" @click="handleReset">
               Reset
             </VBtn>
           </VCardText>
         </VForm>
       </VCard>
     </VCol>
-    <!-- !SECTION -->
-
-    <!-- !SECTION -->
   </VRow>
 </template>
