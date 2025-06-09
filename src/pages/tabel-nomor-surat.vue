@@ -77,7 +77,7 @@ onMounted(() => {
             <th class="text-center text-uppercase">Nomor Surat</th>
             <th class="text-center text-uppercase">Nama Pimpinansi</th>
             <th class="text-center text-uppercase">TMT</th>
-            <th class="text-center text-uppercase">Tanggal SP</th>
+            <th class="text-center text-uppercase">Tanggal Saran Dan Pendapat</th>
             <th class="text-center text-uppercase">Aksi</th>
           </tr>
         </thead>
