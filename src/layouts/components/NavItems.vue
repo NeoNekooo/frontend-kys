@@ -6,9 +6,7 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
 import { router } from '@/plugins/router';
 
 const logout = () => {
-  console.log("Logout function called", localStorage.getItem("token"));
   localStorage.removeItem("token");
-  console.log("Is there any token?", localStorage.getItem("token"));
   router.push({ name: 'login' });
 };
 

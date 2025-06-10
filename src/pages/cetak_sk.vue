@@ -22,7 +22,6 @@ const getPenugasan = async () => {
     } else {
       errorMessage.value = 'Format data tidak sesuai.'
     }
-    console.log('Data Penugasan:', penugasan.value)
   } catch (error) {
     errorMessage.value = 'Gagal memuat data Tapel.'
     console.error('Error fetching penugasan:', error)

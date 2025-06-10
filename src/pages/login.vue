@@ -25,7 +25,6 @@ const handleLogin = async () => {
 
     const token = res.data.token
     localStorage.setItem('token', token)
-    console.log('Login successful:', token)
     toast.success('Login berhasil!')
     router.push({ name: 'dashboard' })
   } catch (err) {
@@ -38,7 +37,6 @@ const fetchLogo = async () => {
   try {
     const response = await axios.get('http://localhost:5000/api/lembaga/logo')
     logo.value = response.data
-    console.log('Logo fetched:', logo.value)
   } catch (error) {
     console.error('Error fetching logo:', error)
   }

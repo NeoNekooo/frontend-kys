@@ -34,7 +34,6 @@ const form = ref({
   photo: '',
   status: '',
 })
-console.log('Form:', route.params)
 
 const fetchPegawai = async () => {
   try {

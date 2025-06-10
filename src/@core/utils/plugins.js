@@ -4,7 +4,6 @@ export const registerPlugins = app => {
 
   importPaths.forEach(path => {
     const pluginImportModule = imports[path]
-    console.log(`Registering plugin from ${path}`)
     pluginImportModule.default?.(app)
   })
 }

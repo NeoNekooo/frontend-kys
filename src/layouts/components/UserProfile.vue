@@ -22,7 +22,6 @@ const fetchLoggedInAdmin = async () => {
   try {
     const res = await api.get('/admin/me')
 
-    console.log('Admin profile response:', res.data)
     const admin = res.data
     if (admin) {
       adminId.value = admin.id
@@ -33,7 +32,6 @@ const fetchLoggedInAdmin = async () => {
         avatarImg: admin.photo || avatar1,
         photoFile: null,
       }
-      console.log('Admin profile loaded:', adminData.value)
     }
   } catch (err) {
     toast.error('Failed to load admin profile')
@@ -46,9 +44,7 @@ const redirectToProfile = () => {
 }
 
 const logout = () => {
-  console.log('Logout function called', localStorage.getItem('token'))
   localStorage.removeItem('token')
-  console.log('is ther any token', localStorage.getItem('token'))
   router.push({ path: 'login' })
 }
 
