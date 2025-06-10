@@ -4,7 +4,6 @@ import avatar1 from '@images/avatars/avatar-1.png'
 import { onMounted, ref } from 'vue'
 import { useToast } from 'vue-toastification'
 
-
 const toast = useToast()
 const refInputEl = ref()
 const adminId = ref(null)
@@ -24,6 +23,7 @@ const fetchLoggedInAdmin = async () => {
 
     console.log('Admin profile response:', res.data)
     const admin = res.data
+    console.log('res:', res)
     if (admin) {
       adminId.value = admin.id
       adminData.value = {
@@ -60,6 +60,7 @@ const changeAvatar = event => {
   adminData.value.photoFile = file
   adminData.value.avatarImg = URL.createObjectURL(file)
 }
+console.log('Admin data:', adminData.value)
 
 const updateAdmin = async () => {
   try {
@@ -91,7 +92,6 @@ const updateAdmin = async () => {
   }
 }
 
-
 onMounted(() => {
   fetchLoggedInAdmin()
 })
@@ -106,7 +106,6 @@ onMounted(() => {
         size="200"
         class="me-6"
         :image="`http://localhost:5000${adminData.avatarImg}`"
-
         :src="`http://localhost:5000${adminData.avatarImg}`"
       />
 

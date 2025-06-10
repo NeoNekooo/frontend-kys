@@ -2,7 +2,10 @@
 import api from '@/plugins/axios/axios'
 import avatar1 from '@images/avatars/avatar-1.png'
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
+
+const router = useRouter()
 
 const toast = useToast()
 const adminId = ref(null)
@@ -37,6 +40,18 @@ const fetchLoggedInAdmin = async () => {
     console.error(err)
   }
 }
+
+const redirectToProfile = () => {
+  router.push({ path: 'account-settings' })
+}
+
+const logout = () => {
+  console.log('Logout function called', localStorage.getItem('token'))
+  localStorage.removeItem('token')
+  console.log('is ther any token', localStorage.getItem('token'))
+  router.push({ name: 'login' })
+}
+
 onMounted(() => {
   fetchLoggedInAdmin()
 })
@@ -101,8 +116,11 @@ onMounted(() => {
               />
             </template>
 
-            <VListItemTitle>
-              <router-link to="/account-settings"> Profile </router-link>
+            <VListItemTitle
+              to="/account-settings"
+              @click="redirectToProfile"
+            >
+              <RouterLink to="/account-settings"> Profile </RouterLink>
             </VListItemTitle>
           </VListItem>
 
@@ -120,7 +138,7 @@ onMounted(() => {
           </VListItem>
 
           <!-- 👉 Pricing -->
-          <VListItem link>
+          <!-- <VListItem link>
             <template #prepend>
               <VIcon
                 class="me-2"
@@ -130,10 +148,10 @@ onMounted(() => {
             </template>
 
             <VListItemTitle>Pricing</VListItemTitle>
-          </VListItem>
+          </VListItem> -->
 
           <!-- 👉 FAQ -->
-          <VListItem link>
+          <!-- <VListItem link>
             <template #prepend>
               <VIcon
                 class="me-2"
@@ -143,26 +161,51 @@ onMounted(() => {
             </template>
 
             <VListItemTitle>FAQ</VListItemTitle>
-          </VListItem>
+          </VListItem> -->
 
           <!-- Divider -->
           <VDivider class="my-2" />
 
+          <router-link @click="logout" >
+
           <!-- 👉 Logout -->
-          <VListItem to="/login">
-            <template #prepend>
-              <VIcon
-                class="me-2"
-                icon="ri-logout-box-r-line"
-                size="22"
-              />
-            </template>
+          <VListItem
+          >
+          <template #prepend>
+            <VIcon
+            class="me-2"
+            icon="ri-logout-box-r-line"
+            size="22"
+            />
+          </template>
 
             <VListItemTitle>Logout</VListItemTitle>
           </VListItem>
+        </router-link>
+
         </VList>
       </VMenu>
       <!-- !SECTION -->
     </VAvatar>
   </VBadge>
+  <dialog
+    id="my_modal_5"
+    class="modal modal-bottom sm:modal-middle"
+  >
+    <div class="modal-box bg-slate-100">
+      <h3 class="text-lg font-bold">Lanjut logout?</h3>
+      <p class="py-4">Kamu akan keluar website</p>
+      <div class="modal-action">
+        <form method="dialog p-4 mx-auto">
+          <button
+            class="btn bg-red-600 text-white hover:bg-red-700 mx-4"
+            @click="logout"
+          >
+            Logout
+          </button>
+          <button class="btn">Close</button>
+        </form>
+      </div>
+    </div>
+  </dialog>
 </template>

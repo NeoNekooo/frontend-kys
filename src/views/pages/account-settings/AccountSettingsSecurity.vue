@@ -1,6 +1,5 @@
 <script setup>
 import api from '@/plugins/axios/axios'
-import axios from 'axios'
 import { onMounted, ref } from 'vue'
 import { useToast } from 'vue-toastification'
 
@@ -10,7 +9,7 @@ const isCurrentPasswordVisible = ref(false)
 const isNewPasswordVisible = ref(false)
 const isConfirmPasswordVisible = ref(false)
 
-const currentPassword = ref('')
+const oldPassword = ref('')
 const newPassword = ref('')
 const confirmPassword = ref('')
 
@@ -27,15 +26,12 @@ const adminData = ref({
   email: '',
   password: '',
   photoFile: null,
+  photo: '',
 })
 
 const fetchLoggedInAdmin = async () => {
   try {
-    const res = await axios.get('http://localhost:5000/api/admin/me', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    })
+    const res = await api.get('http://localhost:5000/api/admin/me')
 
     const admin = res.data
     if (admin) {
@@ -43,6 +39,7 @@ const fetchLoggedInAdmin = async () => {
         id: admin.id,
         username: admin.username,
         email: admin.email || '',
+        photo: admin.photo,
         password: '',
         avatarImg: admin.photo || '',
         photoFile: null,
@@ -76,20 +73,22 @@ const handleSubmit = async () => {
     toast.error('Admin ID tidak ditemukan.')
     return
   }
+
+  const payload = {
+    oldPassword: oldPassword.value,
+    newPassword: newPassword.value,
+  }
+
   console.log('Submitting password change for admin ID:', adminData.value.id)
-  console.log('Current Password:', currentPassword.value)
-  console.log('New Password:', newPassword.value)
+  console.log('Payload:', payload)
 
   try {
-    await api.put(`/admin/change-password/${adminData.value.id}`, {
-      currentPassword: currentPassword.value,
-      newPassword: newPassword.value,
-    })
+    await api.put(`/admin/change-password/${adminData.value.id}`, payload)
 
     toast.success('Password updated successfully!')
 
     // Reset form values
-    currentPassword.value = ''
+    oldPassword.value = ''
     newPassword.value = ''
     confirmPassword.value = ''
   } catch (error) {
@@ -99,7 +98,7 @@ const handleSubmit = async () => {
 }
 
 const handleReset = () => {
-  currentPassword.value = ''
+  oldPassword.value = ''
   newPassword.value = ''
   confirmPassword.value = ''
 }
@@ -121,7 +120,7 @@ onMounted(() => {
                 md="6"
               >
                 <VTextField
-                  v-model="currentPassword"
+                  v-model="oldPassword"
                   :type="isCurrentPasswordVisible ? 'text' : 'password'"
                   :append-inner-icon="isCurrentPasswordVisible ? 'ri-eye-off-line' : 'ri-eye-line'"
                   autocomplete="current-password"
