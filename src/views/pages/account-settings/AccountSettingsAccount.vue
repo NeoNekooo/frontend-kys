@@ -13,7 +13,6 @@ const adminData = ref({
   avatarImg: avatar1,
   username: '',
   email: '',
-  password: '',
   photoFile: null,
 })
 
@@ -29,7 +28,6 @@ const fetchLoggedInAdmin = async () => {
       adminData.value = {
         username: admin.username,
         email: admin.email || '',
-        password: '',
         avatarImg: admin.photo || avatar1,
         photoFile: null,
       }
@@ -67,7 +65,6 @@ const updateAdmin = async () => {
     await api.put(`/admin/${adminId.value}`, {
       username: adminData.value.username,
       email: adminData.value.email,
-      password: adminData.value.password || undefined,
     })
 
     // Step 2: Upload photo separately
@@ -77,7 +74,6 @@ const updateAdmin = async () => {
 
       await api.post(`/admin/upload/${adminId.value}`, formData, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'multipart/form-data',
         },
       })

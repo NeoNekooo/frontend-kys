@@ -49,7 +49,7 @@ const logout = () => {
   console.log('Logout function called', localStorage.getItem('token'))
   localStorage.removeItem('token')
   console.log('is ther any token', localStorage.getItem('token'))
-  router.push({ name: 'login' })
+  router.push({ path: 'login' })
 }
 
 onMounted(() => {
@@ -107,7 +107,7 @@ onMounted(() => {
           <VDivider class="my-2" />
 
           <!-- 👉 Profile -->
-          <VListItem link>
+          <VListItem>
             <template #prepend>
               <VIcon
                 class="me-2"
@@ -166,7 +166,7 @@ onMounted(() => {
           <!-- Divider -->
           <VDivider class="my-2" />
 
-          <router-link @click="logout" >
+          <router-link @click.prevent="logout" >
 
           <!-- 👉 Logout -->
           <VListItem
@@ -179,7 +179,7 @@ onMounted(() => {
             />
           </template>
 
-            <VListItemTitle>Logout</VListItemTitle>
+            <VListItemTitle @click.prevent="logout" >Logout</VListItemTitle>
           </VListItem>
         </router-link>
 
