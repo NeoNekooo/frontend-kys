@@ -1,5 +1,5 @@
 <script setup>
-import axios from 'axios'
+import api from '@/plugins/axios/axios'
 import { onMounted, ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
@@ -7,7 +7,6 @@ import { useToast } from 'vue-toastification'
 const toast = useToast()
 const router = useRouter()
 
-const url = 'http://localhost:5000/api/nomorSurat'
 const nomorSurat = ref([])
 const errorMessage = ref('')
 const loading = ref(true)
@@ -22,7 +21,7 @@ const openDeleteModal = item => {
 
 const getNomorSurat = async () => {
   try {
-    const response = await axios.get(url)
+    const response = await api.get('/nomorSurat')
     if (response.data) {
       nomorSurat.value = response.data
     } else {
@@ -38,7 +37,7 @@ const getNomorSurat = async () => {
 
 const deleteItem = async () => {
   try {
-    await axios.delete(`${url}/${itemToDelete.value.id}`)
+    await api.delete(`/nomorSurat/${itemToDelete.value.id}`)
     toast.success('Data tapel berhasil dihapus.')
     showModal.value = false
     router.go()

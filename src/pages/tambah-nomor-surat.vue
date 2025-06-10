@@ -1,5 +1,5 @@
 <script setup>
-import axios from 'axios'
+import api from '@/plugins/axios/axios'
 import { onMounted, ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
@@ -25,7 +25,7 @@ const loading = ref(false)
 
 const getTapel = async () => {
   try {
-    const response = await axios.get('http://localhost:5000/api/tapel/aktif')
+    const response = await api.get('/tapel/aktif')
     const data = response.data[0]
     if (response.data) {
       tapel.value.id_tapel = data.id
@@ -52,7 +52,7 @@ const submitForm = async () => {
   }
 
   try {
-    await axios.post('http://localhost:5000/api/nomorSurat', payload)
+    await api.post('/nomorSurat', payload)
     console.log('Data yang dikirim:', payload)
     toast.success('Data tapel berhasil ditambahkan.')
     router.push('nomor-surat')
@@ -163,8 +163,3 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped>
-.input-style {
-  @apply w-full px-4 py-2 bg-gray-200 border-2 border-black rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400;
-}
-</style>

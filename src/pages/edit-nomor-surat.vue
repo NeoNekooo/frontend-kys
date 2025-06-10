@@ -1,6 +1,6 @@
 <script setup>
-import axios from 'axios'
-import { ref, onMounted } from 'vue'
+import api from '@/plugins/axios/axios'
+import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 
@@ -16,7 +16,7 @@ const form = ref({
 
 const getTapelById = async () => {
   try {
-    const response = await axios.get(`http://localhost:5000/api//${route.params.id}`)
+    const response = await api.get(`/tapel/${route.params.id}`)
     const data = response.data
     form.value.tapel = data.tapel
     form.value.ket = data.ket
@@ -34,7 +34,7 @@ const submitForm = async () => {
     status: 1,
   }
   try {
-    await axios.put(`http://localhost:5000/api/tapel/${route.params.id}`, payload)
+    await api.put(`/tapel/${route.params.id}`, payload)
     toast.success('Data tapel berhasil diperbarui.')
     router.push('/tapel')
   } catch (error) {
@@ -92,8 +92,3 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped>
-.input-style {
-  @apply w-full px-4 py-2 bg-gray-200 border-2 border-black rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400;
-}
-</style>

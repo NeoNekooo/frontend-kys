@@ -1,4 +1,5 @@
 <script setup>
+import api from '@/plugins/axios/axios'
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
 import { useToast } from 'vue-toastification'
@@ -20,7 +21,7 @@ const passwordRequirements = [
 ]
 
 const adminData = ref({
-  id: '',            // penting untuk endpoint change-password/:id
+  id: '', // penting untuk endpoint change-password/:id
   avatarImg: '',
   username: '',
   email: '',
@@ -39,7 +40,7 @@ const fetchLoggedInAdmin = async () => {
     const admin = res.data
     if (admin) {
       adminData.value = {
-        id: admin.id,  
+        id: admin.id,
         username: admin.username,
         email: admin.email || '',
         password: '',
@@ -53,7 +54,7 @@ const fetchLoggedInAdmin = async () => {
   }
 }
 
-const validatePassword = (password) => {
+const validatePassword = password => {
   if (password.length < 8) return false
   if (!/[a-z]/.test(password)) return false
   if (!/[\d\s\W]/.test(password)) return false
@@ -75,18 +76,14 @@ const handleSubmit = async () => {
     toast.error('Admin ID tidak ditemukan.')
     return
   }
-console.log('Submitting password change for admin ID:', adminData.value.id)
-console.log('Current Password:', currentPassword.value)
-console.log('New Password:', newPassword.value)
+  console.log('Submitting password change for admin ID:', adminData.value.id)
+  console.log('Current Password:', currentPassword.value)
+  console.log('New Password:', newPassword.value)
 
   try {
-    await axios.put(`http://localhost:5000/api/admin/change-password/${adminData.value.id}`, {
+    await api.put(`/admin/change-password/${adminData.value.id}`, {
       currentPassword: currentPassword.value,
       newPassword: newPassword.value,
-    }, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      }
     })
 
     toast.success('Password updated successfully!')
@@ -119,7 +116,10 @@ onMounted(() => {
         <VForm @submit.prevent="handleSubmit">
           <VCardText>
             <VRow class="mb-3">
-              <VCol cols="12" md="6">
+              <VCol
+                cols="12"
+                md="6"
+              >
                 <VTextField
                   v-model="currentPassword"
                   :type="isCurrentPasswordVisible ? 'text' : 'password'"
@@ -134,7 +134,10 @@ onMounted(() => {
             </VRow>
 
             <VRow>
-              <VCol cols="12" md="6">
+              <VCol
+                cols="12"
+                md="6"
+              >
                 <VTextField
                   v-model="newPassword"
                   :type="isNewPasswordVisible ? 'text' : 'password'"
@@ -147,7 +150,10 @@ onMounted(() => {
                 />
               </VCol>
 
-              <VCol cols="12" md="6">
+              <VCol
+                cols="12"
+                md="6"
+              >
                 <VTextField
                   v-model="confirmPassword"
                   :type="isConfirmPasswordVisible ? 'text' : 'password'"
@@ -165,9 +171,17 @@ onMounted(() => {
           <VCardText>
             <p class="text-base font-weight-medium mt-2">Password Requirements:</p>
             <ul class="d-flex flex-column gap-y-3">
-              <li v-for="item in passwordRequirements" :key="item" class="d-flex">
+              <li
+                v-for="item in passwordRequirements"
+                :key="item"
+                class="d-flex"
+              >
                 <div>
-                  <VIcon size="7" icon="ri-checkbox-blank-circle-fill" class="me-3" />
+                  <VIcon
+                    size="7"
+                    icon="ri-checkbox-blank-circle-fill"
+                    class="me-3"
+                  />
                 </div>
                 <span class="font-weight-medium">{{ item }}</span>
               </li>
@@ -177,7 +191,11 @@ onMounted(() => {
           <VCardText class="d-flex flex-wrap gap-4">
             <VBtn type="submit">Save changes</VBtn>
 
-            <VBtn color="secondary" variant="outlined" @click="handleReset">
+            <VBtn
+              color="secondary"
+              variant="outlined"
+              @click="handleReset"
+            >
               Reset
             </VBtn>
           </VCardText>

@@ -1,7 +1,7 @@
 <script setup>
+import api from '@/plugins/axios/axios'
 import avatar1 from '@images/avatars/avatar-1.png'
-import axios from 'axios'
-import { ref, onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useToast } from 'vue-toastification'
 
 const toast = useToast()
@@ -17,11 +17,7 @@ const adminData = ref({
 
 const fetchLoggedInAdmin = async () => {
   try {
-    const res = await axios.get('http://localhost:5000/api/admin/me', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    })
+    const res = await api.get('/admin/me')
 
     console.log('Admin profile response:', res.data)
     const admin = res.data

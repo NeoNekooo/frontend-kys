@@ -1,22 +1,20 @@
 <script setup>
-import axios from 'axios'
-import { ref, onMounted } from 'vue'
+import api from '@/plugins/axios/axios'
+import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
-
 const toast = useToast()
 const route = useRoute()
 const router = useRouter()
 
 const form = ref({
   nama: '',
-
 })
 console.log('Form:', route.params)
-const fetchSpk = async () => { 
+const fetchSpk = async () => {
   try {
     const { id } = route.params
-    const res = await axios.get(`http://localhost:5000/api/spk/${id}`)
+    const res = await api.get(`/spk/${id}`)
     form.value = res.data
   } catch (error) {
     toast.error('Gagal mengambil data SPK.')
@@ -24,12 +22,12 @@ const fetchSpk = async () => {
 }
 
 // Fungsi untuk mengupdate data SPK
-const updateForm = async () => { 
+const updateForm = async () => {
   try {
     const { id } = route.params
-    await axios.put(`http://localhost:5000/api/spk/${id}`, form.value) 
-    toast.success('Data SPK berhasil diperbarui.') 
-    router.push('/satuan-pendidikan') 
+    await api.put(`/spk/${id}`, form.value)
+    toast.success('Data SPK berhasil diperbarui.')
+    router.push('/satuan-pendidikan')
   } catch (error) {
     toast.error('Gagal menyimpan perubahan.')
     console.error(error)
@@ -38,7 +36,7 @@ const updateForm = async () => {
 
 // Muat data saat komponen di-mount
 onMounted(() => {
-  fetchSpk() // 
+  fetchSpk() //
 })
 </script>
 
@@ -46,15 +44,23 @@ onMounted(() => {
   <div class="max-w-lg mx-auto mt-10 p-8 bg-white rounded-lg shadow-md">
     <div class="flex justify-between items-center gap-4 mb-4">
       <h2 class="text-2xl font-semibold text-gray-800">Tambah Data Satuan Pendidikan</h2>
-      <router-link to="/satuan-pendidikan" class="btn bg-green-600 text-white px-4 py-2 rounded-lg mr-4">
+      <router-link
+        to="/satuan-pendidikan"
+        class="btn bg-green-600 text-white px-4 py-2 rounded-lg mr-4"
+      >
         Daftar Satuan Pendidikan
       </router-link>
     </div>
 
-    <form @submit.prevent="updateForm" class="grid grid-cols-1 gap-6">
+    <form
+      @submit.prevent="updateForm"
+      class="grid grid-cols-1 gap-6"
+    >
       <input
-        v-model="form.nama" type="text"
-        placeholder="Nama" class="input-style"
+        v-model="form.nama"
+        type="text"
+        placeholder="Nama"
+        class="input-style"
         required
       />
 
@@ -69,9 +75,3 @@ onMounted(() => {
     </form>
   </div>
 </template>
-
-<style scoped>
-.input-style {
-  @apply w-full px-4 py-2 bg-gray-200 border-2 border-black rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400;
-}
-</style>

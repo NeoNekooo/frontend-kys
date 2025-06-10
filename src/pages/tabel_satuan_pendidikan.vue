@@ -1,4 +1,5 @@
 <script setup>
+import api from "@/plugins/axios/axios";
 import axios from "axios";
 import dayjs from "dayjs";
 import { onMounted, ref } from "vue";
@@ -6,6 +7,7 @@ import { RouterLink } from "vue-router";
 import { useToast } from 'vue-toastification'; // Assuming you have toastification installed
 
 const toast = useToast(); // Initialize toast
+
 
 const url = "http://localhost:5000/api/spk"; // Changed from /api/pegawai to /api/spk
 const spk = ref([]);
@@ -48,7 +50,7 @@ const newSpk = ref({
 
 const getSpk = async () => { // Changed 'getPegawai' to 'getSpk'
   try {
-    const response = await axios.get(url);
+    const response = await api.get('/spk'); // Changed from /pegawai to /spk
     if (response.data) {
       spk.value = response.data; // Changed 'pegawai.value' to 'spk.value'
       console.log(spk.value); // Changed 'pegawai.value' to 'spk.value'
@@ -75,7 +77,7 @@ const closeEditModal = () => {
 
 const confirmEdit = async () => {
   try {
-    await axios.put(`${url}/${editSpk.value._id}`, editSpk.value); // Changed 'editPegawai' to 'editSpk'
+    await api.put(`/spk/${editSpk.value._id}`, editSpk.value); // Changed 'editPegawai' to 'editSpk'
     getSpk(); // Changed 'getPegawai' to 'getSpk'
     editModal.value.close();
     toast.success("Berhasil mengupdate data SPK."); // Changed "pegawai" to "SPK"
@@ -96,7 +98,7 @@ const closeDeleteModal = () => {
 
 const confirmDelete = async () => {
   try {
-    await axios.delete(`${url}/${spkToDelete.value}`); // Changed 'pegawaiToDelete' to 'spkToDelete'
+    await api.delete(`/apk/${spkToDelete.value}`); // Changed 'pegawaiToDelete' to 'spkToDelete'
     getSpk(); // Changed 'getPegawai' to 'getSpk'
     deleteModal.value.close();
     toast.success("Berhasil menghapus data SPK."); // Changed "pegawai" to "SPK"
@@ -142,7 +144,7 @@ const closeAddModal = () => {
 
 const confirmAdd = async () => {
   try {
-    await axios.post(url, newSpk.value); // Changed 'newPegawai' to 'newSpk'
+    await api.post('/spk', newSpk.value); // Changed 'newPegawai' to 'newSpk'
     getSpk(); // Changed 'getPegawai' to 'getSpk'
     addModal.value.close();
     toast.success("Berhasil menambahkan data SPK."); // Changed "pegawai" to "SPK"
@@ -173,7 +175,7 @@ onMounted(() => {
 <template>
   <section class="container-fluid"> <VCard class="my-4">
      <div class="flex justify-between items-center gap-4 mb-4 mx-4 dark:text-white"> 
-      <h2 class="text-2xl font-semibold text-gray-800">Table Data SPK</h2>
+      <h2 class="text-2xl font-semibold text-gray-800">Data Satuan Pendidikan</h2>
         <RouterLink to="tambah-spk" class="btn items-center justify-center mt-4 bg-green-600 text-white mb-4 px-4 py-2 rounded-lg"> Tambah SPK
         </RouterLink>
       </div>

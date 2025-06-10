@@ -1,14 +1,10 @@
 <script setup>
-import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
-import logo from '@images/logo.svg?raw'
-import authV1MaskDark from '@images/pages/auth-v1-mask-dark.png'
-import authV1MaskLight from '@images/pages/auth-v1-mask-light.png'
+import { router } from '@/plugins/router'
 import authV1Tree2 from '@images/pages/auth-v1-tree-2.png'
 import authV1Tree from '@images/pages/auth-v1-tree.png'
 import axios from 'axios'
+import { onMounted, ref } from 'vue'
 import { useToast } from 'vue-toastification'
-import { useTheme } from 'vuetify'
-import {router} from '@/plugins/router'
 
 const toast = useToast()
 
@@ -17,6 +13,9 @@ const form = ref({
   password: '',
   remember: false,
 })
+
+const logo = ref('') // Changed to string for URL
+
 const handleLogin = async () => {
   try {
     const res = await axios.post('http://localhost:5000/api/admin/login', {
@@ -28,22 +27,29 @@ const handleLogin = async () => {
     localStorage.setItem('token', token)
     console.log('Login successful:', token)
     toast.success('Login berhasil!')
-    router.push({name:'dashboard'})
+    router.push({ name: 'dashboard' })
   } catch (err) {
     toast.error(err.response?.data?.message || 'Login gagal')
     console.error('Login error:', err)
   }
 }
 
-const vuetifyTheme = useTheme()
+const fetchLogo = async () => {
+  try {
+    const response = await axios.get('http://localhost:5000/api/lembaga/logo')
+    logo.value = response.data
+    console.log('Logo fetched:', logo.value)
+  } catch (error) {
+    console.error('Error fetching logo:', error)
+  }
+}
 
-const authThemeMask = computed(() => {
-  return vuetifyTheme.global.name.value === 'light' ? authV1MaskLight : authV1MaskDark
+onMounted(() => {
+  fetchLogo()
 })
 
 const isPasswordVisible = ref(false)
 </script>
-
 <template>
   <!-- eslint-disable vue/no-v-html -->
 
@@ -60,7 +66,7 @@ const isPasswordVisible = ref(false)
           <!-- eslint-disable vue/no-v-html -->
           <div
             class="d-flex"
-            v-html="logo"
+            :src="`http://localhost:5000${logo}`"
           />
           <h2 class="font-weight-medium text-2xl text-uppercase">Materio</h2>
         </RouterLink>
@@ -96,7 +102,7 @@ const isPasswordVisible = ref(false)
               />
 
               <!-- remember me checkbox -->
-              <div class="d-flex align-center justify-space-between flex-wrap my-6">
+              <!-- <div class="d-flex align-center justify-space-between flex-wrap my-6">
                 <VCheckbox
                   v-model="form.remember"
                   label="Remember me"
@@ -108,7 +114,7 @@ const isPasswordVisible = ref(false)
                 >
                   Forgot Password?
                 </a>
-              </div>
+              </div> -->
 
               <!-- login button -->
               <VBtn
@@ -120,7 +126,7 @@ const isPasswordVisible = ref(false)
             </VCol>
 
             <!-- create account -->
-            <VCol
+            <!-- <VCol
               cols="12"
               class="text-center text-base"
             >
@@ -131,24 +137,24 @@ const isPasswordVisible = ref(false)
               >
                 Create an account
               </RouterLink>
-            </VCol>
+            </VCol> -->
 
-            <VCol
+            <!-- <VCol
               cols="12"
               class="d-flex align-center"
             >
               <VDivider />
               <span class="mx-4">or</span>
               <VDivider />
-            </VCol>
+            </VCol> -->
 
             <!-- auth providers -->
-            <VCol
+            <!-- <VCol
               cols="12"
               class="text-center"
             >
               <AuthProvider />
-            </VCol>
+            </VCol> -->
           </VRow>
         </VForm>
       </VCardText>
@@ -175,5 +181,5 @@ const isPasswordVisible = ref(false)
 </template>
 
 <style lang="scss">
-@use "@core/scss/template/pages/page-auth";
+@use '@core/scss/template/pages/page-auth';
 </style>

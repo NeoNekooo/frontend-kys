@@ -1,4 +1,5 @@
 <script setup>
+import api from '@/plugins/axios/axios'
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
@@ -22,7 +23,7 @@ const openDeleteModal = item => {
 
 const getTapel = async () => {
   try {
-    const response = await axios.get(url)
+    const response = await api.get('/tapel')
     if (response.data) {
       tapel.value = response.data
     } else {
@@ -38,7 +39,7 @@ const getTapel = async () => {
 
 const deleteItem = async () => {
   try {
-    await axios.delete(`${url}/${itemToDelete.value.id}`)
+    await api.delete(`/tapel/${itemToDelete.value.id}`)
     toast.success('Data tapel berhasil dihapus.')
     showModal.value = false
     router.go()
@@ -50,7 +51,7 @@ const deleteItem = async () => {
 const toggleTapelStatus = async (item, value) => {
   const newStatus = value ? 1 : 0
   try {
-    await axios.put(`${url}/${item.id}`, {
+    await api.put(`/tapel/${item.id}`, {
       tapel: item.tapel,
       ket: item.ket,
       status: newStatus,

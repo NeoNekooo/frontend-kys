@@ -1,5 +1,5 @@
 <script setup>
-import axios from 'axios'
+import api from '@/plugins/axios/axios'
 import { onMounted, ref } from 'vue'
 import { useToast } from 'vue-toastification'
 
@@ -32,7 +32,7 @@ const isSubmitting = ref(false)
 
 const fetchLembaga = async () => {
   try {
-    const res = await axios.get('http://localhost:5000/api/lembaga')
+    const res = await api.get('/lembaga')
     if (res.data.length > 0) {
       const data = res.data[0]
       lembagaId.value = data._id || data.id
@@ -66,13 +66,13 @@ const submitForm = async () => {
   try {
     isSubmitting.value = true
 
-    await axios.put(`http://localhost:5000/api/lembaga/${lembagaId.value}`, form.value)
+    await api.put(`/lembaga/${lembagaId.value}`, form.value)
 
     if (selectedFile.value) {
       const formData = new FormData()
       formData.append('foto', selectedFile.value)
 
-      await axios.post(`http://localhost:5000/api/lembaga/upload/${lembagaId.value}`, formData, {
+      await api.post(`/lembaga/upload/${lembagaId.value}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -213,7 +213,7 @@ onMounted(() => {
         <label>Telepon</label>
         <input
           v-model="form.telepon"
-          type="text"
+          type="number"
           class="input-style"
         />
       </div>
@@ -279,8 +279,8 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped>
+<style >
 .input-style {
-  @apply w-full px-4 py-2 bg-gray-200 border-2 border-black rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400;
+  @apply w-full px-4 py-2 ring-1 ring-gray-400 border-2 border-black rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400;
 }
 </style>

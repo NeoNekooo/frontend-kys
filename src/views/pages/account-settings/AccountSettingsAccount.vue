@@ -1,8 +1,9 @@
 <script setup>
+import api from '@/plugins/axios/axios'
 import avatar1 from '@images/avatars/avatar-1.png'
-import axios from 'axios'
 import { onMounted, ref } from 'vue'
 import { useToast } from 'vue-toastification'
+
 
 const toast = useToast()
 const refInputEl = ref()
@@ -19,11 +20,7 @@ const adminData = ref({
 
 const fetchLoggedInAdmin = async () => {
   try {
-    const res = await axios.get('http://localhost:5000/api/admin/me', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    })
+    const res = await api.get('/admin/me')
 
     console.log('Admin profile response:', res.data)
     const admin = res.data
@@ -66,14 +63,10 @@ const changeAvatar = event => {
 
 const updateAdmin = async () => {
   try {
-    await axios.put(`http://localhost:5000/api/admin/${adminId.value}`, {
+    await api.put(`/admin/${adminId.value}`, {
       username: adminData.value.username,
       email: adminData.value.email,
       password: adminData.value.password || undefined,
-    }, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
     })
 
     // Step 2: Upload photo separately
@@ -81,7 +74,7 @@ const updateAdmin = async () => {
       const formData = new FormData()
       formData.append('foto', adminData.value.photoFile)
 
-      await axios.post(`http://localhost:5000/api/admin/upload/${adminId.value}`, formData, {
+      await api.post(`/admin/upload/${adminId.value}`, formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'multipart/form-data',

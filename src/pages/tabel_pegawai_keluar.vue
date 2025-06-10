@@ -1,5 +1,5 @@
 <script setup>
-import axios from 'axios'
+import api from '@/plugins/axios/axios'
 import dayjs from 'dayjs'
 import { onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
@@ -7,8 +7,6 @@ import { useToast } from 'vue-toastification' // Assuming you have toastificatio
 
 const toast = useToast() // Initialize toast
 
-const url = 'http://localhost:5000/api/pegawai/tidak-aktif'
-const urlAll = 'http://localhost:5000/api/pegawai'
 const pegawai = ref([])
 const errorMessage = ref('')
 const loading = ref(true)
@@ -49,7 +47,7 @@ const newPegawai = ref({
 
 const getPegawai = async () => {
   try {
-    const response = await axios.get(url)
+    const response = await api.get('/pegawai/tidak-aktif')
     if (response.data) {
       pegawai.value = response.data
       console.log(pegawai.value)
@@ -76,7 +74,7 @@ const closeEditModal = () => {
 
 const confirmEdit = async () => {
   try {
-    await axios.put(`${urlAll}/${editPegawai.value.id}`, editPegawai.value)
+    await api.put(`/pegawai/${editPegawai.value.id}`, editPegawai.value)
     getPegawai()
     editModal.value.close()
     toast.success('Berhasil mengupdate data pegawai.')
@@ -97,7 +95,7 @@ const closeDeleteModal = () => {
 
 const confirmDelete = async () => {
   try {
-    await axios.delete(`${urlAll}/${pegawaiToDelete.value}`)
+    await api.delete(`/pegawai/${pegawaiToDelete.value}`)
     getPegawai()
     console.log('Pegawai dengan ID', pegawaiToDelete.value, 'telah dihapus.')
     deleteModal.value.close()
@@ -144,7 +142,7 @@ const closeAddModal = () => {
 
 const confirmAdd = async () => {
   try {
-    await axios.post(url, newPegawai.value)
+    await api.post('/pegawai/tidak-aktif', newPegawai.value)
     getPegawai()
     addModal.value.close()
     toast.success('Berhasil menambahkan data pegawai.')

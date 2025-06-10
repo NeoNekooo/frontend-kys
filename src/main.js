@@ -1,29 +1,24 @@
-import { createApp } from 'vue'
 import App from '@/App.vue'
-import { registerPlugins } from '@core/utils/plugins'
+import { createApp } from 'vue'
 
 // Styles
+import '@/assets/styles/tailwind.css'
 import '@core/scss/template/index.scss'
 import '@layouts/styles/index.scss'
-import '@/assets/styles/tailwind.css'
+
+// Plugins
+import routes from '@/plugins/router/index.js'
+import { registerPlugins } from '@core/utils/plugins'
 import Toast from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
-import routes from './plugins/router'
 
-
-// Create vue app
-// Create Vue app
+// Buat aplikasi Vue
 const app = createApp(App)
 
-// Register plugins
+// Daftarkan plugin & routing
 registerPlugins(app)
-app.use(routes) // ✅ Add router to the existing app
-app.use(Toast)  // ✅ Add Toast to the existing app
+app.use(routes)
+app.use(Toast)
 
-// Mount app
+// Mount ke elemen #app
 app.mount('#app')
-
-
-
-// Register plugins
-// Mount vue app

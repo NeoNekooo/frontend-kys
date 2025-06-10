@@ -1,4 +1,5 @@
 <script setup>
+import api from '@/plugins/axios/axios'
 import axios from 'axios'
 import { ref } from 'vue'
 import { useToast } from 'vue-toastification'
@@ -49,7 +50,7 @@ const handleFileUpload = event => {
 
 const submitForm = async () => {
   try {
-    const res = await axios.post('http://localhost:5000/api/pegawai', form.value)
+    const res = await api.post('/pegawai', form.value)
     toast.success('Data pegawai berhasil ditambahkan.')
 
     const pegawaiId = res.data.id || res.data.id // pastikan ini sesuai respons API
@@ -58,7 +59,7 @@ const submitForm = async () => {
       const formData = new FormData()
       formData.append('foto', photoFile.value)
       console.log(pegawaiId)
-      await axios.post(`http://localhost:5000/api/pegawai/upload/${pegawaiId}`, formData, {})
+      await api.post(`/pegawai/upload/${pegawaiId}`, formData, {})
       toast.success('Foto pegawai berhasil diunggah.')
     }
     Object.assign(form.value, {
@@ -363,8 +364,3 @@ const submitForm = async () => {
   </div>
 </template>
 
-<style scoped>
-.input-style {
-  @apply w-full px-4 py-2 bg-gray-200 border-2 border-black rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400;
-}
-</style>

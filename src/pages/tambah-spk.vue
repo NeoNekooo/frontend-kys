@@ -1,4 +1,5 @@
 <script setup>
+import api from '@/plugins/axios/axios'
 import router from '@/plugins/router'
 import axios from 'axios'
 import { ref } from 'vue'
@@ -13,7 +14,7 @@ const form = ref({
 
 const submitForm = async () => {
   try {
-    await axios.post('http://localhost:5000/api/spk', {
+    await api.post('/spk', {
       nama: form.value.nama 
     })
     toast.success('Data Satuan Pendidikan berhasil ditambahkan.')
@@ -29,7 +30,7 @@ const submitForm = async () => {
   <div class="max-w-lg mx-auto mt-10 p-8 bg-white rounded-lg shadow-md">
     <div class="flex justify-between items-center gap-4 mb-4">
       <h2 class="text-2xl font-semibold text-gray-800">Tambah Data Satuan Pendidikan</h2>
-      <router-link to="satuan-pendidikan" class="btn bg-green-600 text-white px-4 py-2 rounded-lg mr-4">
+      <router-link to="satuan-pendidikan" class="btn bg-green-600 text-white px-2 py-1 rounded-lg mr-4">
         Daftar Satuan Pendidikan
       </router-link>
     </div>
@@ -52,9 +53,3 @@ const submitForm = async () => {
     </form>
   </div>
 </template>
-
-<style scoped>
-.input-style {
-  @apply w-full px-4 py-2 bg-gray-200 border-2 border-black rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400;
-}
-</style>

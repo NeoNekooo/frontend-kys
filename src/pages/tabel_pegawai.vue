@@ -1,180 +1,173 @@
 <script setup>
-import axios from "axios";
-import dayjs from "dayjs";
-import { onMounted, ref } from "vue";
-import { RouterLink } from "vue-router";
-import { useToast } from 'vue-toastification'; // Assuming you have toastification installed
+import api from '@/plugins/axios/axios'
+import dayjs from 'dayjs'
+import { onMounted, ref } from 'vue'
+import { RouterLink } from 'vue-router'
+import { useToast } from 'vue-toastification' // Assuming you have toastification installed
 
+const toast = useToast() // Initialize toast
 
+const pegawai = ref([])
+const errorMessage = ref('')
+const loading = ref(true)
+const editModal = ref(null)
+const deleteModal = ref(null)
+const imageModal = ref(null)
+const addModal = ref(null)
 
-
-const toast = useToast(); // Initialize toast
-
-const url = "http://localhost:5000/api/pegawai/aktif";
-const urlAll = "http://localhost:5000/api/pegawai";
-const pegawai = ref([]);
-const errorMessage = ref("");
-const loading = ref(true);
-const editModal = ref(null);
-const deleteModal = ref(null);
-const imageModal = ref(null);
-const addModal = ref(null);
-
-const editPegawai = ref({});
-const pegawaiToDelete = ref(null);
-const modalImageSrc = ref("");
+const editPegawai = ref({})
+const pegawaiToDelete = ref(null)
+const modalImageSrc = ref('')
 const newPegawai = ref({
-  nama: "",
-  kewarganegaraan: "",
-  nik: "",
-  nuptk: "",
-  nip: "",
-  nipy: "",
-  npwp: "",
-  tmp_lahir: "",
-  tgl_lahir: "",
-  jk: "",
-  agama: "",
-  nama_ibu: "",
-  status_pernikahan: "",
-  nama_suami_istri: "",
+  nama: '',
+  kewarganegaraan: '',
+  nik: '',
+  nuptk: '',
+  nip: '',
+  nipy: '',
+  npwp: '',
+  tmp_lahir: '',
+  tgl_lahir: '',
+  jk: '',
+  agama: '',
+  nama_ibu: '',
+  status_pernikahan: '',
+  nama_suami_istri: '',
   jml_anak: 0,
-  alamat: "",
-  kecamatan: "",
-  desa: "",
-  kabupaten: "",
-  provinsi: "",
-  kode_pos: "",
-  kontak: "",
-  photo: "",
+  alamat: '',
+  kecamatan: '',
+  desa: '',
+  kabupaten: '',
+  provinsi: '',
+  kode_pos: '',
+  kontak: '',
+  photo: '',
   status: 1,
-});
+})
 
 const getPegawai = async () => {
   try {
-    const response = await axios.get(url);
+    const response = await api.get('/pegawai/aktif')
     if (response.data) {
-      pegawai.value = response.data;
-      console.log(pegawai.value);
+      pegawai.value = response.data
+      console.log(pegawai.value)
     } else {
-      errorMessage.value = "Format data tidak sesuai.";
+      errorMessage.value = 'Format data tidak sesuai.'
     }
   } catch (error) {
-    toast.error("Gagal memuat data pegawai.");
-    errorMessage.value = "Gagal memuat data pegawai.";
+    toast.error('Gagal memuat data pegawai.')
+    errorMessage.value = 'Gagal memuat data pegawai.'
   } finally {
-    loading.value = false;
+    loading.value = false
   }
-};
+}
 
-
-
-const openEditModal = (pegawai) => {
-  editPegawai.value = { ...pegawai };
-  editModal.value.showModal();
-};
+const openEditModal = pegawai => {
+  editPegawai.value = { ...pegawai }
+  editModal.value.showModal()
+}
 
 const closeEditModal = () => {
-  editPegawai.value = {};
-  editModal.value.close();
-};
+  editPegawai.value = {}
+  editModal.value.close()
+}
 
 const confirmEdit = async () => {
   try {
-    await axios.put(`${urlAll}/${editPegawai.value.id}`, editPegawai.value);
-    getPegawai();
-    editModal.value.close();
-    toast.success("Berhasil mengupdate data pegawai.");
+    await api.put(`/pegawai/${editPegawai.value.id}`, editPegawai.value)
+    getPegawai()
+    editModal.value.close()
+    toast.success('Berhasil mengupdate data pegawai.')
   } catch (error) {
-    toast.error("Gagal mengupdate data pegawai.");
+    toast.error('Gagal mengupdate data pegawai.')
   }
-};
+}
 
-const openDeleteModal = (id) => {
-  pegawaiToDelete.value = id;
-  deleteModal.value.showModal();
-};
+const openDeleteModal = id => {
+  pegawaiToDelete.value = id
+  deleteModal.value.showModal()
+}
 
 const closeDeleteModal = () => {
-  pegawaiToDelete.value = null;
-  deleteModal.value.close();
-};
+  pegawaiToDelete.value = null
+  deleteModal.value.close()
+}
 
 const confirmDelete = async () => {
   try {
-    await axios.delete(`${urlAll}/${pegawaiToDelete.value}`);
-    getPegawai();
-    console.log("Pegawai dengan ID", pegawaiToDelete.value, "telah dihapus.");
-    deleteModal.value.close();
-    toast.success("Berhasil menghapus data pegawai.");
+    await api.delete(`/pegawai/${pegawaiToDelete.value}`)
+    getPegawai()
+    console.log('Pegawai dengan ID', pegawaiToDelete.value, 'telah dihapus.')
+    deleteModal.value.close()
+    toast.success('Berhasil menghapus data pegawai.')
   } catch (error) {
-    toast.error("Gagal menghapus data pegawai.");
+    toast.error('Gagal menghapus data pegawai.')
   }
-};
+}
 
 const openAddModal = () => {
   newPegawai.value = {
-    nama: "",
-    kewarganegaraan: "",
-    nik: "",
-    nuptk: "",
-    nip: "",
-    nipy: "",
-    npwp: "",
-    tmp_lahir: "",
-    tgl_lahir: "",
-    jk: "",
-    agama: "",
-    nama_ibu: "",
-    status_pernikahan: "",
-    nama_suami_istri: "",
+    nama: '',
+    kewarganegaraan: '',
+    nik: '',
+    nuptk: '',
+    nip: '',
+    nipy: '',
+    npwp: '',
+    tmp_lahir: '',
+    tgl_lahir: '',
+    jk: '',
+    agama: '',
+    nama_ibu: '',
+    status_pernikahan: '',
+    nama_suami_istri: '',
     jml_anak: 0,
-    alamat: "",
-    kecamatan: "",
-    desa: "",
-    kabupaten: "",
-    provinsi: "",
-    kode_pos: "",
-    kontak: "",
-    photo: "",
+    alamat: '',
+    kecamatan: '',
+    desa: '',
+    kabupaten: '',
+    provinsi: '',
+    kode_pos: '',
+    kontak: '',
+    photo: '',
     status: 1,
-  };
-  addModal.value.showModal();
-};
+  }
+  addModal.value.showModal()
+}
 
 const closeAddModal = () => {
-  newPegawai.value = {};
-  addModal.value.close();
-};
+  newPegawai.value = {}
+  addModal.value.close()
+}
 
 const confirmAdd = async () => {
   try {
-    await axios.post(url, newPegawai.value);
-    getPegawai();
-    addModal.value.close();
-    toast.success("Berhasil menambahkan data pegawai.");
+    await api.post('/pegawai/aktif', newPegawai.value)
+    getPegawai()
+    addModal.value.close()
+    toast.success('Berhasil menambahkan data pegawai.')
   } catch (error) {
-    toast.error("Gagal menambahkan data pegawai.");
+    toast.error('Gagal menambahkan data pegawai.')
   }
-};
+}
 
-const formatTanggal = (tanggal) => {
-  return tanggal ? dayjs(tanggal).format("DD-MM-YYYY") : "-";
-};
+const formatTanggal = tanggal => {
+  return tanggal ? dayjs(tanggal).format('DD-MM-YYYY') : '-'
+}
 
-const openImageModal = (imageUrl) => {
-  modalImageSrc.value = imageUrl;
-  imageModal.value.showModal();
-};
+const openImageModal = imageUrl => {
+  modalImageSrc.value = imageUrl
+  imageModal.value.showModal()
+}
 
 const closeImageModal = () => {
-  modalImageSrc.value = "";
-  imageModal.value.close();
-};
+  modalImageSrc.value = ''
+  imageModal.value.close()
+}
 
 onMounted(() => {
-  getPegawai();
-});
+  getPegawai()
+})
 </script>
 
 <template>
@@ -182,7 +175,10 @@ onMounted(() => {
     <VCard>
       <div class="flex justify-between items-center gap-4 mb-4 my-4 ml-4">
         <h2 class="text-2xl font-semibold text-gray-800">Table Data Pegawai</h2>
-        <RouterLink to="tambah-pegawai" class="btn bg-green-600 text-white px-4 py-2 rounded-lg mr-4">
+        <RouterLink
+          to="tambah-pegawai"
+          class="btn bg-green-600 text-white px-4 py-2 rounded-lg mr-4"
+        >
           Tambah Pegawai
         </RouterLink>
       </div>
@@ -206,7 +202,10 @@ onMounted(() => {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(p, index) in pegawai" :key="p.id">
+          <tr
+            v-for="(p, index) in pegawai"
+            :key="p.id"
+          >
             <td>{{ index + 1 }}</td>
             <td class="text-center">
               <img
@@ -231,9 +230,9 @@ onMounted(() => {
 
             <td class="text-center">
               <VChip>
-              <span :class="p.status === 1 ? 'text-green-600' : 'text-red-600'">
-                {{ p.status === 1 ? 'Aktif' : 'Tidak Aktif' }}
-              </span>
+                <span :class="p.status === 1 ? 'text-green-600' : 'text-red-600'">
+                  {{ p.status === 1 ? 'Aktif' : 'Tidak Aktif' }}
+                </span>
               </VChip>
             </td>
             <td class="whitespace-nowrap">
@@ -263,17 +262,30 @@ onMounted(() => {
     </VCard>
   </section>
 
-  <dialog ref="deleteModal" class="modal">
+  <dialog
+    ref="deleteModal"
+    class="modal"
+  >
     <div class="modal-box">
       <h3 class="font-bold text-lg text-red-600">Konfirmasi Penghapusan</h3>
       <p class="py-4">Apakah Anda yakin ingin menghapus data pegawai ini?</p>
       <div class="modal-action">
-        <button @click="closeDeleteModal" class="btn">Batal</button>
-        <button @click="confirmDelete" class="btn btn-error text-white">Ya, Hapus</button>
+        <button
+          @click="closeDeleteModal"
+          class="btn"
+        >
+          Batal
+        </button>
+        <button
+          @click="confirmDelete"
+          class="btn btn-error text-white"
+        >
+          Ya, Hapus
+        </button>
       </div>
     </div>
   </dialog>
-  </template>
+</template>
 
 <style scoped>
 .modal {

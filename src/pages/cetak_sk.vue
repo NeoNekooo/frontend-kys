@@ -1,4 +1,5 @@
 <script setup>
+import api from '@/plugins/axios/axios'
 import axios from 'axios'
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router' // Import useRouter
@@ -15,7 +16,7 @@ const errorMessage = ref('')
 const getPenugasan = async () => {
   const { id } = route.params
   try {
-    const response = await axios.get(`${url}/${id}`)
+    const response = await api.get(`/penugasan/${id}`)
     if (response.data && response.data.data) {
       penugasan.value = response.data.data
     } else {
@@ -197,7 +198,7 @@ onMounted(async () => {
         </div>
       </div>
 
-      <div class="mt-4">
+      <div class="mt-3">
         <p class="mb-2">Tembusan disampaikan Kepada:</p>
         <ol class="list-decimal pl-4">
           <li>Yth. Kepala Dinas Pendidikan Propinsi Jawa Barat</li>

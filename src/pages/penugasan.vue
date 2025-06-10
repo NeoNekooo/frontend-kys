@@ -1,14 +1,9 @@
 <script setup>
-import axios from 'axios'
+import api from '@/plugins/axios/axios'
 import { onMounted, reactive, ref } from 'vue'
 import { useToast } from 'vue-toastification'
 
 const toast = useToast()
-const penugasanUrl = 'http://localhost:5000/api/penugasan'
-const nomorSuratUrl = 'http://localhost:5000/api/nomorSurat'
-const namaPegawaiUrl = 'http://localhost:5000/api/pegawai/aktif'
-const suratPerintahUrl = 'http://localhost:5000/api/spk'
-const tapelUrl = 'http://localhost:5000/api/tapel'
 
 const nomorSuratOptions = ref([])
 const namaPegawaiOptions = ref([])
@@ -28,7 +23,7 @@ const form = reactive({
 
 async function fetchNomorSurat() {
   try {
-    const res = await axios.get(nomorSuratUrl)
+    const res = await api.get('/nomorSurat')
     if (res.data && res.data.length > 0) {
       const firstNomorSurat = res.data[0]
       console.log('First Nomor Surat:', res.data[0])
@@ -40,12 +35,11 @@ async function fetchNomorSurat() {
       nomorSuratOptions.value = res.data
 
       if (firstNomorSurat.id_tapel) {
-  await fetchTapel(firstNomorSurat.id_tapel)
-} else {
-  console.warn('id_tapel tidak tersedia di nomorSurat')
-  form.tapel_display = 'N/A'
-}
-
+        await fetchTapel(firstNomorSurat.id_tapel)
+      } else {
+        console.warn('id_tapel tidak tersedia di nomorSurat')
+        form.tapel_display = 'N/A'
+      }
     } else {
       console.error('No data found for nomor surat')
       nomorSuratOptions.value = []
@@ -57,7 +51,7 @@ async function fetchNomorSurat() {
 async function fetchTapel(id) {
   try {
     console.log('Fetching tapel with ID:', id)
-    const res = await axios.get(`${tapelUrl}/${id}`)
+    const res = await api.get(`/tapel/${id}`)
     console.log('Tapel response:', res.data)
 
     if (res.data) {
@@ -74,10 +68,9 @@ async function fetchTapel(id) {
   }
 }
 
-
 async function fetchPegawaiAktif() {
   try {
-    const res = await axios.get(namaPegawaiUrl)
+    const res = await api.get('/pegawai/aktif')
     if (res.data) {
       namaPegawaiOptions.value = res.data
     } else {
@@ -91,7 +84,7 @@ async function fetchPegawaiAktif() {
 
 async function fetchSPK() {
   try {
-    const res = await axios.get(suratPerintahUrl) // Menggunakan suratPerintahUrl yang sudah diubah
+    const res = await api.get('/spk') // Menggunakan suratPerintahUrl yang sudah diubah
     if (res.data) {
       spkOptions.value = res.data // Diubah dari suratPerintahOptions
     } else {
@@ -105,7 +98,7 @@ async function fetchSPK() {
 
 async function fetchPenugasanData() {
   try {
-    const res = await axios.get(penugasanUrl)
+    const res = await api.get('/penugasan')
     penugasanData.value = res.data.data
     console.log('Penugasan data fetched:', penugasanData.value)
   } catch (error) {
@@ -115,7 +108,7 @@ async function fetchPenugasanData() {
 
 async function handleSubmit() {
   const dataToSubmit = {
-    id_tapel: tapelId.value, 
+    id_tapel: tapelId.value,
     id_nomor_surat: form.id_nomor_surat,
     id_pegawai: form.id_pegawai,
     id_satuan_pendidikan: form.id_satuan_pendidikan,
@@ -123,7 +116,7 @@ async function handleSubmit() {
 
   console.log('Submitted form:', dataToSubmit)
   try {
-    await axios.post(penugasanUrl, dataToSubmit)
+    await api.post('/penugasan', dataToSubmit)
     toast.success('Data penugasan berhasil ditambahkan!')
     handleReset()
     await fetchPenugasanData()
@@ -282,30 +275,29 @@ onMounted(async () => {
               <td>{{ index + 1 }}</td>
               <td>{{ item.tahun_pelajaran }}</td>
               <td>{{ item.nomor_surat }}</td>
-              <td>{{ item.nama_pegawai}}</td>
+              <td>{{ item.nama_pegawai }}</td>
               <td>{{ item.nama_satuan_pendidikan }}</td>
-               <td class="text-center whitespace-nowrap">
-              <div class="flex items-center justify-center gap-3">
-                <RouterLink
-                  :to="`/tapel/edit/${item.id}`"
-                  class="text-white hover:text-blue-800 text-center px-2 py-1 rounded-lg bg-yellow-400 focus:outline-none"
-                  title="Edit Tapel"
-                  aria-label="Edit"
-                >
-                  <i class="ri-pencil-line text-xl"></i>
-                </RouterLink>
+              <td class="text-center whitespace-nowrap">
+                <div class="flex items-center justify-center gap-3">
+                  <RouterLink
+                    :to="`/tapel/edit/${item.id}`"
+                    class="text-white hover:text-blue-800 text-center px-2 py-1 rounded-lg bg-yellow-400 focus:outline-none"
+                    title="Edit Tapel"
+                    aria-label="Edit"
+                  >
+                    <i class="ri-pencil-line text-xl"></i>
+                  </RouterLink>
 
-                <RouterLink
-                :to="`/cetak_sk/${item.id}`"
-                  class="bg-green-800 hover:bg-green-700 text-white px-2 py-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
-                  title="Hapus Tapel"
-                  aria-label="Delete"
-                >
-                  <i class="ri-printer-line text-lg"></i>
-                </RouterLink>
-              
-              </div>
-            </td>
+                  <RouterLink
+                    :to="`/cetak_sk/${item.id}`"
+                    class="bg-green-800 hover:bg-green-700 text-white px-2 py-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+                    title="Hapus Tapel"
+                    aria-label="Delete"
+                  >
+                    <i class="ri-printer-line text-lg"></i>
+                  </RouterLink>
+                </div>
+              </td>
             </tr>
             <tr v-if="penugasanData.length === 0">
               <td
@@ -324,7 +316,11 @@ onMounted(async () => {
 
 <style scoped>
 .input-field {
-  @apply px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500;
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  background-color: #f9fafb;
+  transition: border-color 0.2s ease-in-out;
 }
 
 .input-field[disabled] {

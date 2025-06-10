@@ -28,7 +28,6 @@ const routes = [
       { path: 'dashboard', name: 'dashboard', component: () => import('@/pages/dashboard.vue') },
       { path: 'account-settings', component: () => import('@/pages/account-settings.vue') },
       { path: 'icons', component: () => import('@/pages/icons.vue') },
-      { path: 'cards', component: () => import('@/pages/cards.vue') },
       { path: 'profil-lembaga', component: ProfilLembaga },
       { name: 'tambah-pegawai', path: 'tambah-pegawai', component: TambahPegawai },
       { name: 'EditPegawai', path: '/pegawai/edit/:id', component: EditPegawai, props: true },
