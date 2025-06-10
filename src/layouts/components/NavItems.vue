@@ -27,12 +27,12 @@ const openLogoutModal = () => {
   />
 
   <!-- 👉 Front Pages -->
-  <VerticalNavGroup :item="{ title: 'Lembaga', icon: 'ri-file-copy-line' }">
+  <VerticalNavGroup :item="{ title: 'Lembaga', icon: 'ri-organization-chart' }">
     <VerticalNavLink :item="{ title: 'Profil Lembaga', href: '/profil-lembaga' }" />
     <VerticalNavLink :item="{ title: 'Satuan Pendidikan', to: '/satuan-pendidikan' }" />
   </VerticalNavGroup>
 
-  <VerticalNavGroup :item="{ title: 'Pegawai', icon: 'ri-file-copy-line' }">
+  <VerticalNavGroup :item="{ title: 'Pegawai', icon: 'ri-team-fill' }">
     <VerticalNavLink :item="{ title: 'Pegawai', href: '/tabel-pegawai' }" />
     <VerticalNavLink
       :item="{ title: 'Pegawai Keluar', href: '/tabel-pegawai-keluar' }"
@@ -40,13 +40,12 @@ const openLogoutModal = () => {
     />
   </VerticalNavGroup>
 
-  <VerticalNavGroup :item="{ title: 'Penugasan Pegawai', icon: 'ri-file-copy-line' }">
-    <VerticalNavLink :item="{ title: 'Penugasan Pegawai', href: '/tabel-penugasan' }" />
-    <VerticalNavLink :item="{ title: 'Cetak SK', href: '' }" />
+  <VerticalNavGroup :item="{ title: 'Penugasan Pegawai', icon: 'ri-briefcase-3-line' }">
+    <VerticalNavLink :item="{ title: 'Penugasan ', href: '/tabel-penugasan' }" />
   </VerticalNavGroup>
 
   <VerticalNavLink
-    :item="{ title: 'Tahun Pelajaran', icon: 'ri-file-copy-line', href: '/tapel' }"
+    :item="{ title: 'Tahun Pelajaran', icon: 'ri-calendar-todo-line', href: '/tapel' }"
   />
 
   <VerticalNavLink
@@ -54,26 +53,17 @@ const openLogoutModal = () => {
   />
 
   <!-- 👉 Logout Modal Trigger -->
-  <VerticalNavLink
+  
+<hr> 
+
+<VerticalNavLink
+    :style="{ color: 'red' }"
     :item="{ title: 'Logout', icon: 'ri-logout-box-line' }"
     @click="openLogoutModal"
   />
 
-  <!-- 👉 UI Section Title -->
-  <VerticalNavSectionTitle :item="{ heading: 'User Interface' }" />
+  
 
-  <VerticalNavLink
-    :item="{ title: 'Cards', icon: 'ri-bar-chart-box-line', to: '/cards' }"
-  />
-
-  <!-- 👉 Forms & Tables -->
-  <VerticalNavSectionTitle :item="{ heading: 'Forms & Tables' }" />
-  <VerticalNavLink
-    :item="{ title: 'Form Layouts', icon: 'ri-layout-4-line', to: '/form-layouts' }"
-  />
-  <VerticalNavLink
-    :item="{ title: 'Tables', icon: 'ri-table-alt-line', to: '/tables' }"
-  />
 
   <!-- 👉 Logout Modal -->
   <dialog ref="modalRef" class="modal modal-bottom sm:modal-middle">
@@ -89,3 +79,14 @@ const openLogoutModal = () => {
     </div>
   </dialog>
 </template>
+
+<style>
+hr {
+  height: 1px;
+  border-top: 1px solid gray;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+</style>
