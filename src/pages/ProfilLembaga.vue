@@ -62,9 +62,21 @@ const handleFileUpload = event => {
   selectedFile.value = file
 }
 
+const isValidHttpsUrl = (url) => {
+  return typeof url === 'string' && url.trim() !== '' && url.startsWith('https://')
+}
+
+
 const submitForm = async () => {
   try {
     isSubmitting.value = true
+
+    // 👉 Validasi situs_web harus https://
+    if (form.value.situs_web && !isValidHttpsUrl(form.value.situs_web)) {
+      toast.error('Situs web harus diawali dengan https://')
+      isSubmitting.value = false
+      return
+    }
 
     await api.put(`/lembaga/${lembagaId.value}`, form.value)
 
@@ -87,6 +99,7 @@ const submitForm = async () => {
     isSubmitting.value = false
   }
 }
+
 
 
 onMounted(() => {

@@ -176,7 +176,7 @@ onMounted(() => {
   <section class="container-fluid"> <VCard class="my-4">
      <div class="flex justify-between items-center gap-4 mb-4 mx-4 dark:text-white"> 
       <h2 class="text-2xl font-semibold text-gray-800">Data Satuan Pendidikan</h2>
-        <RouterLink to="tambah-spk" class="btn items-center justify-center mt-4 bg-green-600 text-white mb-4 px-4 py-2 rounded-lg"> Tambah SPK
+        <RouterLink to="tambah-spk" class="btn items-center justify-center mt-4 bg-green-600 text-white mb-4 px-4 py-2 rounded-lg"> Tambah
         </RouterLink>
       </div>
       <div class="overflow-x-auto"> <VTable class="w-full"> <thead>
