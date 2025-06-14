@@ -66,7 +66,7 @@ onMounted(() => {
           to="tambah-nomor-surat"
           class="btn bg-green-600 text-white px-4 py-2 rounded-lg mr-4"
         >
-          Tambah Tapel
+          Tambah
         </RouterLink>
       </div>
       <VTable>
