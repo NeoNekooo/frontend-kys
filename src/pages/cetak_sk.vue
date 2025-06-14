@@ -48,13 +48,13 @@ onMounted(async () => {
 
 <template>
   <div class="font-sans text-sm text-gray-800 leading-tight p-4 print:p-0" style="font-family: Arial, sans-serif">
-    <div class="max-w-4xl mx-auto print:shadow-none mt-36">
-      <div class="text-center mb-4">
+    <div class="max-w-4xl mx-auto print:shadow-none lable">
+      <div class="text-center mb-3">
         <h1 class="text-xl font-bold uppercase mb-0">SURAT KEPUTUSAN</h1>
         <h2 class="text-header font-bold uppercase mb-0">KETUA YAYASAN NURUL ISLAM AFFANDIYAH</h2>
         <p class="text-sm font-bold">Nomor : {{ penugasan.nomor_surat }}</p>
-        <div class="my-2">
-          <p class="font-bold uppercase text-sm ">TENTANG :</p>
+        <div class="">
+          <p class="font-bold uppercase text-sm ">TENTANG </p>
         </div>
         <p class="font-bold uppercase text-header">PENGANGKATAN GURU DAN TENAGA KEPENDIDIKAN</p>
         <p class="font-bold uppercase text-header">
@@ -221,6 +221,10 @@ onMounted(async () => {
 
 .text-header {
   font-size: 16px;
+}
+
+.lable{
+  margin-top: 145px;
 }
 
 /* Hide elements when printing */

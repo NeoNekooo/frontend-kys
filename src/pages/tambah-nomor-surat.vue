@@ -81,10 +81,10 @@ onMounted(() => {
     <div class="flex justify-between items-center gap-4 mb-4">
       <h2 class="text-2xl font-semibold text-gray-800">Tambah Data Nomor Surat</h2>
       <router-link
-        to="/tabel-nomor-surat"
+        to="/nomor-surat"
         class="btn bg-green-600 text-white px-4 py-2 rounded-lg mr-4"
       >
-        Daftar Nomor Surat
+        Kembali
       </router-link>
     </div>
 
@@ -125,7 +125,7 @@ onMounted(() => {
         />
       </div>
       <div>
-        <label for="nama_pimpinan">Keterangan</label>
+        <label for="nama_pimpinan">Nama Pimpinan</label>
         <input
           id="nama_pimpinan"
           v-model="form.nama_pimpinan"
@@ -156,7 +156,7 @@ onMounted(() => {
           type="submit"
           class="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-2 rounded shadow"
         >
-          Simpan Tapel
+          Simpan
         </button>
       </div>
     </form>
