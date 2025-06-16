@@ -1,6 +1,5 @@
 <script setup>
 import api from '@/plugins/axios/axios'
-import axios from 'axios'
 import { ref } from 'vue'
 import { useToast } from 'vue-toastification'
 
@@ -128,11 +127,20 @@ const submitForm = async () => {
       </div>
       <div>
         <label>Jabatan</label>
-        <input
+        <select
           v-model="form.jabatan"
-          type="text"
           class="input-style"
-        />
+        >
+          <option
+            disabled
+            value=""
+          >
+            Jabatan
+          </option>
+          <option value="Tenaga Kerja Usaha">Tenaga Kerja</option>
+          <option value="Guru">Guru</option>
+          <option value="Pegawai">Pegawai</option>
+        </select>
       </div>
       <div>
         <label>Kewarganegaraan</label>
@@ -154,7 +162,7 @@ const submitForm = async () => {
         <label>NIK</label>
         <input
           v-model="form.nik"
-          type="text"
+          type="number"
           class="input-style"
         />
       </div>
@@ -162,7 +170,7 @@ const submitForm = async () => {
         <label>NUPTK</label>
         <input
           v-model="form.nuptk"
-          type="text"
+          type="number"
           class="input-style"
         />
       </div>
@@ -170,7 +178,7 @@ const submitForm = async () => {
         <label>NIP</label>
         <input
           v-model="form.nip"
-          type="text"
+          type="number"
           class="input-style"
         />
       </div>
@@ -283,12 +291,13 @@ const submitForm = async () => {
           class="input-style"
         />
       </div>
-      <div class="md:col-span-2">
-        <label>Alamat</label>
-        <textarea
+      <div class="">
+        <label>Jalan</label>
+        <input
+          type="text"
           v-model="form.alamat"
-          class="input-style resize-none h-24"
-        ></textarea>
+          class="input-style"
+        />
       </div>
       <div>
         <label>Desa</label>
@@ -363,4 +372,3 @@ const submitForm = async () => {
     </form>
   </div>
 </template>
-

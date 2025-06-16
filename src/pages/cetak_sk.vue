@@ -1,7 +1,6 @@
 <script setup>
 import api from '@/plugins/axios/axios'
-import axios from 'axios'
-import { ref, onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router' // Import useRouter
 
 const route = useRoute()
@@ -28,38 +27,42 @@ const getPenugasan = async () => {
   }
 }
 
-const formatDate = (dateStr) => {
+const formatDate = dateStr => {
   if (!dateStr) return ''
   const options = { day: '2-digit', month: 'long', year: 'numeric' }
   return new Date(dateStr).toLocaleDateString('id-ID', options)
 }
 
 onMounted(async () => {
-  await getPenugasan() 
+  await getPenugasan()
 
   window.onafterprint = () => {
-    router.back() 
-    window.onafterprint = null; 
-  };
+    router.back()
+    window.onafterprint = null
+  }
 
-  window.print();
+  window.print()
 })
 </script>
 
 <template>
-  <div class="font-sans text-sm text-gray-800 leading-tight p-4 print:p-0" style="font-family: Arial, sans-serif">
+  <div
+    class="font-sans text-sm text-gray-800 leading-tight p-4 print:p-0"
+    style="font-family: Arial, sans-serif"
+  >
     <div class="max-w-4xl mx-auto print:shadow-none lable">
-      <div class="text-center mb-3">
-        <h1 class="text-xl font-bold uppercase mb-0">SURAT KEPUTUSAN</h1>
-        <h2 class="text-header font-bold uppercase mb-0">KETUA YAYASAN NURUL ISLAM AFFANDIYAH</h2>
+      <div class="text-center">
+        <h1 class="text-xl font-bold uppercase">SURAT KEPUTUSAN</h1>
+        <h2 class="text-header font-bold uppercase">KETUA YAYASAN NURUL ISLAM AFFANDIYAH</h2>
         <p class="text-sm font-bold">Nomor : {{ penugasan.nomor_surat }}</p>
         <div class="">
           <p class="font-bold uppercase text-sm ">TENTANG </p>
         </div>
-        <p class="font-bold uppercase text-header">PENGANGKATAN GURU DAN TENAGA KEPENDIDIKAN <br>
-         DI YAYASAN NURUL ISLAM AFFANDIYAH TAHUN PELAJARAN {{ penugasan.tahun_pelajaran }}
+        <p class="font-bold uppercase text-header">PENGANGKATAN GURU DAN TENAGA KEPENDIDIKAN</p>
+        <p class="font-bold uppercase text-header">
+          DI YAYASAN NURUL ISLAM AFFANDIYAH TAHUN PELAJARAN {{ penugasan.tahun_pelajaran }}
         </p>
-        <h2 class="text-header font-bold uppercase mt-4">KETUA YAYASAN NURUL ISLAM AFFANDIYAH</h2>
+        <h2 class="text-header font-bold uppercase mt-2 mb-2">KETUA YAYASAN NURUL ISLAM AFFANDIYAH</h2>
       </div>
 
       <table class="w-full border-collapse text-black font-normal table-1">
@@ -71,13 +74,11 @@ onMounted(async () => {
               <ol class="list-decimal pl-4">
                 <li>
                   ㅤBahwa untuk kelancaran dan ketertiban kegiatan Belajar Mengajar serta kinerja ketatausahaan di
-                  ㅤㅤㅤYayasan
-                  Nurul Islam dipandang perlu untuk mengangkat Guru dan Tenaga Kependidikan;
+                  ㅤㅤㅤYayasan Nurul Islam dipandang perlu untuk mengangkat Guru dan Tenaga Kependidikan;
                 </li>
                 <li>
                   ㅤBahwa nama yang tercantum dalam surat keputusan ini dipandang cakap dan memenuhi syarat untuk
-                  ㅤmenjadi
-                  Guru dan Tenaga Kependidikan di Yayasan Nurul Islam.
+                  ㅤmenjadi Guru dan Tenaga Kependidikan di Yayasan Nurul Islam.
                 </li>
               </ol>
             </td>
@@ -92,11 +93,10 @@ onMounted(async () => {
                 <li>ㅤPeraturan Pemerintah Nomor 29 tahun 1990 tentang pendidikan menengah;</li>
                 <li>
                   ㅤKeputusan Menteri Negara Pendayagunaan Aparatur Negara Nomor 84 tahun 1983 tentang Jabatan
-                  ㅤFungsional
-                  Guru dan Angka Kreditnya;
+                  ㅤFungsional Guru dan Angka Kreditnya;
                 </li>
                 <li>
-                  ㅤKeputusan Bersama Menteri Pendidikan dan Kebudayaan dan Kepala Badan Administrasi <br>
+                  ㅤKeputusan Bersama Menteri Pendidikan dan Kebudayaan dan Kepala Badan Administrasi <br />
                   ㅤKepegawaian Negara Nomor : 0433/P/1993 dan Nomor 25 tahun 1993;
                 </li>
                 <li>ㅤProgram Kerja Yayasan Tahun Pelajaran {{ penugasan.tahun_pelajaran }}.</li>
@@ -127,29 +127,27 @@ onMounted(async () => {
       <table class="w-full border-collapse text-black font-normal table-2 text-xs">
         <tbody>
           <tr>
-            <td class="w-1/6 pr-4 align-top">Menetapkan <br> Pertama</td>
+            <td class="w-1/6 pr-4 align-top">
+              Menetapkan <br />
+              Pertama
+            </td>
             <td class="w-1/60 align-top">:</td>
             <td class="align-top">
               <ol class="list-decimal pl-4">
-                <li>
-                  Menunjuk Saudara/i ㅤㅤㅤㅤㅤㅤㅤ:
-                </li>
+                <li>Menunjuk Saudara/i ㅤㅤㅤㅤㅤㅤㅤ:</li>
                 <li>
                   Namaㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ&nbsp; :ㅤ<b>{{ penugasan.nama_pegawai }}</b>
                 </li>
                 <li>
                   Tempat, Tanggal Lahirㅤㅤㅤㅤㅤ&nbsp; &nbsp; &nbsp;:ㅤ{{ penugasan.tmp_lahir }},{{
-                    formatDate(penugasan.tgl_lahir) }}
+                    formatDate(penugasan.tgl_lahir)
+                  }}
                 </li>
+                <li>Jenjang/Pend. Terakhirㅤㅤㅤㅤㅤㅤ:ㅤ{{ penugasan.jenjang_pendidikan }}</li>
+                <li>Jabatan/Unit Kerjaㅤㅤㅤㅤㅤㅤㅤㅤ:ㅤ{{ penugasan.jabatan }}</li>
                 <li>
-                  Jenjang/Pend. Terakhirㅤㅤㅤㅤㅤㅤ:ㅤ{{ penugasan.jenjang_pendidikan }}
-                </li>
-                <li>
-                  Jabatan/Unit Kerjaㅤㅤㅤㅤㅤㅤㅤㅤ:ㅤ{{ penugasan.jabatan }}
-                </li>
-                <li>
-                  ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ&nbsp; Di {{ penugasan.nama_satuan_pendidikan }} Nurul Islam Tahun Pelajaran
-                  2024/2025
+                  ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ&nbsp; Di {{ penugasan.nama_satuan_pendidikan }} Nurul Islam Tahun
+                  Pelajaran 2024/2025
                 </li>
               </ol>
             </td>
@@ -159,8 +157,10 @@ onMounted(async () => {
             <td class="align-top">:</td>
             <td class="align-top">
               <ol class="list-decimal pl-4">
-                <li>Kepada nama yang tercantum di atas diberikan honorarium sesuai dengan peraturan dan
-                  ketentuan yang berlaku di Yayasan Nurul Islam</li>
+                <li>
+                  Kepada nama yang tercantum di atas diberikan honorarium sesuai dengan peraturan dan ketentuan yang
+                  berlaku di Yayasan Nurul Islam
+                </li>
               </ol>
             </td>
           </tr>
@@ -169,8 +169,9 @@ onMounted(async () => {
             <td class="align-top">:</td>
             <td class="align-top">
               <ol class="list-decimal pl-4">
-                <li>Keputusan mulai berlaku sejak tanggal ditetapkan sampai dengan adanya perubahan yang
-                  dianggap perlu.</li>
+                <li>
+                  Keputusan mulai berlaku sejak tanggal ditetapkan sampai dengan adanya perubahan yang dianggap perlu.
+                </li>
               </ol>
             </td>
           </tr>
@@ -214,7 +215,7 @@ onMounted(async () => {
 
 <style scoped>
 .table-1 li {
-  margin-left: 20px;
+  margin-inline-start: 20px;
 }
 
 .table-2 ol {
@@ -226,7 +227,7 @@ onMounted(async () => {
 }
 
 .lable{
-  margin-top: 170px;
+  margin-top: 145px;
 }
 
 /* Hide elements when printing */
@@ -279,6 +280,10 @@ onMounted(async () => {
 }
 
 .mb-2 {
+  margin-block-end: 0.5rem;
+}
+
+.mt-2 {
   margin-block-end: 0.5rem;
 }
 
