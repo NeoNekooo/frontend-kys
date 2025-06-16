@@ -31,7 +31,7 @@ const submitForm = async () => {
     <div class="flex justify-between items-center gap-4 mb-4">
       <h2 class="text-2xl font-semibold text-gray-800">Tambah Data Satuan Pendidikan</h2>
       <router-link to="satuan-pendidikan" class="btn bg-green-600 text-white px-2 py-1 rounded-lg mr-4">
-        Daftar Satuan Pendidikan
+        Kembali
       </router-link>
     </div>
 

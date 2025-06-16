@@ -101,7 +101,7 @@ const submitForm = async () => {
         to="tabel-pegawai"
         class="btn bg-green-600 text-white px-4 py-2 rounded-lg mr-4"
       >
-        Daftar Pegawai
+        Kembali
       </router-link>
     </div>
 

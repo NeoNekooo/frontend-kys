@@ -1,6 +1,6 @@
 <script setup>
 import api from '@/plugins/axios/axios'
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 const toast = useToast()
@@ -31,6 +31,7 @@ const form = ref({
   kabupaten: '',
   provinsi: '',
   kode_pos: '',
+  kontak: '',
   photo: '',
   status: '',
 })
@@ -67,16 +68,18 @@ const updateForm = async () => {
     const { id } = route.params
 
     const updateData = { ...form.value }
-    delete updateData.photo
 
-    // Update data pegawai
+    // Jangan kirim photo jika belum diubah (masih string)
+    const isPhotoFile = form.value.photo && typeof form.value.photo !== 'string'
+    if (isPhotoFile) {
+      delete updateData.photo
+    }
+
     await api.put(`/pegawai/${id}`, updateData)
 
-    // Upload foto jika ada
-    if (form.value.photo) {
+    if (isPhotoFile) {
       const formData = new FormData()
       formData.append('foto', form.value.photo)
-
       await api.post(`http://localhost:5000/api/pegawai/upload/${id}`, formData)
     }
 
@@ -87,6 +90,12 @@ const updateForm = async () => {
     console.error(error)
   }
 }
+
+const photoPreview = computed(() => {
+  if (!form.value.photo) return `http://localhost:5000/uploads/pegawai/${form.value.photo_filename || 'default.png'}`
+  if (typeof form.value.photo === 'string') return `http://localhost:5000/uploads/pegawai/${form.value.photo}`
+  return URL.createObjectURL(form.value.photo)
+})
 
 onMounted(() => {
   fetchPegawai()
@@ -313,7 +322,20 @@ onMounted(() => {
         />
       </div>
       <div>
+        <label>Kontak</label>
+        <input
+          v-model="form.kontak"
+          type="text"
+          class="input-style"
+        />
+      </div>
+      <div>
         <label>Foto</label>
+        <img
+          :src="photoPreview"
+          alt="Foto Pegawai"
+          class="w-32 h-32 object-cover rounded border mb-2"
+        />
         <input
           type="file"
           accept=".jpg, .png, .jpeg"
@@ -350,4 +372,3 @@ onMounted(() => {
     </form>
   </div>
 </template>
-

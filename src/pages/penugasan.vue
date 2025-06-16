@@ -280,7 +280,7 @@ onMounted(async () => {
               <td class="text-center whitespace-nowrap">
                 <div class="flex items-center justify-center gap-3">
                   <RouterLink
-                    :to="`/tapel/edit/${item.id}`"
+                    :to="`/penugasan/edit/${item.id}`"
                     class="text-white hover:text-blue-800 text-center px-2 py-1 rounded-lg bg-yellow-400 focus:outline-none"
                     title="Edit Tapel"
                     aria-label="Edit"

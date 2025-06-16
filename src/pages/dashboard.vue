@@ -1,9 +1,8 @@
 <script setup>
 import AnalyticsTransactions from '@/views/dashboard/AnalyticsTransactions.vue'
 
-
 const totalProfit = {
-  title: 'Total Profit',
+  title: 'Selamat Datang',
   color: 'secondary',
   icon: 'ri-pie-chart-2-line',
   stats: '$25.6k',
@@ -22,5 +21,5 @@ const newProject = {
 </script>
 
 <template>
-      <AnalyticsTransactions />
+  <AnalyticsTransactions />
 </template>

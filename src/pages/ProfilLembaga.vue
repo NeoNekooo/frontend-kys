@@ -1,6 +1,6 @@
 <script setup>
 import api from '@/plugins/axios/axios'
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useToast } from 'vue-toastification'
 
 const toast = useToast()
@@ -62,10 +62,9 @@ const handleFileUpload = event => {
   selectedFile.value = file
 }
 
-const isValidHttpsUrl = (url) => {
+const isValidHttpsUrl = url => {
   return typeof url === 'string' && url.trim() !== '' && url.startsWith('https://')
 }
-
 
 const submitForm = async () => {
   try {
@@ -100,7 +99,15 @@ const submitForm = async () => {
   }
 }
 
-
+const logoPreview = computed(() => {
+  if (selectedFile.value) {
+    return URL.createObjectURL(selectedFile.value)
+  } else if (form.value.logo_url) {
+    return form.value.logo_url
+  } else {
+    return null
+  }
+})
 
 onMounted(() => {
   fetchLembaga()
@@ -115,6 +122,16 @@ onMounted(() => {
       @submit.prevent="submitForm"
       class="grid grid-cols-1 md:grid-cols-2 gap-6"
     >
+    <div
+          v-if="logoPreview"
+          class="mt-2"
+        >
+          <img
+            :src="logoPreview"
+            alt="Preview Logo"
+            class="h-20 rounded border border-gray-300"
+          />
+        </div>
       <div>
         <label>Nama Lembaga</label>
         <input
@@ -163,16 +180,7 @@ onMounted(() => {
           type="file"
           class="input-style"
         />
-        <div
-          v-if="selectedFile"
-          class="mt-2"
-        >
-          <img
-            :src="URL.createObjectURL(selectedFile)"
-            alt="Preview Logo"
-            class="h-20 rounded"
-          />
-        </div>
+       
       </div>
 
       <div class="md:col-span-2">
@@ -226,7 +234,7 @@ onMounted(() => {
         <label>Telepon</label>
         <input
           v-model="form.telepon"
-          type="number"
+          type="text"
           class="input-style"
         />
       </div>
@@ -292,7 +300,7 @@ onMounted(() => {
   </div>
 </template>
 
-<style >
+<style>
 .input-style {
   @apply w-full px-4 py-2 ring-1 ring-gray-400 border-2 border-black rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400;
 }

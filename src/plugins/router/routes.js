@@ -1,10 +1,11 @@
 import cetak_sk from '@/pages/cetak_sk.vue'
 import EditNomorSurat from '@/pages/edit-nomor-surat.vue'
 import EditPegawai from '@/pages/edit-pegawai.vue'
+import EditPenugasan from '@/pages/edit-penugasan.vue'
 import editSpk from '@/pages/edit-spk.vue'
 import EditTapel from '@/pages/edit-tapel.vue'
+import Lembaga from '@/pages/lembaga.vue'
 import TabelPenugasan from '@/pages/penugasan.vue'
-import ProfilLembaga from '@/pages/ProfilLembaga.vue'
 import tabelNomorSurat from '@/pages/tabel-nomor-surat.vue'
 import tapel from '@/pages/tabel-tapel.vue'
 import tables_pegawai from '@/pages/tabel_pegawai.vue'
@@ -28,7 +29,7 @@ const routes = [
       { path: 'dashboard', name: 'dashboard', component: () => import('@/pages/dashboard.vue') },
       { path: 'account-settings', component: () => import('@/pages/account-settings.vue') },
       { path: 'icons', component: () => import('@/pages/icons.vue') },
-      { path: 'profil-lembaga', component: ProfilLembaga },
+      { path: 'profil-lembaga', component: Lembaga },
       { name: 'tambah-pegawai', path: 'tambah-pegawai', component: TambahPegawai },
       { name: 'EditPegawai', path: '/pegawai/edit/:id', component: EditPegawai, props: true },
       { name: 'tabel-pegawai', path: 'tabel-pegawai', component: tables_pegawai },
@@ -43,7 +44,9 @@ const routes = [
       { path: 'tabel-penugasan', name: 'tabel-penugasan', component: TabelPenugasan },
       { path: 'nomor-surat', name: 'nomor-surat', component: tabelNomorSurat },
       { path: 'edit-nomor-surat/:id', name: 'edit-nomor-surat', component: EditNomorSurat, props: true },
+      { path: 'penugasan/edit/:id', component: EditPenugasan },
       { path: 'tambah-nomor-surat', name: 'tambah-nomor-surat', component: tambahNomorSurat },
+      // { path: 'lembaga-profil', name: 'lembaga profil', component: Lembaga },
     ],
   },
   {

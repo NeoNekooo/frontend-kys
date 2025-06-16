@@ -49,7 +49,7 @@ onMounted(() => {
 const isPasswordVisible = ref(false)
 </script>
 <template>
-  <div class="auth-wrapper d-flex align-center justify-center pa-4 ">
+  <div class="auth-wrapper d-flex align-center justify-center pa-4">
     <VCard
       class="auth-card pa-4 pt-7"
       max-width="900"
@@ -60,16 +60,17 @@ const isPasswordVisible = ref(false)
           class="d-flex align-center gap-3"
         >
           <!-- eslint-disable vue/no-v-html -->
-          <div
-            class="d-flex"
-            :src="`http://localhost:5000${logo}`"
+          <img
+            class="d-flex w-24"
+            src="../assets/images/satu-1735196021.png"
           />
-          <h2 class="font-weight-medium text-2xl text-uppercase">Sistem Yayasan</h2>
+
+          <!-- <h2 class="font-weight-medium text-2xl text-uppercase">SIYNA</h2> -->
         </RouterLink>
       </VCardItem>
 
       <VCardText class="pt-2">
-        <p class="mb-0">Silahkan Login</p>
+        <!-- <p class="mb-0">Silahkan Login</p> -->
       </VCardText>
 
       <VCardText>
@@ -112,7 +113,7 @@ const isPasswordVisible = ref(false)
               </div> -->
 
               <!-- login button -->
-              <VBtn 
+              <VBtn
                 class="mt-4"
                 block
                 type="submit"

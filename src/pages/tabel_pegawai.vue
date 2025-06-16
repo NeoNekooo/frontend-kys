@@ -174,34 +174,35 @@ onMounted(() => {
   <section>
     <VCard>
       <div class="flex justify-between items-center gap-4 mb-4 my-4 ml-4">
-        <h2 class="text-2xl font-semibold text-gray-800">Table Data Pegawai</h2>
+        <h2 class="text-2xl font-semibold text-gray-800">Data Pegawai</h2>
         <RouterLink
           to="tambah-pegawai"
           class="btn bg-green-600 text-white px-4 py-2 rounded-lg mr-4"
         >
-          Tambah Pegawai
+          Tambah
         </RouterLink>
       </div>
-      <VTable>
+      <VTable
+      >
         <thead>
           <tr>
             <th class="text-uppercase">No</th>
             <th class="text-center text-uppercase">Photo</th>
             <th class="text-center text-uppercase">Nama</th>
-            <th class="text-center text-uppercase">Kewarganegaraan</th>
-            <th class="text-center text-uppercase">NIK</th>
+            <!-- <th class="text-center text-uppercase">Kewarganegaraan</th> -->
+            <!-- <th class="text-center text-uppercase">NIK</th> -->
             <th class="text-center text-uppercase">NUPTK</th>
-            <th class="text-center text-uppercase">NIP</th>
+            <!-- <th class="text-center text-uppercase">NIP</th> -->
             <th class="text-center text-uppercase">NIPY</th>
-            <th class="text-center text-uppercase">NPWP</th>
+            <!-- <th class="text-center text-uppercase">NPWP</th> -->
             <th class="text-center text-uppercase">Jenis Kelamin</th>
-            <th class="text-center text-uppercase">Kode Pos</th>
-            <th class="text-center text-uppercase">Kontak</th>
+            <!-- <th class="text-center text-uppercase">Kode Pos</th> -->
+            <!-- <th class="text-center text-uppercase">Kontak</th> -->
             <th class="text-center text-uppercase">Status</th>
             <th class="text-center text-uppercase">Aksi</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="my-7 py-4 space-y-4 gap-4">
           <tr
             v-for="(p, index) in pegawai"
             :key="p.id"
@@ -218,15 +219,15 @@ onMounted(() => {
               <span v-else>-</span>
             </td>
             <td class="text-center">{{ p.nama }}</td>
-            <td class="text-center">{{ p.kewarganegaraan }}</td>
-            <td class="text-center">{{ p.nik }}</td>
+            <!-- <td class="text-center">{{ p.kewarganegaraan }}</td> -->
+            <!-- <td class="text-center">{{ p.nik }}</td> -->
             <td class="text-center">{{ p.nuptk }}</td>
-            <td class="text-center">{{ p.nip }}</td>
+            <!-- <td class="text-center">{{ p.nip }}</td> -->
             <td class="text-center">{{ p.nipy }}</td>
-            <td class="text-center">{{ p.npwp }}</td>
+            <!-- <td class="text-center">{{ p.npwp }}</td> -->
             <td class="text-center">{{ p.jk === 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
-            <td class="text-center">{{ p.kode_pos }}</td>
-            <td class="text-center">{{ p.kontak || '-' }}</td>
+            <!-- <td class="text-center">{{ p.kode_pos }}</td> -->
+            <!-- <td class="text-center">{{ p.kontak || '-' }}</td> -->
 
             <td class="text-center">
               <VChip>
@@ -253,6 +254,11 @@ onMounted(() => {
                   aria-label="Delete"
                 >
                   <i class="ri-delete-bin-6-line text-lg"></i>
+                </button>
+                <button
+                  class="bg-green-600 hover:bg-green-700 text-white px-2 py-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+                >
+                  <i class="ri-printer-line text-lg"></i>
                 </button>
               </div>
             </td>

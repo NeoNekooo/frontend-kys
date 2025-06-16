@@ -56,10 +56,12 @@ onMounted(async () => {
         <h2 class="text-header font-bold uppercase">KETUA YAYASAN NURUL ISLAM AFFANDIYAH</h2>
         <p class="text-sm font-bold">Nomor : {{ penugasan.nomor_surat }}</p>
         <p class="font-bold text-sm print:mt-2 print:mb-2">TENTANG</p>
-        <p class="font-bold text-header">PENGANGKATAN GURU DAN TENAGA KEPENDIDIKAN</p>
-        <p class="font-bold uppercase text-header">
+        <p class="font-bold text-header">PENGANGKATAN GURU DAN TENAGA KEPENDIDIKAN <br>
+
           DI YAYASAN NURUL ISLAM AFFANDIYAH TAHUN PELAJARAN {{ penugasan.tahun_pelajaran }}
+
         </p>
+     
         <h2 class="text-header font-bold uppercase mt-2 mb-2">KETUA YAYASAN NURUL ISLAM AFFANDIYAH</h2>
       </div>
 
@@ -137,7 +139,7 @@ onMounted(async () => {
                   Namaㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ&nbsp; :ㅤ<b>{{ penugasan.nama_pegawai }}</b>
                 </li>
                 <li>
-                  Tempat, Tanggal Lahirㅤㅤㅤㅤㅤ&nbsp; &nbsp; &nbsp;:ㅤ{{ penugasan.tmp_lahir }},{{
+                  Tempat, Tanggal Lahirㅤㅤㅤㅤㅤ&nbsp; &nbsp; &nbsp;:ㅤ{{ penugasan.tmp_lahir }}, {{
                     formatDate(penugasan.tgl_lahir)
                   }}
                 </li>
@@ -190,8 +192,9 @@ onMounted(async () => {
             </ul>
           </div>
           <p class="">Ketua Yayasan,</p>
-          <p class="font-bold underline mt-16">{{ penugasan.nama_pimpinan }}</p>
-          <p>NIPY. -</p>
+          <p class="font-bold mt-16">
+            <span class="underline"> {{ penugasan.nama_pimpinan }}</span> <span><br />NIPY</span>
+          </p>
         </div>
       </div>
 
@@ -222,7 +225,7 @@ onMounted(async () => {
 }
 
 .lable {
-  margin-block-start: 145px;
+  margin-block-start: 160px;
 }
 
 /* Hide elements when printing */

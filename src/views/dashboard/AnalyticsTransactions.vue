@@ -43,18 +43,18 @@ const moreList = [
 </script>
 
 <template>
-  <VCard title="Transactions">
+  <VCard title="Selamat Datang">
     <template #subtitle>
       <p class="text-body-1 mb-0">
-        <span class="d-inline-block font-weight-medium text-high-emphasis">Total 48.5% Growth</span> <span class="text-high-emphasis">😎</span> this month
+        <span class="d-inline-block font-weight-medium text-high-emphasis">Di Sistem Informasi Yayasan</span>
       </p>
     </template>
 
-    <template #append>
+    <!-- <template #append>
       <MoreBtn :menu-list="moreList" />
-    </template>
+    </template> -->
 
-    <VCardText class="pt-10">
+    <!-- <VCardText class="pt-10">
       <VRow>
         <VCol
           v-for="item in statistics"
@@ -87,6 +87,6 @@ const moreList = [
           </div>
         </VCol>
       </VRow>
-    </VCardText>
+    </VCardText> -->
   </VCard>
-</template>
+</template> 
