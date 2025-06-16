@@ -1,6 +1,7 @@
 import cetak_sk from '@/pages/cetak_sk.vue'
 import EditNomorSurat from '@/pages/edit-nomor-surat.vue'
 import EditPegawai from '@/pages/edit-pegawai.vue'
+import EditPenugasan from '@/pages/edit-penugasan.vue'
 import editSpk from '@/pages/edit-spk.vue'
 import EditTapel from '@/pages/edit-tapel.vue'
 import TabelPenugasan from '@/pages/penugasan.vue'
@@ -15,6 +16,7 @@ import tambahNomorSurat from '@/pages/tambah-nomor-surat.vue'
 import TambahPegawai from '@/pages/tambah-pegawai.vue'
 import tambahSpk from '@/pages/tambah-spk.vue'
 import tambahTapel from '@/pages/tambah-tapel.vue'
+import editPenugasan from '@/pages/edit-penugasan.vue'
 
 import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
@@ -40,6 +42,7 @@ const routes = [
       { path: 'tambah-tapel', name: 'tambah-tapel', component: tambahTapel },
       { path: 'tambah-spk', component: tambahSpk },
       { name: 'Editspk', path: '/spk/edit/:id', component: editSpk, props: true },
+      { name: 'Editpenugasan', path: '/penugasan/edit/:id', component: editPenugasan, props: true },
       { path: 'tabel-penugasan', name: 'tabel-penugasan', component: TabelPenugasan },
       { path: 'nomor-surat', name: 'nomor-surat', component: tabelNomorSurat },
       { path: 'edit-nomor-surat/:id', name: 'edit-nomor-surat', component: EditNomorSurat, props: true },

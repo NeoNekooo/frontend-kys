@@ -56,9 +56,8 @@ onMounted(async () => {
         <div class="">
           <p class="font-bold uppercase text-sm ">TENTANG </p>
         </div>
-        <p class="font-bold uppercase text-header">PENGANGKATAN GURU DAN TENAGA KEPENDIDIKAN</p>
-        <p class="font-bold uppercase text-header">
-          DI YAYASAN NURUL ISLAM AFFANDIYAH TAHUN PELAJARAN {{ penugasan.tahun_pelajaran }}
+        <p class="font-bold uppercase text-header">PENGANGKATAN GURU DAN TENAGA KEPENDIDIKAN <br>
+         DI YAYASAN NURUL ISLAM AFFANDIYAH TAHUN PELAJARAN {{ penugasan.tahun_pelajaran }}
         </p>
         <h2 class="text-header font-bold uppercase mt-4">KETUA YAYASAN NURUL ISLAM AFFANDIYAH</h2>
       </div>
@@ -192,8 +191,11 @@ onMounted(async () => {
             </ul>
           </div>
           <p class="">Ketua Yayasan,</p>
-          <p class="font-bold underline mt-16">{{ penugasan.nama_pimpinan }}</p>
-          <p>NIPY. -</p>
+          <p class="font-bold mt-16"><u>{{ penugasan.nama_pimpinan }}</u> <br>
+          NIPY:-
+          </p>
+
+          
         </div>
       </div>
 
@@ -224,7 +226,7 @@ onMounted(async () => {
 }
 
 .lable{
-  margin-top: 145px;
+  margin-top: 170px;
 }
 
 /* Hide elements when printing */
