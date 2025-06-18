@@ -174,7 +174,7 @@ onMounted(() => {
   <section>
     <VCard>
       <div class="flex justify-between items-center gap-4 mb-4 my-4 ml-4">
-        <h2 class="text-2xl font-semibold text-gray-800">Table Data Pegawai Keluar</h2>
+        <h2 class="text-2xl font-semibold text-gray-800"> Data Pegawai Keluar</h2>
       </div>
       <VTable>
         <thead>

@@ -51,18 +51,18 @@ onMounted(async () => {
     style="font-family: Arial, sans-serif"
   >
     <div class="max-w-4xl mx-auto print:shadow-none lable">
-      <div class="text-center">
-        <h1 class="text-xl font-bold uppercase">SURAT KEPUTUSAN</h1>
-        <h2 class="text-header font-bold uppercase">KETUA YAYASAN NURUL ISLAM AFFANDIYAH</h2>
+      <div class="text-center mb-3">
+        <h1 class="text-xl font-bold uppercase mb-0">SURAT KEPUTUSAN</h1>
+        <h2 class="text-header font-bold uppercase mb-0">KETUA YAYASAN NURUL ISLAM AFFANDIYAH</h2>
         <p class="text-sm font-bold">Nomor : {{ penugasan.nomor_surat }}</p>
-        <p class="font-bold text-sm print:mt-2 print:mb-2">TENTANG</p>
-        <p class="font-bold text-header">PENGANGKATAN GURU DAN TENAGA KEPENDIDIKAN <br>
-
+        <div class="">
+          <p class="font-bold uppercase text-sm">TENTANG</p>
+        </div>
+        <p class="font-bold uppercase text-header">
+          PENGANGKATAN GURU DAN TENAGA KEPENDIDIKAN <br />
           DI YAYASAN NURUL ISLAM AFFANDIYAH TAHUN PELAJARAN {{ penugasan.tahun_pelajaran }}
-
         </p>
-     
-        <h2 class="text-header font-bold uppercase mt-2 mb-2">KETUA YAYASAN NURUL ISLAM AFFANDIYAH</h2>
+        <h2 class="text-header font-bold uppercase mt-4">KETUA YAYASAN NURUL ISLAM AFFANDIYAH</h2>
       </div>
 
       <table class="w-full border-collapse text-black font-normal table-1">
@@ -139,7 +139,7 @@ onMounted(async () => {
                   Namaㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ&nbsp; :ㅤ<b>{{ penugasan.nama_pegawai }}</b>
                 </li>
                 <li>
-                  Tempat, Tanggal Lahirㅤㅤㅤㅤㅤ&nbsp; &nbsp; &nbsp;:ㅤ{{ penugasan.tmp_lahir }}, {{
+                  Tempat, Tanggal Lahirㅤㅤㅤㅤㅤ&nbsp; &nbsp; &nbsp;:ㅤ{{ penugasan.tmp_lahir }},{{
                     formatDate(penugasan.tgl_lahir)
                   }}
                 </li>
@@ -193,7 +193,8 @@ onMounted(async () => {
           </div>
           <p class="">Ketua Yayasan,</p>
           <p class="font-bold mt-16">
-            <span class="underline"> {{ penugasan.nama_pimpinan }}</span> <span><br />NIPY</span>
+            <u>{{ penugasan.nama_pimpinan }}</u> <br />
+            NIPY:-
           </p>
         </div>
       </div>
@@ -278,10 +279,6 @@ onMounted(async () => {
 }
 
 .mb-2 {
-  margin-block-end: 0.5rem;
-}
-
-.mt-2 {
   margin-block-end: 0.5rem;
 }
 

@@ -81,6 +81,7 @@ const submitForm = async () => {
     }
 
     await api.put(`/lembaga/${lembagaId.value}`, form.value)
+    console.log(form.value)
 
     if (selectedFile.value) {
       const formData = new FormData()
@@ -92,7 +93,6 @@ const submitForm = async () => {
         },
       })
     }
-    window.location.reload()
     toast.success('Data lembaga berhasil diperbarui.')
   } catch (error) {
     console.error('Gagal mengupdate data:', error)
@@ -116,9 +116,9 @@ onMounted(() => {
   fetchLembaga()
 })
 </script>
-
 <template>
   <VCard title="Album Settings">
+    <!-- Logo Section -->
     <VCardText class="flex gap-6 items-start flex-wrap">
       <!-- Logo Preview -->
       <div>
@@ -153,11 +153,13 @@ onMounted(() => {
 
     <VDivider />
 
+    <!-- Form Section -->
     <VCardText>
       <form
         @submit.prevent="submitForm"
         class="grid grid-cols-1 md:grid-cols-2 gap-6"
       >
+        <!-- Basic Info -->
         <div>
           <label>Nama Lembaga</label>
           <input
@@ -166,6 +168,7 @@ onMounted(() => {
             class="input-style"
           />
         </div>
+
         <div>
           <label>NPYN</label>
           <input
@@ -174,6 +177,7 @@ onMounted(() => {
             class="input-style"
           />
         </div>
+
         <div>
           <label>Tahun Berdiri</label>
           <input
@@ -182,6 +186,7 @@ onMounted(() => {
             class="input-style"
           />
         </div>
+
         <div>
           <label>Luas</label>
           <input
@@ -190,6 +195,7 @@ onMounted(() => {
             class="input-style"
           />
         </div>
+
         <div>
           <label>Moto</label>
           <input
@@ -198,16 +204,19 @@ onMounted(() => {
             class="input-style"
           />
         </div>
+
+        <!-- Optional logo upload -->
         <div>
           <label>Logo</label>
           <input
             accept=".jpg, .png, .jpeg"
-            @change="handleFileUpload"
             type="file"
+            @change="handleFileUpload"
             class="input-style"
           />
         </div>
 
+        <!-- Address & Contact -->
         <div class="md:col-span-2">
           <label>Alamat</label>
           <textarea
@@ -215,103 +224,107 @@ onMounted(() => {
             class="input-style resize-none h-24"
           ></textarea>
         </div>
+
         <div>
-          <label>Desa</label>
-          <input
+          <label>Desa</label
+          ><input
             v-model="form.desa"
             type="text"
             class="input-style"
           />
         </div>
         <div>
-          <label>Kecamatan</label>
-          <input
+          <label>Kecamatan</label
+          ><input
             v-model="form.kecamatan"
             type="text"
             class="input-style"
           />
         </div>
         <div>
-          <label>Kabupaten</label>
-          <input
+          <label>Kabupaten</label
+          ><input
             v-model="form.kabupaten"
             type="text"
             class="input-style"
           />
         </div>
         <div>
-          <label>Provinsi</label>
-          <input
+          <label>Provinsi</label
+          ><input
             v-model="form.provinsi"
             type="text"
             class="input-style"
           />
         </div>
         <div>
-          <label>Kode Pos</label>
-          <input
+          <label>Kode Pos</label
+          ><input
             v-model="form.kode_pos"
             type="text"
             class="input-style"
           />
         </div>
         <div>
-          <label>Telepon</label>
-          <input
+          <label>Telepon</label
+          ><input
             v-model="form.telepon"
             type="text"
             class="input-style"
           />
         </div>
         <div>
-          <label>Fax</label>
-          <input
+          <label>Fax</label
+          ><input
             v-model="form.fax"
             type="text"
             class="input-style"
           />
         </div>
         <div>
-          <label>Email</label>
-          <input
+          <label>Email</label
+          ><input
             v-model="form.email"
             type="email"
             class="input-style"
           />
         </div>
         <div>
-          <label>Situs Web</label>
-          <input
+          <label>Situs Web</label
+          ><input
             v-model="form.situs_web"
             type="text"
             class="input-style"
           />
         </div>
+
+        <!-- Social Media -->
         <div>
-          <label>Facebook</label>
-          <input
+          <label>Facebook</label
+          ><input
             v-model="form.facebook"
             type="text"
             class="input-style"
           />
         </div>
         <div>
-          <label>YouTube</label>
-          <input
+          <label>YouTube</label
+          ><input
             v-model="form.youtube"
             type="text"
             class="input-style"
           />
         </div>
         <div>
-          <label>TikTok</label>
-          <input
+          <label>TikTok</label
+          ><input
             v-model="form.tiktok"
             type="text"
             class="input-style"
           />
         </div>
 
+        <!-- Submit -->
         <div class="md:col-span-2 flex gap-4">
           <button
             type="submit"
@@ -325,3 +338,9 @@ onMounted(() => {
     </VCardText>
   </VCard>
 </template>
+
+<style lang="scss">
+.input-style {
+  @apply w-full px-4 py-2 ring-1 ring-gray-400 border-2 border-black rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400;
+}
+</style>

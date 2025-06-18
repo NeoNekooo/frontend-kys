@@ -26,28 +26,28 @@ const openLogoutModal = () => {
 
   <!-- 👉 Front Pages -->
   <VerticalNavGroup :item="{ title: 'Lembaga', icon: 'ri-organization-chart' }">
-    <VerticalNavLink :item="{ title: 'Profil Lembaga', href: '/profil-lembaga' }" />
+    <VerticalNavLink :item="{ title: 'Profil Lembaga', to: '/profil-lembaga' }" />
     <VerticalNavLink :item="{ title: 'Satuan Pendidikan', to: '/satuan-pendidikan' }" />
   </VerticalNavGroup>
 
   <VerticalNavGroup :item="{ title: 'Pegawai', icon: 'ri-team-fill' }">
-    <VerticalNavLink :item="{ title: 'Pegawai', href: '/tabel-pegawai' }" />
+    <VerticalNavLink :item="{ title: 'Pegawai', to: '/tabel-pegawai' }" />
     <VerticalNavLink
-      :item="{ title: 'Pegawai Keluar', href: '/tabel-pegawai-keluar' }"
+      :item="{ title: 'Pegawai Keluar', to: '/tabel-pegawai-keluar' }"
       :style="{ color: 'red' }"
     />
   </VerticalNavGroup>
 
   <VerticalNavGroup :item="{ title: 'Penugasan Pegawai', icon: 'ri-briefcase-3-line' }">
-    <VerticalNavLink :item="{ title: 'Penugasan ', href: '/tabel-penugasan' }" />
+    <VerticalNavLink :item="{ title: 'Penugasan ', to: '/tabel-penugasan' }" />
   </VerticalNavGroup>
 
   <VerticalNavLink
-    :item="{ title: 'Tahun Pelajaran', icon: 'ri-calendar-todo-line', href: '/tapel' }"
+    :item="{ title: 'Tahun Pelajaran', icon: 'ri-calendar-todo-line', to: '/tapel' }"
   />
 
   <VerticalNavLink
-    :item="{ title: 'Nomor Surat', icon: 'ri-file-copy-line', href: '/nomor-surat' }"
+    :item="{ title: 'Nomor Surat', icon: 'ri-file-copy-line', to: '/nomor-surat' }"
   />
 
   <!-- 👉 Logout Modal Trigger -->

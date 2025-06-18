@@ -1,7 +1,6 @@
 <script setup>
-import { useRoute } from 'vue-router'
-import AccountSettingsSecurity from '@/views/pages/account-settings/AccountSettingsSecurity.vue'
 import LembagaPreview from '@/views/pages/lembaga/LembagaPreview.vue'
+import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const activeTab = ref(route.params.tab)
@@ -12,12 +11,7 @@ const tabs = [
     title: 'Lembaga',
     icon: 'ri-school-line',
     tab: 'account',
-  },
-  {
-    title: 'Security',
-    icon: 'ri-lock-line',
-    tab: 'security',
-  },
+  }
 ]
 </script>
 
@@ -53,11 +47,9 @@ const tabs = [
       </VWindowItem>
 
       <!-- Security -->
-      <VWindowItem value="Edit">
+      <!-- <VWindowItem value="Edit">
         <AccountSettingsSecurity />
-      </VWindowItem>
-
-     
+      </VWindowItem> -->
     </VWindow>
   </div>
 </template>

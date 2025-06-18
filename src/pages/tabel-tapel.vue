@@ -74,7 +74,7 @@ onMounted(() => {
   <section>
     <VCard>
       <div class="flex justify-between items-center gap-4 mb-4 my-4 ml-4">
-        <h2 class="text-2xl font-semibold text-gray-800">Table Data Tapel</h2>
+        <h2 class="text-2xl font-semibold text-gray-800"> Data Tapel</h2>
         <RouterLink
           to="tambah-tapel"
           class="btn bg-green-600 text-white px-4 py-2 rounded-lg mr-4"

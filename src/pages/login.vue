@@ -63,7 +63,7 @@ const isPasswordVisible = ref(false)
           <img
             class="d-flex w-24"
             src="../assets/images/satu-1735196021.png"
-          />
+          />  
 
           <!-- <h2 class="font-weight-medium text-2xl text-uppercase">SIYNA</h2> -->
         </RouterLink>

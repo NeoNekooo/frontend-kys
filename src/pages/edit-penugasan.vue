@@ -1,22 +1,22 @@
 <script setup>
 import api from '@/plugins/axios/axios'
+import { router } from '@/plugins/router'
 import { onMounted, reactive, ref, watch } from 'vue'
 import { useToast } from 'vue-toastification'
 
 const toast = useToast()
 
-// Define props to receive the assignment ID
 const props = defineProps({
   id: {
-    type: String, // Or Number, depending on your API
-    required: true, // Make it required for an edit form
+    type: String, 
+    required: true,
   },
 })
 
 const nomorSuratOptions = ref([])
 const namaPegawaiOptions = ref([])
 const spkOptions = ref([])
-const tapelOptions = ref([]) // Keep if still needed for other purposes, though tapel_display is derived
+// const tapelOptions = ref([]) // Keep if still needed for other purposes, though tapel_display is derived
 const tapel = ref({ tapel: '' }) // Keep for tapel object if needed
 const penugasanData = ref([]) // This might not be needed for an edit form, but kept for now
 const tapelId = ref(null)
@@ -30,20 +30,20 @@ const form = reactive({
   id_satuan_pendidikan: '',
 })
 
-// Watch for changes in the ID prop to refetch data if the ID changes
-watch(() => props.id, async (newId) => {
-  if (newId) {
-    await fetchPenugasanById(newId);
-  }
-});
-
+watch(
+  () => props.id,
+  async newId => {
+    if (newId) {
+      await fetchPenugasanById(newId)
+    }
+  },
+)
 
 async function fetchNomorSurat() {
   try {
     const res = await api.get('/nomorSurat')
     if (res.data && res.data.length > 0) {
       nomorSuratOptions.value = res.data
-      // No need to pre-select the first one here for edit, as it will be populated by fetchPenugasanById
     } else {
       console.error('No data found for nomor surat')
       nomorSuratOptions.value = []
@@ -105,30 +105,30 @@ async function fetchPenugasanById(id) {
   try {
     const res = await api.get(`/penugasan/${id}`)
     if (res.data) {
-      const penugasan = res.data.data; // Assuming your API returns data in a 'data' field
-      form.id = penugasan.id;
-      form.id_nomor_surat = penugasan.id_nomor_surat;
-      form.id_pegawai = penugasan.id_pegawai;
-      form.id_satuan_pendidikan = penugasan.id_satuan_pendidikan;
-      tapelId.value = penugasan.id_tapel; // Populate tapelId
+      const penugasan = res.data.data // Assuming your API returns data in a 'data' field
+      form.id = penugasan.id
+      form.id_nomor_surat = penugasan.id_nomor_surat
+      form.id_pegawai = penugasan.id_pegawai
+      form.id_satuan_pendidikan = penugasan.id_satuan_pendidikan
+      tapelId.value = penugasan.id_tapel // Populate tapelId
 
       // Fetch related display data
       if (penugasan.id_nomor_surat) {
-        const nomorSuratRes = await api.get(`/nomorSurat/${penugasan.id_nomor_surat}`);
+        const nomorSuratRes = await api.get(`/nomorSurat/${penugasan.id_nomor_surat}`)
         if (nomorSuratRes.data) {
-          form.nomorSurat_display = nomorSuratRes.data.no_surat;
+          form.nomorSurat_display = nomorSuratRes.data.no_surat
           if (nomorSuratRes.data.id_tapel) {
-            await fetchTapel(nomorSuratRes.data.id_tapel);
+            await fetchTapel(nomorSuratRes.data.id_tapel)
           }
         }
       }
     } else {
-      console.error('No penugasan data found for ID:', id);
-      toast.error('Data penugasan tidak ditemukan.');
+      console.error('No penugasan data found for ID:', id)
+      toast.error('Data penugasan tidak ditemukan.')
     }
   } catch (error) {
-    console.error('Error fetching penugasan by ID:', error);
-    toast.error('Gagal memuat data penugasan.');
+    console.error('Error fetching penugasan by ID:', error)
+    toast.error('Gagal memuat data penugasan.')
   }
 }
 
@@ -143,6 +143,8 @@ async function handleSubmit() {
   console.log('Submitted form for update:', dataToSubmit)
   try {
     await api.put(`/penugasan/${form.id}`, dataToSubmit)
+
+    router.push({ name: 'tabel-penugasan' })
     toast.success('Data penugasan berhasil diperbarui!')
   } catch (error) {
     console.error('Error submitting form:', error)
@@ -153,10 +155,10 @@ async function handleSubmit() {
 function handleReset() {
   // For an edit form, reset might mean reloading the original data
   if (props.id) {
-    fetchPenugasanById(props.id);
+    fetchPenugasanById(props.id)
   } else {
-    form.id_pegawai = '';
-    form.id_satuan_pendidikan = '';
+    form.id_pegawai = ''
+    form.id_satuan_pendidikan = ''
   }
 }
 
@@ -176,55 +178,118 @@ onMounted(async () => {
       <div class="w-full md:w-full">
         <div class="flex justify-between items-center gap-4 mb-4">
           <h2 class="text-2xl font-semibold text-gray-800">Edit Data penugasan</h2>
-          <router-link to="/tabel-penugasan" class="btn bg-green-600 text-white px-4 py-2 rounded-lg mr-4">
-           Kembali
+          <router-link
+            to="/tabel-penugasan"
+            class="btn bg-green-600 text-white px-4 py-2 rounded-lg mr-4"
+          >
+            Kembali
           </router-link>
         </div>
 
-        <form @submit.prevent="handleSubmit" class="space-y-4">
+        <form
+          @submit.prevent="handleSubmit"
+          class="space-y-4"
+        >
           <div>
-            <label for="tapel" class="block text-sm font-medium text-gray-700">Tahun Pelajaran</label>
-            <input id="tapel" type="text" class="input-field mt-1 block w-full bg-gray-100 cursor-not-allowed" disabled
-              :value="form.tapel_display" placeholder="Loading tahun pelajaran..." />
+            <label
+              for="tapel"
+              class="block text-sm font-medium text-gray-700"
+              >Tahun Pelajaran</label
+            >
+            <input
+              id="tapel"
+              type="text"
+              class="input-field mt-1 block w-full bg-gray-100 cursor-not-allowed"
+              disabled
+              :value="form.tapel_display"
+              placeholder="Loading tahun pelajaran..."
+            />
           </div>
 
           <div>
-            <label for="nomor_surat" class="block text-sm font-medium text-gray-700">Nomor Surat</label>
-            <input id="nomor_surat" v-model="form.nomorSurat_display" type="text"
-              class="input-field mt-1 block w-full bg-gray-100 cursor-not-allowed" disabled
-              placeholder="Nomor Surat Akan Tampil Disini" />
+            <label
+              for="nomor_surat"
+              class="block text-sm font-medium text-gray-700"
+              >Nomor Surat</label
+            >
+            <input
+              id="nomor_surat"
+              v-model="form.nomorSurat_display"
+              type="text"
+              class="input-field mt-1 block w-full bg-gray-100 cursor-not-allowed"
+              disabled
+              placeholder="Nomor Surat Akan Tampil Disini"
+            />
           </div>
 
           <div>
-            <label for="nama_pegawai" class="block text-sm font-medium text-gray-700">Nama Pegawai</label>
-            <select id="nama_pegawai" v-model="form.id_pegawai" class="input-field mt-1 block w-full" required>
-              <option disabled value="">
+            <label
+              for="nama_pegawai"
+              class="block text-sm font-medium text-gray-700"
+              >Nama Pegawai</label
+            >
+            <select
+              id="nama_pegawai"
+              v-model="form.id_pegawai"
+              class="input-field mt-1 block w-full"
+              required
+            >
+              <option
+                disabled
+                value=""
+              >
                 Pilih Nama Pegawai
               </option>
-              <option v-for="item in namaPegawaiOptions" :key="item.id" :value="item.id">
+              <option
+                v-for="item in namaPegawaiOptions"
+                :key="item.id"
+                :value="item.id"
+              >
                 {{ item.nama }}
               </option>
             </select>
           </div>
 
           <div>
-            <label for="spk_select" class="block text-sm font-medium text-gray-700">SPK</label>
-            <select id="spk_select" v-model="form.id_satuan_pendidikan" class="input-field mt-1 block w-full" required>
-              <option disabled value="">
+            <label
+              for="spk_select"
+              class="block text-sm font-medium text-gray-700"
+              >SPK</label
+            >
+            <select
+              id="spk_select"
+              v-model="form.id_satuan_pendidikan"
+              class="input-field mt-1 block w-full"
+              required
+            >
+              <option
+                disabled
+                value=""
+              >
                 Pilih SPK
               </option>
-              <option v-for="item in spkOptions" :key="item.id" :value="item.id">
+              <option
+                v-for="item in spkOptions"
+                :key="item.id"
+                :value="item.id"
+              >
                 {{ item.nama }}
               </option>
             </select>
           </div>
 
           <div class="flex space-x-2 pt-2">
-            <button type="submit" class="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition">
+            <button
+              type="submit"
+              class="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition"
+            >
               Update
             </button>
-            <button type="button" @click="handleReset"
-              class="border border-gray-300 px-4 py-2 rounded-md hover:bg-gray-100">
+            <button
+              type="button"
+              @click="handleReset"
+              class="border border-gray-300 px-4 py-2 rounded-md hover:bg-gray-100"
+            >
               Reset
             </button>
           </div>

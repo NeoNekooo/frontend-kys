@@ -27,9 +27,8 @@ import UserProfile from '@/layouts/components/UserProfile.vue'
           class="d-flex align-center cursor-pointer"
           style="user-select: none;"
         >
-          <!-- 👉 Search Trigger button -->
           <IconBtn>
-            <VIcon icon="ri-search-line" />
+            <VIcon icon="ri-search-line" />  
           </IconBtn>
 
           <span class="d-none d-md-flex align-center text-disabled">

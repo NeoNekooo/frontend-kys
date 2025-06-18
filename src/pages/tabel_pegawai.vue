@@ -174,16 +174,15 @@ onMounted(() => {
   <section>
     <VCard>
       <div class="flex justify-between items-center gap-4 mb-4 my-4 ml-4">
-        <h2 class="text-2xl font-semibold text-gray-800">Data Pegawai</h2>
+        <h2 class="text-2xl font-semibold text-gray-800 dark:text-white">Data Pegawai</h2>
         <RouterLink
           to="tambah-pegawai"
-          class="btn bg-green-600 text-white px-4 py-2 rounded-lg mr-4"
+          class="btn bg-green-600 text-white px-4 py-2 border-0 rounded-lg mr-4"
         >
           Tambah
         </RouterLink>
       </div>
-      <VTable
-      >
+      <VTable>
         <thead>
           <tr>
             <th class="text-uppercase">No</th>
@@ -332,7 +331,7 @@ onMounted(() => {
 }
 
 .btn {
-  border-radius: 6px;
+  /* border-radius: 6px; */
   cursor: pointer;
   padding-block: 8px;
   padding-inline: 16px;
