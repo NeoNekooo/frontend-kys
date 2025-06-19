@@ -7,7 +7,6 @@ const route = useRoute()
 const router = useRouter() // Initialize useRouter
 const romawi = ref(['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'])
 
-const url = 'http://localhost:5000/api/penugasan'
 
 const penugasan = ref({})
 const errorMessage = ref('')

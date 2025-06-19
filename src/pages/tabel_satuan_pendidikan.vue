@@ -9,7 +9,6 @@ import { useToast } from 'vue-toastification'; // Assuming you have toastificati
 const toast = useToast(); // Initialize toast
 
 
-const url = "http://localhost:5000/api/spk"; // Changed from /api/pegawai to /api/spk
 const spk = ref([]);
 const errorMessage = ref("");
 const loading = ref(true);

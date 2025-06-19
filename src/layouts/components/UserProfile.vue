@@ -67,7 +67,7 @@ onMounted(() => {
       color="primary"
       variant="tonal"
     >
-      <VImg :src="`http://localhost:5000${adminData.avatarImg}`" />
+      <VImg :src="`https://simaya.yayasannurulislam.org${adminData.avatarImg}`" />
       <!-- SECTION Menu -->
       <VMenu
         activator="parent"
@@ -91,7 +91,7 @@ onMounted(() => {
                     color="primary"
                     variant="tonal"
                   >
-                    <VImg :src="`http://localhost:5000${adminData.avatarImg}`" />
+                    <VImg :src="`https://simaya.yayasannurulislam.org${adminData.avatarImg}`" />
                   </VAvatar>
                 </VBadge>
               </VListItemAction>

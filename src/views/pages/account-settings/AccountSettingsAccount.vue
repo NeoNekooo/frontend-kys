@@ -101,8 +101,8 @@
           rounded="lg"
           size="200"
           class="me-6"
-          :image="`http://localhost:5000${adminData.avatarImg}`"
-          :src="`http://localhost:5000${adminData.avatarImg}`"
+          :image="`https://simaya.yayasannurulislam.org${adminData.avatarImg}`"
+          :src="`https://simaya.yayasannurulislam.org${adminData.avatarImg}`"
         />
 
         <!-- Upload Controls -->

@@ -123,7 +123,7 @@ onMounted(() => {
       <!-- Logo Preview -->
       <div>
         <img
-          :src="`http://localhost:5000${form.logo}`"
+          :src="`https://simaya.yayasannurulislam.org${form.logo}`"
           alt="Logo Preview"
           class="rounded-lg border border-gray-300 w-40 h-40 object-cover"
         />

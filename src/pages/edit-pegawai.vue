@@ -80,7 +80,7 @@ const updateForm = async () => {
     if (isPhotoFile) {
       const formData = new FormData()
       formData.append('foto', form.value.photo)
-      await api.post(`http://localhost:5000/api/pegawai/upload/${id}`, formData)
+      await api.post(`/pegawai/upload/${id}`, formData)
     }
 
     toast.success('Data pegawai berhasil diperbarui.')
@@ -92,8 +92,8 @@ const updateForm = async () => {
 }
 
 const photoPreview = computed(() => {
-  if (!form.value.photo) return `http://localhost:5000/uploads/pegawai/${form.value.photo_filename || 'default.png'}`
-  if (typeof form.value.photo === 'string') return `http://localhost:5000/uploads/pegawai/${form.value.photo}`
+  if (!form.value.photo) return `https://simaya.yayasannurulislam.org/uploads/pegawai/${form.value.photo_filename || 'default.png'}`
+  if (typeof form.value.photo === 'string') return `https://simaya.yayasannurulislam.org/uploads/pegawai/${form.value.photo}`
   return URL.createObjectURL(form.value.photo)
 })
 

@@ -1,4 +1,5 @@
 <script setup>
+import api from '@/plugins/axios/axios'
 import { router } from '@/plugins/router'
 import authV1Tree2 from '@images/pages/auth-v1-tree-2.png'
 import authV1Tree from '@images/pages/auth-v1-tree.png'
@@ -7,6 +8,8 @@ import { onMounted, ref } from 'vue'
 import { useToast } from 'vue-toastification'
 
 const toast = useToast()
+
+console.log(import.meta.env.VITE_API_BASE_URL)
 
 const form = ref({
   username: '',
@@ -18,7 +21,7 @@ const logo = ref('') // Changed to string for URL
 
 const handleLogin = async () => {
   try {
-    const res = await axios.post('http://localhost:5000/api/admin/login', {
+    const res = await api.post('/admin/login', {
       username: form.value.username,
       password: form.value.password,
     })
@@ -35,7 +38,7 @@ const handleLogin = async () => {
 
 const fetchLogo = async () => {
   try {
-    const response = await axios.get('http://localhost:5000/api/lembaga/logo')
+    const response = await api.get('/lembaga/logo')
     logo.value = response.data
   } catch (error) {
     console.error('Error fetching logo:', error)

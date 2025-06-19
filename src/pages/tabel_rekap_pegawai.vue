@@ -17,7 +17,7 @@ const modalImageSrc = ref(""); // Untuk gambar di modal
 
 const getPegawai = async () => {
   try {
-    const response = await axios.get(url);
+    const response = await api.get(url);
     // console.log(response.data);
     if (response.data) {
       pegawai.value = response.data;
@@ -205,10 +205,10 @@ onMounted(() => {
     <td class="text-center">
       <img
         v-if="p.photo"
-        :src="`http://localhost:8000/images/${p.photo}`"
+        :src="`https://simaya.yayasannurulislam.org/images/${p.photo}`"
         alt="Photo"
         class="w-12 h-12 object-cover rounded-md cursor-pointer mx-auto"
-        @click="openImageModal(`http://localhost:8000/images/${p.photo}`)"
+        @click="openImageModal(`https://simaya.yayasannurulislam.org/images/${p.photo}`)"
       />
       <span v-else>-</span>
     </td>

@@ -8,7 +8,6 @@ import { useToast } from 'vue-toastification'
 const toast = useToast()
 const router = useRouter()
 
-const url = 'http://localhost:5000/api/tapel'
 const tapel = ref([])
 const errorMessage = ref('')
 const loading = ref(true)
